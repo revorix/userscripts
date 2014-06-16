@@ -27,8 +27,7 @@
 	var SettingsSummaryFirst;
 	var SettingsAutoLoad;
 
-	var DEBUG_VERBOSE = true;
-	var DEBUG_ALWAYS_NEW_AID = false;
+	var DEBUG_VERBOSE = false;
 
 	var FREQ_0 = 0;
 	var FREQ_C = 1;
@@ -652,9 +651,7 @@
 				}
 			}
 
-			if (idx > -1) {
-				if (!DEBUG_ALWAYS_NEW_AID) continue;
-			} else {
+			if (idx < 0) {
 				idx = artis.length;
 				artis.push(clone(arti_record));
 				artis[idx].aid = aid;
