@@ -14,7 +14,7 @@
 
 "use strict";
 
-(function()	// prevents namespace pollution. Help the environment! :)
+(function()	/* prevents namespace pollution. Help the environment! :) */
 {
 
 	var ARTIS_PER_PAGE = 15;
@@ -52,12 +52,12 @@
 		"Waffenrepolisator",
 		"Regenerative Naniten",
 
-		// -- deprecated --
+		/* -- deprecated -- */
 		"Regenerative Naniten Typ I",
 		"Regenerative Naniten Typ II",
 		"Regenerative Naniten Typ III",
 		"Optimierungsbeschleuniger",
-		// --     --     --
+		/* --     --     -- */
 
 		"Ressourcen",
 		"Schrott",
@@ -82,7 +82,7 @@
 
 	var artis = new Array();
 
-	// stats
+	/* stats */
 	var artis_sum;
 	var c_arti_types = new Array(arti_name_list.length);
 	var c_arti_types_aid = new Array(arti_name_list.length);
@@ -125,13 +125,12 @@
 			+ ';';
 
 		var expiredate = new Date();
-		// save cookie for a year
+		/* save cookie for a year */
 		expiredate.setTime(expiredate.getTime() + (365 * 24 * 60 * 60 * 1000));
 
 		document.cookie =  str + ' expires=' + expiredate.toGMTString() + '; path=/';
 
-		// show this to user
-
+		/* show this to user */
 		var spn = document.createElement('span');
 		spn.style.color = '#00FF00';
 		spn.id = 'savemsg';
@@ -250,9 +249,9 @@
 		frm.parentNode.insertBefore(document.createElement('br'), frm.nextSibling);
 	}
 
+	/* load main stuff with stats and all from localStorage */
 	function loadStatData()
 	{
-		// load main stuff with stats and all from localStorage
 		var str = localStorage.getItem('rxartefakte');
 
 		if (!str) {
@@ -279,13 +278,13 @@
 			c_ress_count[i] = 0;
 		}
 
-		// artis_sum
+		/* artis_sum */
 		var substr = str.match(/sum:[^,;]+/);
 		if (substr) {
 			artis_sum = +substr[0].match(/\d+/);
 		}
 
-		// types
+		/* types */
 		substr = str.match(/typc:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
@@ -310,7 +309,7 @@
 			}
 		}
 
-		// freq
+		/* freq */
 		substr = str.match(/freq:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
@@ -321,7 +320,7 @@
 			c_freq_0 = +substr[4];
 		}
 
-		// ress
+		/* ress */
 		substr = str.match(/sumres:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
@@ -389,16 +388,16 @@
 		return true;
 	}
 
+	/* save main stuff with stats and and all in localStorage */
 	function saveStatData()
 	{
-		// save main stuff with stats and and all in localStorage
 		var ikey = 'rxartefakte';
 		var str = '';
 
-		// artis_sum
+		/* artis_sum */
 		str += 'sum:' + artis_sum + ',';
 
-		// types
+		/* types */
 		str+= 'typc:';
 
 		for (var i = 0; i < c_arti_types.length; i++) {
@@ -423,10 +422,10 @@
 
 		str = str.replace(/\!$/, ',');
 
-		// freq
+		/* freq */
 		str += 'freq:' + c_freq_c + '!' + c_freq_u + '!' + c_freq_r + '!' + c_freq_l + '!' + c_freq_0 + ',';
 
-		// ress
+		/* ress */
 
 		str+= 'sumres:';
 
@@ -505,9 +504,9 @@
 		return 0;
 	}
 
+	/* load arti data from storage and save in global structure */
 	function loadArtiData()
 	{
-		// load arti data from storage and save in global structure
 		var loaded = 0;
 		var keys = new Array();
 		var idx = 0;
@@ -525,7 +524,7 @@
 			return -1;
 		}
 
-		keys.sort();	// use a special sort function if we get in trouble here
+		keys.sort();	/* use a special sort function if we get in trouble here */
 
 		for (var i = 0; i < keys.length; i++) {
 			var str = localStorage.getItem(keys[i]).split('!');
@@ -550,11 +549,10 @@
 		return loaded;
 	}
 
+	/* save updated global structure in storage */
 	function saveArtiData()
 	{
-		// save updated global structure in storage
-		// use 100 artis per key entry to limit value to a sane size
-
+		/* use 100 artis per key entry to limit value to a sane size */
 		var cid = 0;
 
 		log('saving ' + artis.length + ' artis...');
@@ -569,7 +567,7 @@
 		var str = "";
 
 		for (var i = 0; i < artis.length; i++) {
-			// save as: "a3493t5f1r11v100000,"
+			/* save as: "a3493t5f1r11v100000," */
 			str +=
 				"a" + artis[i].aid +
 				"t" + artis[i].type +
@@ -610,9 +608,9 @@
 		return 0;
 	}
 
+	/* parse page, lookup aid and add to array if new */
 	function parseArtis()
 	{
-		// parse page, lookup aid and add to array if new
 		var addcounter = 0;
 		var tables = document.getElementsByTagName('table');
 
@@ -621,22 +619,22 @@
 			return -1;
 		}
 
-        // a premium account has an extra table for filters, mind you
+        /* a premium account has an extra table for filters, mind you */
         var ttable = tables[tables.length - 1];
 
 		for (var i = 1; i < ttable.rows.length; i++) {
-			// exclude line with button (1 cell only)
+			/* exclude line with button (1 cell only) */
 			if (ttable.rows[i].cells.length != 4) {
 				continue;
 			}
 
-			// scan
+			/* scan */
 			if (!ttable.rows[i].cells[3].firstChild.href) {
 				log('no aid found');
 				continue;
 			}
 
-			// if link exists, get aid from it
+			/* if link exists, get aid from it */
 			var aid = +ttable.rows[i].cells[3].firstChild.href.match(/aid=\d+/)[0].match(/\d+/);
 
 			if (aid <= 0) {
@@ -644,7 +642,7 @@
 				continue;
 			}
 
-			// lookup aid, continue if existing (or overwrite, as debug switch)
+			/* lookup aid, continue if existing (or overwrite, as debug switch) */
 			var idx = -1;
 
 			for (var j = 0; j < artis.length; j++) {
@@ -665,7 +663,7 @@
 			var arti_string = ttable.rows[i].cells[1].textContent.trim();
 			var arti_props = ttable.rows[i].cells[2].textContent.trim();
 
-			// frequency
+			/* frequency */
 			var arti_freq = arti_string.match(/\([CURL]\)/);
 			if (arti_freq) {
 				arti_freq = arti_freq[0].replace(/[\(\)]/g, "");
@@ -679,15 +677,15 @@
 				default: artis[idx].freq = FREQ_0; break;
 			}
 
-			// type
+			/* type */
 			if (ttable.rows[i].cells[2].lastChild.tagName === "IMG") {
-				// resources
+				/* resources */
 				var rtype = ttable.rows[i].cells[2].lastChild.src.match(/[^\/]+\.gif$/);
 				artis[idx].ress = +rtype[0].match(/\d+/);
 				artis[idx].val = arti_props.match(/\d+/)[0];
 				artis[idx].type = arti_name_list.indexOf("Ressourcen");
 			} else {
-				// non-ress, analyze string then
+				/* non-ress, analyze string then */
 				arti_string = arti_string.replace(/\s*\([\S]*/,"");
 				artis[idx].type = arti_name_list.indexOf("Unbekannt");
 				for (var j = 0; j < arti_name_list.length; j++) {
@@ -700,14 +698,14 @@
 
 			addcounter++;
 
-			// color new artifacts
+			/* color new artifacts */
 			ttable.rows[i].cells[0].style.color = '#00FFFF';
 		}
 
 		if (addcounter > 0) {
 			artis.sort(function(a, b){return (a.aid === b.aid ? 0 : (a.aid < b.aid ? -1 : 1))});
 
-			// user message
+			/* user message */
 			var spn = document.createElement('span');
 			spn.style.color = '#00FFFF';
 			spn.appendChild(document.createTextNode(' ' + addcounter
@@ -719,9 +717,9 @@
 		return addcounter;
 	}
 
+	/* calc the stats of our array */
 	function calcStats()
 	{
-		// calc the stats of our array
 		artis_sum = artis.length;
 
 		c_freq_0 = 0;
@@ -747,14 +745,14 @@
 			c_ress_count[i] = 0;
 		}
 
-		// special cases where oldest is required
+		/* special cases where oldest is required */
 		var specialBBSaid = 0;
 		var specialBBSpage = 0;
 		var specialCTaid = 0;
 		var specialCTpage = 0;
 
 		for (var i = 0; i < artis.length; i++) {
-			// freq
+			/* freq */
 			switch(artis[i].freq) {
 				case FREQ_0: c_freq_0++; break;
 				case FREQ_C: c_freq_c++; break;
@@ -763,11 +761,11 @@
 				case FREQ_L: c_freq_l++; break;
 				default: break;
 			}
-			// types
+			/* types */
 			c_arti_types[artis[i].type]++;
 			c_arti_types_aid[artis[i].type] = artis[i].aid;
 			c_arti_types_page[artis[i].type] = +i;
-			// exceptions
+			/* exceptions */
 			if (!specialBBSaid && artis[i].type == arti_name_list.indexOf("Baubeschleuniger")) {
 				specialBBSaid = artis[i].aid;
 				specialBBSpage = +i;
@@ -776,7 +774,7 @@
 				specialCTaid = artis[i].aid;
 				specialCTpage = +i;
 			}
-			// ress
+			/* ress */
 			if (artis[i].type === arti_name_list.indexOf("Ressourcen")) {
 				c_ress_total[+artis[i].ress - 1] += +artis[i].val;
 				c_ress_count[+artis[i].ress - 1]++;
@@ -793,7 +791,7 @@
 			}
 		}
 
-		// age override
+		/* age override */
 		c_arti_types_aid[arti_name_list.indexOf("Baubeschleuniger")] = specialBBSaid;
 		c_arti_types_page[arti_name_list.indexOf("Baubeschleuniger")] = specialBBSpage;
 		c_arti_types_aid[arti_name_list.indexOf("Crew Trainer")] = specialCTaid;
@@ -832,10 +830,13 @@
 		return 0;
 	}
 
+	/*
+	 * This function is necessary because a hotlink containing a link to
+	 * the same page visited before will not load - so we have to make
+	 * it reload...
+	 */
 	function clickRefreshSamePage()
 	{
-		// this function is necessary because a hotlink containing a link to the
-		// same page visited before will not load - so we have to make it reload...
 		var page = document.URL.match(/est=\d+/);
 		if (page && (page[0] === this.href.match(/est=\d+/)[0])) {
 			document.location.href = this.href;
@@ -864,7 +865,7 @@
 			linkline.insertBefore(document.createTextNode(' | '), linkline.firstChild);
 			linkline.insertBefore(sumlink, linkline.firstChild);
 		} else {
-			// handle that ridicolous break
+			/* handle that ridicolous break */
 			if (linkline.lastChild.tagName === 'BR') {
 				linkline.replaceChild(document.createTextNode(' | '), linkline.lastChild);
 			} else {
@@ -874,7 +875,7 @@
 			linkline.appendChild(sumlink);
 		}
 
-		// first frame load only, and only if no new artis are found
+		/* first frame load only, and only if no new artis are found */
 		if (SettingsAutoLoad && (/artefakte\.php$/).test(document.URL) && (!newartis)) {
 			generateSummaryTables();
 		}
@@ -884,9 +885,9 @@
 
 	function getRxDomain()
 	{
-		if ((/\/\/\d+\.\d+\.\d+\.\d+\//).test(document.URL)) {	// IP
+		if ((/\/\/\d+\.\d+\.\d+\.\d+\//).test(document.URL)) {	/* IP */
 			return (document.URL.match(/[\w:\.\/]+\/rx\//)[0]);
-		} else {	// revorix.info
+		} else {	/* revorix.info */
 			return (document.URL.match(/[\w:\.\/]+revorix\.info\//)[0]);
 		}
 	}
@@ -896,7 +897,7 @@
 		var maindiv = document.createElement('div');
 		maindiv.className = 'wrp ce';
 
-		// table upper boundary
+		/* table upper boundary */
 		var dtop1 = document.createElement('div');
 		var dtop2 = document.createElement('div');
 		var dtop3 = document.createElement('div');
@@ -906,13 +907,13 @@
 		dtop2.appendChild(dtop3);
 		dtop1.appendChild(dtop2);
 
-		// table side boundaries
+		/* table side boundaries */
 		var dsid1 = document.createElement('div');
 		var dsid2 = document.createElement('div');
 		dsid1.className = 'ml';
 		dsid2.className = 'mr';
 
-		// table lower boundaries
+		/* table lower boundaries */
 		var dbot1 = document.createElement('div');
 		var dbot2 = document.createElement('div');
 		var dbot3 = document.createElement('div');
@@ -922,7 +923,7 @@
 		dbot2.appendChild(dbot3);
 		dbot1.appendChild(dbot2);
 
-		// connect
+		/* connect */
 		dsid2.appendChild(t);
 		dsid1.appendChild(dsid2);
 		maindiv.appendChild(dtop1);
@@ -938,7 +939,7 @@
 		var known_artis = tables[1].rows[1].cells[0].innerHTML.match(/\berforscht[^|]*\(\d+\)/);
 		var display_links = (!!known_artis) && (+(known_artis[0].match(/\d+/)[0]) <= artis_sum);
 
-		// exchange links and bold texts to mark active page
+		/* exchange links and bold texts to mark active page */
 		var thispagelink = document.getElementById('artisummary');
 		var otherlinks = thispagelink.parentNode.getElementsByTagName('b');
 		for (var i in otherlinks) {
@@ -985,7 +986,7 @@
 		thispagebold.textContent = thispagelink.textContent;
 		thispagelink.parentNode.replaceChild(thispagebold, thispagelink);
 
-		// summary //
+		/* summary */
 		var s = document.createElement('table');
 		s.className = 'wrpd full';
 		s.style.textAlign = 'center';
@@ -1021,7 +1022,7 @@
 			s.rows[1].appendChild(vcell);
 		}
 
-		// double line at last column
+		/* double line at last column */
 		s.rows[0].cells[5].style.borderRightWidth = '0px';
 		s.rows[1].cells[5].style.borderRightWidth = '0px';
 		s.rows[0].cells[6].style.borderStyle = 'solid solid solid double';
@@ -1029,12 +1030,12 @@
 		s.rows[0].cells[6].style.borderLeftWidth = '3px';
 		s.rows[1].cells[6].style.borderLeftWidth = '3px';
 
-		// arti type overview //
+		/* arti type overview */
 
 		var t = document.createElement('table');
 		t.className = 'wrpd full';
 
-		// rows + cells. If we have all artis, insert links to appropriate pages (warn otherwise)
+		/* rows + cells. If we have all artis, insert links to appropriate pages (warn otherwise) */
 		var headrow = document.createElement('tr');
 		var hcell1 = document.createElement('td');
 		var hcell2 = document.createElement('td');
@@ -1071,7 +1072,7 @@
 			var c1 = document.createElement('td');
 			var c2 = document.createElement('td');
 
-			// old deprecated stuff
+			/* old deprecated stuff */
 			if (/Regenerative Naniten Typ [I]+/.test(arti_name_list[i])) {
 				if (c_arti_types[i] === 0) {
 					continue;
@@ -1119,7 +1120,7 @@
 			currow++;
 		}
 
-		// double boundary in the middle
+		/* double boundary in the middle */
 
 		for (var i = 0; i < t.rows.length; i++) {
 			if (t.rows[i].cells.length == 6) {
@@ -1135,7 +1136,7 @@
 			}
 		}
 
-		// resources //
+		/* resources */
 
 		var r = document.createElement('table');
 		r.className = 'wrpd full';
@@ -1216,7 +1217,7 @@
 			r.appendChild(rw);
 		}
 
-		// only leave first framed div intact, eliminate the rest
+		/* only leave first framed div intact, eliminate the rest */
 
         var frtdivs = document.getElementsByClassName('wrp ce');
 
@@ -1270,14 +1271,15 @@
 		return cnt;
 	}
 
+	/*
+	 * If we have too much artis, check the current page. Since artis
+	 * are sorted by aid (both rx and artis array), the aid chain on the
+	 * page should be found back at the array. Any extra aids in that
+	 * chain are those which have been removed previously and somehow
+	 * did miss our detection - hence we remove them.
+	 */
 	function killOrphans()
 	{
-		// if we have too much artis, check the current page. Since artis
-		// are sorted by aid (both rx and artis array), the aid chain on
-		// the page should be found back at the array. Any extra aids in
-		// that chain are those which have been removed previously and
-		// somehow did miss our detection - hence we remove them.
-
 		var tables = document.getElementsByTagName('table');
 		var idx = -1;
 		var touched = false;
@@ -1289,12 +1291,12 @@
         var ttable = tables[tables.length - 1];
 
 		for (var i = 1; i < ttable.rows.length; i++) {
-			// exclude line with button (1 cell only)
+			/* exclude line with button (1 cell only) */
 			if (ttable.rows[i].cells.length != 4) {
 				continue;
 			}
 
-			// scan
+			/* scan */
 			if (!ttable.rows[i].cells[3].firstChild.href) {
 				log('aid missing in chain, aborting orphan search');
 				return -1;
@@ -1303,7 +1305,7 @@
 			var aid = +ttable.rows[i].cells[3].firstChild.href.match(/aid=\d+/)[0].match(/\d+/);
 
 			if (idx == -1) {
-				// find start of chain
+				/* find start of chain */
 				for (var j = artis.length - 1; j >= 0; j--) {
 					if (artis[j].aid === aid) {
 						idx = j;
@@ -1317,7 +1319,7 @@
 				}
 
 				if ((idx > (artis.length - 15)) && (idx < (artis.length - 1))) {
-					// assume we are on page 1, with lots of orphans left
+					/* assume we are on page 1, with lots of orphans left */
 					artis.splice(idx + 1, artis.length - idx);
 					log('removed ' + (artis.length-idx) + ' orphan(s) from end');
 					touched = true;
@@ -1329,13 +1331,13 @@
 			idx--;
 
 			if (aid > artis[idx].aid) {
-				// this means a new arti has popped up we do not know yet
+				/* this means a new arti has popped up we do not know yet */
 				log('new arti found');
 				return 1;
 			}
 
 			if (aid < artis[idx].aid) {
-				// remove one or more orphans, until we hit a recognised or an unknown arti
+				/* remove one or more orphans, until we hit a recognised or an unknown arti */
 				var st = idx;
 				while ((aid < artis[idx].aid) && (idx >= 0)) {
 					idx--;
@@ -1395,10 +1397,9 @@
 		return 0;
 	}
 
+	/* load cookie, check artis, save cookie if necessary, generate overview */
 	function init_artis()
 	{
-		// load cookie, check artis, save cookie if necessary, generate overview
-
 		var data_loaded = -1;
 		var tables = document.getElementsByTagName('table');
 
@@ -1406,7 +1407,7 @@
 			insertSettings();
 
 		} else if ((/artefakte\.php\S*asr=\d+$/).test(document.URL)) {
-			// scrapping
+			/* scrapping */
 			loadArtiData();
 			var aid = +document.URL.match(/\d+$/)[0];
 			removeArti(aid);
@@ -1415,7 +1416,7 @@
 			insertSummary();
 
 		} else if ((/artefakte\.php\S*kaa=\d+$/).test(document.URL)) {
-			// multi-scrapping
+			/* multi-scrapping */
 			loadArtiData();
 			if (removeUselessArtis() > 0) {
 				saveArtiData();
@@ -1429,7 +1430,7 @@
 			(/artefakte\.php\S*agv=\d+$/).test(document.referrer) &&
 			tables.length > 0)
 		{
-			// transfer
+			/* transfer */
 			loadArtiData();
 			var aid = +document.URL.match(/\d+$/)[0];
 			removeArti(aid);
@@ -1438,10 +1439,11 @@
 			insertSummary();
 
 		} else if ((/artefakte_use\.php\S*aid=\d+/).test(document.URL)) {
-			// usage
-			// Ress: loads page with one table containing 'Ressourcen erhalten' in row 1
-			// in general: failure has a bold 'Achtung' with extra text and no tables on a plain body
-			// probably risky, nevertheless convenient: exclude failure instead of inclusion of success
+			/* usage
+			 * Ress: loads page with one table containing 'Ressourcen erhalten' in row 1
+			 * in general: failure has a bold 'Achtung' with extra text and no tables on a plain body
+			 * probably risky, nevertheless convenient: exclude failure instead of inclusion of success
+			 */
 			if (!((document.getElementsByTagName('b').length > 0) &&
 				(document.getElementsByTagName('table').length === 0) &&
 				(document.getElementsByTagName('b')[0].textContent === 'Achtung')))
@@ -1454,10 +1456,10 @@
 			}
 
 		} else if (((/artefakte\.php$|artefakte\S*est=\d+$|artefakte\S*[e|u]st=\d+\S*faa=\d+$/).test(document.URL)) && (tables != null)) {
-			// standard page without extra parameters ('erforscht' only)
+			/* standard page without extra parameters ('erforscht' only) */
 
 			if (!localStorage) {
-				// user message
+				/* user message */
 				var spn = document.createElement('span');
 				spn.style.color = '#FFFF00';
 				spn.appendChild(document.createTextNode(' Warnung:'
@@ -1467,22 +1469,24 @@
 				return 0;
 			}
 
-			// only load main stats here (unless this fails)
+			/* only load main stats here (unless this fails) */
 			if (!loadStatData()) {
 				data_loaded = loadArtiData();
 				calcStats();
 			}
 			log(artis_sum + ' artis stored');
 
-			// load array data if changed
+			/* load array data if changed */
 			if (tables.length > 1) {
 				var user_artis = +tables[1].rows[1].cells[0].firstChild.textContent.match(/\d+/);
 
 				var newartis = 0;
 
 				if (user_artis != artis_sum) {
-					// show a hint here
-					// distinguish between more saved than existent and less than existent
+					/*
+					 * show a hint here;
+					 * distinguish between more saved than existent and less than existent
+					 */
 					log('mismatch: ' + user_artis + ' detected, but ' + artis_sum + ' found in storage');
 					if (data_loaded < 0) {
 						loadArtiData();
@@ -1536,21 +1540,23 @@
 		return 0;
 	}
 
-	// object and array cloning function, see
-	// http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
+	/*
+	 * Object and array cloning function, see
+	 * http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
+	 */
 	function clone(sth)
 	{
-		// bool, string, number, and null or undefined
+		/* bool, string, number, and null or undefined */
 		if (null == sth || "object" != typeof sth) return sth;
 
-		// date
+		/* date */
 		if (sth instanceof Date) {
 			var copy = new Date();
 			copy.setTime(sth.getTime());
 			return copy;
 		}
 
-		// array
+		/* array */
 		if (sth instanceof Array) {
 			var copy = [];
 			for (var i = 0, len = sth.length; i < len; i++) {
@@ -1559,7 +1565,7 @@
 			return copy;
 		}
 
-		// object
+		/* object */
 		if (sth instanceof Object) {
 			var copy = {};
 			for (var attr in sth) {
@@ -1567,8 +1573,6 @@
 			}
 			return copy;
 		}
-
-		// throw new Error("Cannot copy object, type not supported.");
 	}
 
 	function log(str)
