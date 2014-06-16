@@ -14,7 +14,8 @@
 
 "use strict";
 
-(function() {	// prevents namespace pollution. Help the environment! :)
+(function()	// prevents namespace pollution. Help the environment! :)
+{
 
 	var ARTIS_PER_PAGE = 15;
 
@@ -100,11 +101,11 @@
 	var c_freq_l = 0;
 	var c_freq_0 = 0;
 
-	function loadSettings() {
-
+	function loadSettings()
+	{
 		var str = document.cookie.match(/rxuscriptartefakte=[^;]+/);
 
-		if(!str) {
+		if (!str) {
 			SettingsSummaryFirst = true;
 			SettingsAutoLoad = false;
 		} else {
@@ -113,8 +114,8 @@
 		}
 	}
 
-	function saveSettings() {
-
+	function saveSettings()
+	{
 		SettingsSummaryFirst = document.getElementById('rorderLeft').checked ? true : false;
 		SettingsAutoLoad = document.getElementById('rautoload').checked ? true : false;
 
@@ -140,17 +141,18 @@
 		window.setTimeout(removeSavemsg, 3000);
 	}
 
-	function removeSavemsg() {
+	function removeSavemsg()
+	{
 		var spn = document.getElementById('savemsg');
-		if(spn) {
+		if (spn) {
 			spn.parentNode.removeChild(spn);
 		}
 	}
 
-	function insertSettings() {
-
+	function insertSettings()
+	{
 		var frm = document.getElementsByTagName('form');
-		if(!frm.length) {
+		if (!frm.length) {
 			return;
 		}
 		frm = frm[0];
@@ -248,25 +250,25 @@
 		frm.parentNode.insertBefore(document.createElement('br'), frm.nextSibling);
 	}
 
-	function loadStatData() {
-
+	function loadStatData()
+	{
 		// load main stuff with stats and all from localStorage
 		var str = localStorage.getItem('rxartefakte');
 
-		if(!str) {
+		if (!str) {
 			log("main data 'rxartefakte' not found in web storage");
 			return false;
 		}
 
 		artis_sum = 0;
 
-		for(var i = 0; i < arti_name_list.length; i++) {
+		for (var i = 0; i < arti_name_list.length; i++) {
 			c_arti_types[i] = 0;
 			c_arti_types_aid[i] = 0;
 			c_arti_types_page[i] = 0;
 		}
 
-		for(var i = 0; i < ressources.length; i++) {
+		for (var i = 0; i < ressources.length; i++) {
 			c_ress_low[i] = 0;
 			c_ress_hi[i] = 0;
 			c_ress_low_aid[i] = 0;
@@ -279,38 +281,38 @@
 
 		// artis_sum
 		var substr = str.match(/sum:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			artis_sum = +substr[0].match(/\d+/);
 		}
 
 		// types
 		substr = str.match(/typc:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_arti_types.length; i++) {
+			for (var i = 0; i < c_arti_types.length; i++) {
 				c_arti_types[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/typaid:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_arti_types.length; i++) {
+			for (var i = 0; i < c_arti_types.length; i++) {
 				c_arti_types_aid[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/typpg:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_arti_types.length; i++) {
+			for (var i = 0; i < c_arti_types.length; i++) {
 				c_arti_types_page[i] = +substr[i];
 			}
 		}
 
 		// freq
 		substr = str.match(/freq:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
 			c_freq_c = +substr[0];
 			c_freq_u = +substr[1];
@@ -321,65 +323,65 @@
 
 		// ress
 		substr = str.match(/sumres:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_ress_total.length; i++) {
+			for (var i = 0; i < c_ress_total.length; i++) {
 				c_ress_total[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/reshi:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_ress_hi.length; i++) {
+			for (var i = 0; i < c_ress_hi.length; i++) {
 				c_ress_hi[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/reslo:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+|Infinity/g);
-			for(var i = 0; i < c_ress_low.length; i++) {
+			for (var i = 0; i < c_ress_low.length; i++) {
 				c_ress_low[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/reshiaid:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_ress_hi_aid.length; i++) {
+			for (var i = 0; i < c_ress_hi_aid.length; i++) {
 				c_ress_hi_aid[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/resloaid:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_ress_low_aid.length; i++) {
+			for (var i = 0; i < c_ress_low_aid.length; i++) {
 				c_ress_low_aid[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/reshipg:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_ress_hi_aid.length; i++) {
+			for (var i = 0; i < c_ress_hi_aid.length; i++) {
 				c_ress_hi_page[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/reslopg:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_ress_low_aid.length; i++) {
+			for (var i = 0; i < c_ress_low_aid.length; i++) {
 				c_ress_low_page[i] = +substr[i];
 			}
 		}
 
 		substr = str.match(/cntres:[^,;]+/);
-		if(substr) {
+		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for(var i = 0; i < c_ress_total.length; i++) {
+			for (var i = 0; i < c_ress_total.length; i++) {
 				c_ress_count[i] = +substr[i];
 			}
 		}
@@ -387,8 +389,8 @@
 		return true;
 	}
 
-	function saveStatData() {
-
+	function saveStatData()
+	{
 		// save main stuff with stats and and all in localStorage
 		var ikey = 'rxartefakte';
 		var str = '';
@@ -399,7 +401,7 @@
 		// types
 		str+= 'typc:';
 
-		for(var i = 0; i < c_arti_types.length; i++) {
+		for (var i = 0; i < c_arti_types.length; i++) {
 			str+= c_arti_types[i] + '!';
 		}
 
@@ -407,7 +409,7 @@
 
 		str+= 'typaid:';
 
-		for(var i = 0; i < c_arti_types_aid.length; i++) {
+		for (var i = 0; i < c_arti_types_aid.length; i++) {
 			str+= c_arti_types_aid[i] + '!';
 		}
 
@@ -415,7 +417,7 @@
 
 		str+= 'typpg:';
 
-		for(var i = 0; i < c_arti_types_page.length; i++) {
+		for (var i = 0; i < c_arti_types_page.length; i++) {
 			str+= c_arti_types_page[i] + '!';
 		}
 
@@ -428,7 +430,7 @@
 
 		str+= 'sumres:';
 
-		for(var i = 0; i < c_ress_total.length; i++) {
+		for (var i = 0; i < c_ress_total.length; i++) {
 			str+= c_ress_total[i] + '!';
 		}
 
@@ -436,7 +438,7 @@
 
 		str+= 'reshi:';
 
-		for(var i = 0; i < c_ress_hi.length; i++) {
+		for (var i = 0; i < c_ress_hi.length; i++) {
 			str+= c_ress_hi[i] + '!';
 		}
 
@@ -444,7 +446,7 @@
 
 		str+= 'reslo:';
 
-		for(var i = 0; i < c_ress_low.length; i++) {
+		for (var i = 0; i < c_ress_low.length; i++) {
 			str+= c_ress_low[i] + '!';
 		}
 
@@ -452,7 +454,7 @@
 
 		str+= 'reshiaid:';
 
-		for(var i = 0; i < c_ress_hi_aid.length; i++) {
+		for (var i = 0; i < c_ress_hi_aid.length; i++) {
 			str+= c_ress_hi_aid[i] + '!';
 		}
 
@@ -460,7 +462,7 @@
 
 		str+= 'resloaid:';
 
-		for(var i = 0; i < c_ress_low_aid.length; i++) {
+		for (var i = 0; i < c_ress_low_aid.length; i++) {
 			str+= c_ress_low_aid[i] + '!';
 		}
 
@@ -468,7 +470,7 @@
 
 		str+= 'reshipg:';
 
-		for(var i = 0; i < c_ress_hi_page.length; i++) {
+		for (var i = 0; i < c_ress_hi_page.length; i++) {
 			str+= c_ress_hi_page[i] + '!';
 		}
 
@@ -476,7 +478,7 @@
 
 		str+= 'reslopg:';
 
-		for(var i = 0; i < c_ress_low_page.length; i++) {
+		for (var i = 0; i < c_ress_low_page.length; i++) {
 			str+= c_ress_low_page[i] + '!';
 		}
 
@@ -484,7 +486,7 @@
 
 		str+= 'cntres:';
 
-		for(var i = 0; i < c_ress_count.length; i++) {
+		for (var i = 0; i < c_ress_count.length; i++) {
 			str+= c_ress_count[i] + '!';
 		}
 
@@ -495,43 +497,44 @@
 		return 0;
 	}
 
-	function killStatData() {
-
+	function killStatData()
+	{
 		log('cleaning up web storage (stats)');
 		localStorage.removeItem('rxartefakte');
 
 		return 0;
 	}
 
-	function loadArtiData() {
+	function loadArtiData()
+	{
 		// load arti data from storage and save in global structure
 		var loaded = 0;
 		var keys = new Array();
 		var idx = 0;
 
-		for(var thiskey in localStorage) {
-			if((/rxartefakte\d+/).test(thiskey)) {
+		for (var thiskey in localStorage) {
+			if ((/rxartefakte\d+/).test(thiskey)) {
 				keys[idx++] = thiskey;
 			}
 		}
 
 		artis.length = 0;
 
-		if(keys.length === 0) {
+		if (keys.length === 0) {
 			log("no arti data found in web storage");
 			return -1;
 		}
 
 		keys.sort();	// use a special sort function if we get in trouble here
 
-		for(var i = 0; i < keys.length; i++) {
+		for (var i = 0; i < keys.length; i++) {
 			var str = localStorage.getItem(keys[i]).split('!');
 
-			if((!str) || (!(/\d+/).test(str[0]))) {
+			if ((!str) || (!(/\d+/).test(str[0]))) {
 				continue;
 			}
 
-			for(var j = 0; j < str.length; j++) {
+			for (var j = 0; j < str.length; j++) {
 				artis.push(clone(arti_record));
 				artis[loaded].aid = +str[j].match(/a\d+/)[0].slice(1);
 				artis[loaded].type = +str[j].match(/t\d+/)[0].slice(1);
@@ -558,14 +561,14 @@
 
 		killArtiData();
 
-		if(!artis.length) {
+		if (!artis.length) {
 			return -1;
 		}
 
 		var key_lines = new Array(Math.ceil(artis.length / 100));
 		var str = "";
 
-		for(var i = 0; i < artis.length; i++) {
+		for (var i = 0; i < artis.length; i++) {
 			// save as: "a3493t5f1r11v100000,"
 			str +=
 				"a" + artis[i].aid +
@@ -574,7 +577,7 @@
 				"r" + artis[i].ress +
 				"v" + artis[i].val;
 
-			if(!((i+1)%100)) {
+			if (!((i+1)%100)) {
 				key_lines[cid++] = str;
 				str = "";
 			} else {
@@ -585,7 +588,7 @@
 		str = str.replace(/!$/,"");
 		key_lines[cid] = str;
 
-		for(var i = 0; i <= cid; i++) {
+		for (var i = 0; i <= cid; i++) {
 			localStorage.setItem("rxartefakte" + ((cid < 10) ? ("0" + i) : ("" + i)), key_lines[i]);
 		}
 
@@ -594,11 +597,12 @@
 		return 0;
 	}
 
-	function killArtiData() {
+	function killArtiData()
+	{
 		log('cleaning up web storage (artis)');
 
-		for(var thiskey in localStorage) {
-			if((/rxartefakte\d+/).test(thiskey)) {
+		for (var thiskey in localStorage) {
+			if ((/rxartefakte\d+/).test(thiskey)) {
 				localStorage.removeItem(thiskey);
 			}
 		}
@@ -606,12 +610,13 @@
 		return 0;
 	}
 
-	function parseArtis() {
+	function parseArtis()
+	{
 		// parse page, lookup aid and add to array if new
 		var addcounter = 0;
 		var tables = document.getElementsByTagName('table');
 
-		if(tables.length < 4) {
+		if (tables.length < 4) {
 			log('not enough tables, page seems incomplete');
 			return -1;
 		}
@@ -619,14 +624,14 @@
         // a premium account has an extra table for filters, mind you
         var ttable = tables[tables.length - 1];
 
-		for(var i = 1; i < ttable.rows.length; i++) {
+		for (var i = 1; i < ttable.rows.length; i++) {
 			// exclude line with button (1 cell only)
-			if(ttable.rows[i].cells.length != 4) {
+			if (ttable.rows[i].cells.length != 4) {
 				continue;
 			}
 
 			// scan
-			if(!ttable.rows[i].cells[3].firstChild.href) {
+			if (!ttable.rows[i].cells[3].firstChild.href) {
 				log('no aid found');
 				continue;
 			}
@@ -634,7 +639,7 @@
 			// if link exists, get aid from it
 			var aid = +ttable.rows[i].cells[3].firstChild.href.match(/aid=\d+/)[0].match(/\d+/);
 
-			if(aid <= 0) {
+			if (aid <= 0) {
 				log('aid ' + aid + ' is invalid');
 				continue;
 			}
@@ -642,15 +647,15 @@
 			// lookup aid, continue if existing (or overwrite, as debug switch)
 			var idx = -1;
 
-			for(var j = 0; j < artis.length; j++) {
-				if(artis[j].aid === aid) {
+			for (var j = 0; j < artis.length; j++) {
+				if (artis[j].aid === aid) {
 					idx = j;
 					break;
 				}
 			}
 
-			if(idx > -1) {
-				if(!DEBUG_ALWAYS_NEW_AID) continue;
+			if (idx > -1) {
+				if (!DEBUG_ALWAYS_NEW_AID) continue;
 			} else {
 				idx = artis.length;
 				artis.push(clone(arti_record));
@@ -662,7 +667,7 @@
 
 			// frequency
 			var arti_freq = arti_string.match(/\([CURL]\)/);
-			if(arti_freq) {
+			if (arti_freq) {
 				arti_freq = arti_freq[0].replace(/[\(\)]/g, "");
 			}
 
@@ -675,7 +680,7 @@
 			}
 
 			// type
-			if(ttable.rows[i].cells[2].lastChild.tagName === "IMG") {
+			if (ttable.rows[i].cells[2].lastChild.tagName === "IMG") {
 				// resources
 				var rtype = ttable.rows[i].cells[2].lastChild.src.match(/[^\/]+\.gif$/);
 				artis[idx].ress = +rtype[0].match(/\d+/);
@@ -685,8 +690,8 @@
 				// non-ress, analyze string then
 				arti_string = arti_string.replace(/\s*\([\S]*/,"");
 				artis[idx].type = arti_name_list.indexOf("Unbekannt");
-				for(var j = 0; j < arti_name_list.length; j++) {
-					if(arti_string === arti_name_list[j]) {
+				for (var j = 0; j < arti_name_list.length; j++) {
+					if (arti_string === arti_name_list[j]) {
 						artis[idx].type = j;
 						break;
 					}
@@ -699,7 +704,7 @@
 			ttable.rows[i].cells[0].style.color = '#00FFFF';
 		}
 
-		if(addcounter > 0) {
+		if (addcounter > 0) {
 			artis.sort(function(a, b){return (a.aid === b.aid ? 0 : (a.aid < b.aid ? -1 : 1))});
 
 			// user message
@@ -714,7 +719,8 @@
 		return addcounter;
 	}
 
-	function calcStats() {
+	function calcStats()
+	{
 		// calc the stats of our array
 		artis_sum = artis.length;
 
@@ -724,13 +730,13 @@
 		c_freq_r = 0;
 		c_freq_l = 0;
 
-		for(var i = 0; i < arti_name_list.length; i++) {
+		for (var i = 0; i < arti_name_list.length; i++) {
 			c_arti_types[i] = 0;
 			c_arti_types_aid[i] = 0;
 			c_arti_types_page[i] = 0;
 		}
 
-		for(var i = 0; i < ressources.length; i++) {
+		for (var i = 0; i < ressources.length; i++) {
 			c_ress_low[i] = Infinity;
 			c_ress_hi[i] = 0;
 			c_ress_low_aid[i] = 0;
@@ -747,7 +753,7 @@
 		var specialCTaid = 0;
 		var specialCTpage = 0;
 
-		for(var i = 0; i < artis.length; i++) {
+		for (var i = 0; i < artis.length; i++) {
 			// freq
 			switch(artis[i].freq) {
 				case FREQ_0: c_freq_0++; break;
@@ -762,24 +768,24 @@
 			c_arti_types_aid[artis[i].type] = artis[i].aid;
 			c_arti_types_page[artis[i].type] = +i;
 			// exceptions
-			if(!specialBBSaid && artis[i].type == arti_name_list.indexOf("Baubeschleuniger")) {
+			if (!specialBBSaid && artis[i].type == arti_name_list.indexOf("Baubeschleuniger")) {
 				specialBBSaid = artis[i].aid;
 				specialBBSpage = +i;
 			}
-			if(!specialCTaid && artis[i].type == arti_name_list.indexOf("Crew Trainer")) {
+			if (!specialCTaid && artis[i].type == arti_name_list.indexOf("Crew Trainer")) {
 				specialCTaid = artis[i].aid;
 				specialCTpage = +i;
 			}
 			// ress
-			if(artis[i].type === arti_name_list.indexOf("Ressourcen")) {
+			if (artis[i].type === arti_name_list.indexOf("Ressourcen")) {
 				c_ress_total[+artis[i].ress - 1] += +artis[i].val;
 				c_ress_count[+artis[i].ress - 1]++;
-				if(+artis[i].val < c_ress_low[+artis[i].ress - 1]) {
+				if (+artis[i].val < c_ress_low[+artis[i].ress - 1]) {
 					c_ress_low[+artis[i].ress - 1] = +artis[i].val;
 					c_ress_low_aid[+artis[i].ress - 1] = +artis[i].aid;
 					c_ress_low_page[+artis[i].ress - 1] = +i;
 				}
-				if(+artis[i].val > c_ress_hi[+artis[i].ress - 1]) {
+				if (+artis[i].val > c_ress_hi[+artis[i].ress - 1]) {
 					c_ress_hi[artis[i].ress - 1] = +artis[i].val;
 					c_ress_hi_aid[+artis[i].ress - 1] = +artis[i].aid;
 					c_ress_hi_page[+artis[i].ress - 1] = +i;
@@ -793,11 +799,11 @@
 		c_arti_types_aid[arti_name_list.indexOf("Crew Trainer")] = specialCTaid;
 		c_arti_types_page[arti_name_list.indexOf("Crew Trainer")] = specialCTpage;
 
-		for(var i = 0; i < arti_name_list.length; i++) {
+		for (var i = 0; i < arti_name_list.length; i++) {
 			c_arti_types_page[i] = Math.ceil((artis_sum - c_arti_types_page[i]) / 15);
 		}
 
-		for(var i = 0; i < ressources.length; i++) {
+		for (var i = 0; i < ressources.length; i++) {
 			c_ress_low_page[i] = Math.ceil((artis_sum - c_ress_low_page[i]) / 15);
 			c_ress_hi_page[i] = Math.ceil((artis_sum - c_ress_hi_page[i]) / 15);
 		}
@@ -807,8 +813,8 @@
 		return 0;
 	}
 
-	function clickRefreshStats() {
-
+	function clickRefreshStats()
+	{
 		killStatData();
 		loadArtiData();
 		calcStats();
@@ -817,8 +823,8 @@
 		return 0;
 	}
 
-	function clickDeleteAll() {
-
+	function clickDeleteAll()
+	{
 		killArtiData();
 		killStatData();
 		document.location.reload();
@@ -826,11 +832,12 @@
 		return 0;
 	}
 
-	function clickRefreshSamePage() {
+	function clickRefreshSamePage()
+	{
 		// this function is necessary because a hotlink containing a link to the
 		// same page visited before will not load - so we have to make it reload...
 		var page = document.URL.match(/est=\d+/);
-		if(page && (page[0] === this.href.match(/est=\d+/)[0])) {
+		if (page && (page[0] === this.href.match(/est=\d+/)[0])) {
 			document.location.href = this.href;
 			document.location.reload(false);
 		}
@@ -838,8 +845,8 @@
 		return 0;
 	}
 
-	function insertSummary(newartis) {
-
+	function insertSummary(newartis)
+	{
 		loadSettings();
 
 		var tables = document.getElementsByTagName('table');
@@ -853,12 +860,12 @@
 
 		linkline.innerHTML = linkline.innerHTML.replace('unerforschte Artefakte', 'unbekannte Objekte');
 
-		if(SettingsSummaryFirst) {
+		if (SettingsSummaryFirst) {
 			linkline.insertBefore(document.createTextNode(' | '), linkline.firstChild);
 			linkline.insertBefore(sumlink, linkline.firstChild);
 		} else {
 			// handle that ridicolous break
-			if(linkline.lastChild.tagName === 'BR') {
+			if (linkline.lastChild.tagName === 'BR') {
 				linkline.replaceChild(document.createTextNode(' | '), linkline.lastChild);
 			} else {
 				linkline.appendChild(document.createTextNode(' | '));
@@ -868,23 +875,24 @@
 		}
 
 		// first frame load only, and only if no new artis are found
-		if(SettingsAutoLoad && (/artefakte\.php$/).test(document.URL) && (!newartis)) {
+		if (SettingsAutoLoad && (/artefakte\.php$/).test(document.URL) && (!newartis)) {
 			generateSummaryTables();
 		}
 
 		return 0;
 	}
 
-	function getRxDomain() {
-		if((/\/\/\d+\.\d+\.\d+\.\d+\//).test(document.URL)) {	// IP
+	function getRxDomain()
+	{
+		if ((/\/\/\d+\.\d+\.\d+\.\d+\//).test(document.URL)) {	// IP
 			return (document.URL.match(/[\w:\.\/]+\/rx\//)[0]);
 		} else {	// revorix.info
 			return (document.URL.match(/[\w:\.\/]+revorix\.info\//)[0]);
 		}
 	}
 
-	function frameTable(t) {
-
+	function frameTable(t)
+	{
 		var maindiv = document.createElement('div');
 		maindiv.className = 'wrp ce';
 
@@ -924,8 +932,8 @@
 		return maindiv;
 	}
 
-	function generateSummaryTables() {
-
+	function generateSummaryTables()
+	{
 		var tables = document.getElementsByTagName('table');
 		var known_artis = tables[1].rows[1].cells[0].innerHTML.match(/\berforscht[^|]*\(\d+\)/);
 		var display_links = (!!known_artis) && (+(known_artis[0].match(/\d+/)[0]) <= artis_sum);
@@ -933,13 +941,13 @@
 		// exchange links and bold texts to mark active page
 		var thispagelink = document.getElementById('artisummary');
 		var otherlinks = thispagelink.parentNode.getElementsByTagName('b');
-		for(var i in otherlinks) {
-			if((/^erforscht/).test(otherlinks[i].textContent)) {
+		for (var i in otherlinks) {
+			if ((/^erforscht/).test(otherlinks[i].textContent)) {
 				var relink = document.createElement('a');
 				relink.href = '?est=1';
 				relink.appendChild(document.createTextNode(otherlinks[i].textContent));
 				thispagelink.parentNode.replaceChild(relink, otherlinks[i]);
-			} else if((/^unerforscht/).test(otherlinks[i].textContent)) {
+			} else if ((/^unerforscht/).test(otherlinks[i].textContent)) {
 				var relink = document.createElement('a');
 				relink.href = '?ust=1';
 				relink.appendChild(document.createTextNode(otherlinks[i].textContent));
@@ -948,7 +956,7 @@
 		}
 
 		tables[1].rows[2].cells[1].innerHTML = '';
-		if(!display_links) {
+		if (!display_links) {
 			var spn = document.createElement('span');
 			spn.style.color = '#FFFF00';
 			spn.appendChild(document.createTextNode('Hinweis: Indizierung unvollständig, Hotlinks nicht verfügbar'));
@@ -1001,7 +1009,7 @@
 		var statsvalues = new Array(c_freq_0, c_freq_c, c_freq_u,
 			c_freq_r, c_freq_l, artis_sum);
 
-		for(i = 0; i < 6; i++) {
+		for (i = 0; i < 6; i++) {
 			var tcell = document.createElement('td');
 			var vcell = document.createElement('td');
 
@@ -1035,7 +1043,7 @@
 		hcell1.style.width = "30%";
 		hcell2.style.width = "20%";
 		hcell2.style.textAlign = 'center';
-		if(display_links) {
+		if (display_links) {
 			hcell2.colSpan = 2;
 		}
 		hcell1.appendChild(document.createTextNode('Art'));
@@ -1057,29 +1065,29 @@
 
 		var currow = 0;
 
-		for(var i = 0; i < c_arti_types.length; i++) {
+		for (var i = 0; i < c_arti_types.length; i++) {
 
 			var r = ((currow < rowcount) ? (document.createElement('tr')) : (t.rows[currow-rowcount+1]));
 			var c1 = document.createElement('td');
 			var c2 = document.createElement('td');
 
 			// old deprecated stuff
-			if(/Regenerative Naniten Typ [I]+/.test(arti_name_list[i])) {
-				if(c_arti_types[i] === 0) {
+			if (/Regenerative Naniten Typ [I]+/.test(arti_name_list[i])) {
+				if (c_arti_types[i] === 0) {
 					continue;
 				}
 				c1.className = 'i';
 			}
 
-			if(/Optimierungsbeschleuniger/.test(arti_name_list[i])) {
-				if(c_arti_types[i] === 0) {
+			if (/Optimierungsbeschleuniger/.test(arti_name_list[i])) {
+				if (c_arti_types[i] === 0) {
 					continue;
 				}
 				c1.className = 'i';
 			}
 
-			if(arti_name_list[i] === 'Unbekannt') {
-				if(c_arti_types[i] === 0) {
+			if (arti_name_list[i] === 'Unbekannt') {
+				if (c_arti_types[i] === 0) {
 					continue;
 				}
 				c1.style.color = '#FF8000';
@@ -1090,9 +1098,9 @@
 			r.appendChild(c1);
 			r.appendChild(c2);
 
-			if(display_links) {
+			if (display_links) {
 				var c3 = document.createElement('td');
-				if((c_arti_types_aid[i] > 0) && (i != arti_name_list.indexOf('Ressourcen'))) {
+				if ((c_arti_types_aid[i] > 0) && (i != arti_name_list.indexOf('Ressourcen'))) {
 					var link3 = document.createElement('a');
 					link3.appendChild(document.createTextNode(LINK_TEXT));
 					link3.href = getRxDomain() + 'php/artefakte.php?est=' + c_arti_types_page[i] + '#' + c_arti_types_aid[i];
@@ -1104,7 +1112,7 @@
 				r.appendChild(c3);
 			}
 
-			if(currow < rowcount) {
+			if (currow < rowcount) {
 				t.appendChild(r);
 			}
 
@@ -1113,14 +1121,14 @@
 
 		// double boundary in the middle
 
-		for(var i = 0; i < t.rows.length; i++) {
-			if(t.rows[i].cells.length == 6) {
+		for (var i = 0; i < t.rows.length; i++) {
+			if (t.rows[i].cells.length == 6) {
 				t.rows[i].cells[3].style.borderStyle = 'solid solid solid double';
 				t.rows[i].cells[3].style.borderLeftWidth = '3px';
 				t.rows[i].cells[2].style.borderRightWidth = '0px';
 				t.rows[i].cells[2].style.width = '10%';
 				t.rows[i].cells[5].style.width = '10%';
-			} else if(t.rows[i].cells.length == 4) {
+			} else if (t.rows[i].cells.length == 4) {
 				t.rows[i].cells[2].style.borderStyle = 'solid solid solid double';
 				t.rows[i].cells[2].style.borderLeftWidth = '3px';
 				t.rows[i].cells[1].style.borderRightWidth = '0px';
@@ -1138,7 +1146,7 @@
 		var ressheader = new Array('Ressourcen', 'Anzahl', 'Summe', 'Größtes Artefakt', 'Kleinstes Artefakt');
 		var taligns = new Array('10%', '15%', '25%', '25%', '25%');
 
-		for(i = 0; i < 5; i++) {
+		for (i = 0; i < 5; i++) {
 			var rhcell = document.createElement('td');
 			rhcell.className = 'nfo';
 			rhcell.style.width = taligns[i];
@@ -1147,16 +1155,16 @@
 			resshead.appendChild(rhcell);
 		}
 
-		if(display_links) {
+		if (display_links) {
 			resshead.cells[3].colSpan = 2;
 			resshead.cells[4].colSpan = 2;
 		}
 
 		r.appendChild(resshead);
 
-		for(var i = 0; i < c_ress_total.length; i++) {
+		for (var i = 0; i < c_ress_total.length; i++) {
 
-			if(!c_ress_count[i]) {
+			if (!c_ress_count[i]) {
 				continue;
 			}
 
@@ -1201,7 +1209,7 @@
 			c4l.appendChild(link4);
 			c5l.appendChild(link5);
 
-			if(display_links) {
+			if (display_links) {
 				rw.insertBefore(c4l, c5);
 				rw.appendChild(c5l);
 			}
@@ -1212,8 +1220,8 @@
 
         var frtdivs = document.getElementsByClassName('wrp ce');
 
-        for(var i = frtdivs.length - 1; i > 0; i--) {
-            if(frtdivs[i].nextSibling &&
+        for (var i = frtdivs.length - 1; i > 0; i--) {
+            if (frtdivs[i].nextSibling &&
                 (frtdivs[i].nextSibling.tagName == 'BR'))
             {
                 frtdivs[i].parentNode.removeChild(frtdivs[i].nextSibling);
@@ -1232,10 +1240,10 @@
 		return 0;
 	}
 
-	function removeArti(said) {
-
-		for(var i = 0; i < artis.length; i++) {
-			if(artis[i].aid === said) {
+	function removeArti(said)
+	{
+		for (var i = 0; i < artis.length; i++) {
+			if (artis[i].aid === said) {
 				artis.splice(i, 1);
 				log('arti ' + said + ' has been removed');
 				return 0;
@@ -1245,14 +1253,14 @@
 		return -1;
 	}
 
-	function removeUselessArtis() {
-
+	function removeUselessArtis()
+	{
 		var i = artis.length;
 		var cnt = 0;
 
-		while(i > 0) {
+		while (i > 0) {
 			i--;
-			if(artis[i].type === arti_name_list.indexOf('Schrott')) {
+			if (artis[i].type === arti_name_list.indexOf('Schrott')) {
 				log('arti ' + artis[i].aid + ' has been scrapped');
 				artis.splice(i, 1);
 				cnt++;
@@ -1262,7 +1270,8 @@
 		return cnt;
 	}
 
-	function killOrphans() {
+	function killOrphans()
+	{
 		// if we have too much artis, check the current page. Since artis
 		// are sorted by aid (both rx and artis array), the aid chain on
 		// the page should be found back at the array. Any extra aids in
@@ -1273,41 +1282,41 @@
 		var idx = -1;
 		var touched = false;
 
-		if(tables.length < 4) {
+		if (tables.length < 4) {
 			return -1;
 		}
 
         var ttable = tables[tables.length - 1];
 
-		for(var i = 1; i < ttable.rows.length; i++) {
+		for (var i = 1; i < ttable.rows.length; i++) {
 			// exclude line with button (1 cell only)
-			if(ttable.rows[i].cells.length != 4) {
+			if (ttable.rows[i].cells.length != 4) {
 				continue;
 			}
 
 			// scan
-			if(!ttable.rows[i].cells[3].firstChild.href) {
+			if (!ttable.rows[i].cells[3].firstChild.href) {
 				log('aid missing in chain, aborting orphan search');
 				return -1;
 			}
 
 			var aid = +ttable.rows[i].cells[3].firstChild.href.match(/aid=\d+/)[0].match(/\d+/);
 
-			if(idx == -1) {
+			if (idx == -1) {
 				// find start of chain
-				for(var j = artis.length - 1; j >= 0; j--) {
-					if(artis[j].aid === aid) {
+				for (var j = artis.length - 1; j >= 0; j--) {
+					if (artis[j].aid === aid) {
 						idx = j;
 						break;
 					}
 				}
 
-				if(idx == -1) {
+				if (idx == -1) {
 					log('start of chain not found, first arti seems to be new');
 					return 1;
 				}
 
-				if((idx > (artis.length - 15)) && (idx < (artis.length - 1))) {
+				if ((idx > (artis.length - 15)) && (idx < (artis.length - 1))) {
 					// assume we are on page 1, with lots of orphans left
 					artis.splice(idx + 1, artis.length - idx);
 					log('removed ' + (artis.length-idx) + ' orphan(s) from end');
@@ -1319,16 +1328,16 @@
 
 			idx--;
 
-			if(aid > artis[idx].aid) {
+			if (aid > artis[idx].aid) {
 				// this means a new arti has popped up we do not know yet
 				log('new arti found');
 				return 1;
 			}
 
-			if(aid < artis[idx].aid) {
+			if (aid < artis[idx].aid) {
 				// remove one or more orphans, until we hit a recognised or an unknown arti
 				var st = idx;
-				while((aid < artis[idx].aid) && (idx >= 0)) {
+				while ((aid < artis[idx].aid) && (idx >= 0)) {
 					idx--;
 				}
 				artis.splice(idx+1, st-idx);
@@ -1341,21 +1350,20 @@
 		return (touched ? 2 : 0);
 	}
 
-	function highlightArti(haid) {
-
+	function highlightArti(haid)
+	{
 		var tables = document.getElementsByTagName('table');
-
         var ttable = tables[tables.length - 1];
 
-		for(var i = 1; i < ttable.rows.length; i++) {
+		for (var i = 1; i < ttable.rows.length; i++) {
 
-			if(!ttable.rows[i].cells[3].firstChild.href) {
+			if (!ttable.rows[i].cells[3].firstChild.href) {
 				continue;
 			}
 
 			var thisaid = +ttable.rows[i].cells[3].firstChild.href.match(/aid=\d+/)[0].match(/\d+/);
 
-			if(thisaid === haid) {
+			if (thisaid === haid) {
 
 				var r = document.createElement('tr');
 				var rc = document.createElement('td');
@@ -1387,16 +1395,17 @@
 		return 0;
 	}
 
-	function init_artis() {
+	function init_artis()
+	{
 		// load cookie, check artis, save cookie if necessary, generate overview
 
 		var data_loaded = -1;
 		var tables = document.getElementsByTagName('table');
 
-		if((/setup\.php$/).test(document.URL)) {
+		if ((/setup\.php$/).test(document.URL)) {
 			insertSettings();
 
-		} else if((/artefakte\.php\S*asr=\d+$/).test(document.URL)) {
+		} else if ((/artefakte\.php\S*asr=\d+$/).test(document.URL)) {
 			// scrapping
 			loadArtiData();
 			var aid = +document.URL.match(/\d+$/)[0];
@@ -1405,10 +1414,10 @@
 			calcStats();
 			insertSummary();
 
-		} else if((/artefakte\.php\S*kaa=\d+$/).test(document.URL)) {
+		} else if ((/artefakte\.php\S*kaa=\d+$/).test(document.URL)) {
 			// multi-scrapping
 			loadArtiData();
-			if(removeUselessArtis() > 0) {
+			if (removeUselessArtis() > 0) {
 				saveArtiData();
 				calcStats();
 			} else {
@@ -1416,7 +1425,7 @@
 			}
 			insertSummary();
 
-		} else if((/artefakte\.php\S*agvg=\d+$/).test(document.URL) &&
+		} else if ((/artefakte\.php\S*agvg=\d+$/).test(document.URL) &&
 			(/artefakte\.php\S*agv=\d+$/).test(document.referrer) &&
 			tables.length > 0)
 		{
@@ -1428,12 +1437,12 @@
 			calcStats();
 			insertSummary();
 
-		} else if((/artefakte_use\.php\S*aid=\d+/).test(document.URL)) {
+		} else if ((/artefakte_use\.php\S*aid=\d+/).test(document.URL)) {
 			// usage
 			// Ress: loads page with one table containing 'Ressourcen erhalten' in row 1
 			// in general: failure has a bold 'Achtung' with extra text and no tables on a plain body
 			// probably risky, nevertheless convenient: exclude failure instead of inclusion of success
-			if(!((document.getElementsByTagName('b').length > 0) &&
+			if (!((document.getElementsByTagName('b').length > 0) &&
 				(document.getElementsByTagName('table').length === 0) &&
 				(document.getElementsByTagName('b')[0].textContent === 'Achtung')))
 			{
@@ -1444,10 +1453,10 @@
 				calcStats();
 			}
 
-		} else if(((/artefakte\.php$|artefakte\S*est=\d+$|artefakte\S*[e|u]st=\d+\S*faa=\d+$/).test(document.URL)) && (tables != null)) {
+		} else if (((/artefakte\.php$|artefakte\S*est=\d+$|artefakte\S*[e|u]st=\d+\S*faa=\d+$/).test(document.URL)) && (tables != null)) {
 			// standard page without extra parameters ('erforscht' only)
 
-			if(!localStorage) {
+			if (!localStorage) {
 				// user message
 				var spn = document.createElement('span');
 				spn.style.color = '#FFFF00';
@@ -1459,31 +1468,31 @@
 			}
 
 			// only load main stats here (unless this fails)
-			if(!loadStatData()) {
+			if (!loadStatData()) {
 				data_loaded = loadArtiData();
 				calcStats();
 			}
 			log(artis_sum + ' artis stored');
 
 			// load array data if changed
-			if(tables.length > 1) {
+			if (tables.length > 1) {
 				var user_artis = +tables[1].rows[1].cells[0].firstChild.textContent.match(/\d+/);
 
 				var newartis = 0;
 
-				if(user_artis != artis_sum) {
+				if (user_artis != artis_sum) {
 					// show a hint here
 					// distinguish between more saved than existent and less than existent
 					log('mismatch: ' + user_artis + ' detected, but ' + artis_sum + ' found in storage');
-					if(data_loaded < 0) {
+					if (data_loaded < 0) {
 						loadArtiData();
 					}
 
-					if(user_artis < artis_sum) {
+					if (user_artis < artis_sum) {
 						log('it seems orphans exist');
 						var youkill = killOrphans();
-						if(youkill > 0) {
-							if(youkill === 1) {
+						if (youkill > 0) {
+							if (youkill === 1) {
 								newartis = parseArtis();
 								killOrphans();
 							}
@@ -1494,7 +1503,7 @@
 						newartis = parseArtis();
 					}
 
-					if(newartis > 0) {
+					if (newartis > 0) {
 						log(newartis + ' new artifacts found on this page');
 						saveArtiData();
 						calcStats();
@@ -1506,18 +1515,18 @@
 				insertSummary(newartis);
 			}
 
-		} else if(((/artefakte\S*ust=(\d+|\d+\&afr\=\d+)$/).test(document.URL)) && (tables != null)) {
-			if(loadStatData()) {
+		} else if (((/artefakte\S*ust=(\d+|\d+\&afr\=\d+)$/).test(document.URL)) && (tables != null)) {
+			if (loadStatData()) {
 				insertSummary();
 			}
 
-		} else if(((/artefakte\S*est=\d+\#\d+$/).test(document.URL)) && (tables != null)) {
+		} else if (((/artefakte\S*est=\d+\#\d+$/).test(document.URL)) && (tables != null)) {
 			var haid = +document.URL.match(/\d+$/)[0];
-			if(!highlightArti(haid)) {
+			if (!highlightArti(haid)) {
 				log('arti ' + haid + ' not found on this page');
 			}
 
-			if(loadStatData()) {
+			if (loadStatData()) {
 				insertSummary();
 			}
 		}
@@ -1529,7 +1538,8 @@
 
 	// object and array cloning function, see
 	// http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
-	function clone(sth) {
+	function clone(sth)
+	{
 		// bool, string, number, and null or undefined
 		if (null == sth || "object" != typeof sth) return sth;
 
@@ -1563,7 +1573,7 @@
 
 	function log(str)
 	{
-		if(DEBUG_VERBOSE) {
+		if (DEBUG_VERBOSE) {
 			console.log('rxartis: ' + str);
 		}
 	}
