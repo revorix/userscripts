@@ -12,6 +12,8 @@
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/setup\.php/
 // ==/UserScript==
 
+/* jshint devel: true */
+
 (function()	/* prevents namespace pollution. Help the environment! :) */
 {
 	"use strict";
@@ -830,8 +832,8 @@
 	function clickRefreshSamePage()
 	{
 		var page = document.URL.match(/est=\d+/);
-		if (page && (page[0] === this.href.match(/est=\d+/)[0])) {
-			document.location.href = this.href;
+		if (page) {
+			document.location.href = page[0];
 			document.location.reload(false);
 		}
 
