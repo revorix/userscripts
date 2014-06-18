@@ -810,7 +810,7 @@
 		calcStats();
 		document.location.reload();
 
-		return 0;
+		return false;
 	}
 
 	function clickDeleteAll()
@@ -819,7 +819,7 @@
 		killStatData();
 		document.location.reload();
 
-		return 0;
+		return false;
 	}
 
 	/*
@@ -846,7 +846,7 @@
 		var linkline = tables[1].rows[1].cells[0];
 
 		var sumlink = document.createElement('a');
-		sumlink.href = 'javascript:void(0);';
+		sumlink.href = '#';
 		sumlink.id = 'artisummary';
 		sumlink.appendChild(document.createTextNode(SUMMARY_TEXT));
 		sumlink.addEventListener('click', generateSummaryTables, false);
@@ -963,14 +963,14 @@
 		var rightthing = tables[1].rows[2].cells[2];
 
 		var refreshlink = document.createElement('a');
-		refreshlink.href = 'javascript:void(0);';
+		refreshlink.href = '#';
 		refreshlink.id = 'artirefreshstats';
 		refreshlink.appendChild(document.createTextNode(REFRESH_TEXT.replace(/\s/g, '\u00A0')));
 		refreshlink.addEventListener('click', clickRefreshStats, false);
 		leftthing.replaceChild(refreshlink, leftthing.firstChild);
 
 		var deletelink = document.createElement('a');
-		deletelink.href = 'javascript:void(0);';
+		deletelink.href = '#';
 		deletelink.id = 'artideleteall';
 		deletelink.appendChild(document.createTextNode(DELETEALL_TEXT.replace(/\s/g, '\u00A0')));
 		deletelink.addEventListener('click', clickDeleteAll, false);
@@ -1230,7 +1230,7 @@
 		par.appendChild(document.createElement('br'));
 		par.appendChild(frameTable(rt));
 
-		return 0;
+		return false;
 	}
 
 	function removeArti(said)
