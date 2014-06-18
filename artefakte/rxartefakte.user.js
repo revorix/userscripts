@@ -12,12 +12,9 @@
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/setup\.php/
 // ==/UserScript==
 
-"use strict";
-
 (function()	/* prevents namespace pollution. Help the environment! :) */
 {
-
-	var ARTIS_PER_PAGE = 15;
+	"use strict";
 
 	var SUMMARY_TEXT = 'Übersicht';
 	var DELETEALL_TEXT = 'Alles löschen';
@@ -77,9 +74,9 @@
 		freq: 0,
 		ress: 0,
 		val: 0,
-	}
+	};
 
-	var artis = new Array();
+	var artis = [];
 
 	/* stats */
 	var artis_sum;
@@ -118,16 +115,16 @@
 		SettingsSummaryFirst = document.getElementById('rorderLeft').checked ? true : false;
 		SettingsAutoLoad = document.getElementById('rautoload').checked ? true : false;
 
-		var str = 'rxuscriptartefakte='
-			+ 'sumfirst:' + (SettingsSummaryFirst ? '1' : '0') + '!'
-			+ 'autoload:' + (SettingsAutoLoad ? '1' : '0')
-			+ ';';
+		var s = 'rxuscriptartefakte=' +
+			'sumfirst:' + (SettingsSummaryFirst ? '1' : '0') + '!' +
+			'autoload:' + (SettingsAutoLoad ? '1' : '0') +
+			';';
 
 		var expiredate = new Date();
 		/* save cookie for a year */
 		expiredate.setTime(expiredate.getTime() + (365 * 24 * 60 * 60 * 1000));
 
-		document.cookie =  str + ' expires=' + expiredate.toGMTString() + '; path=/';
+		document.cookie = s + ' expires=' + expiredate.toGMTString() + '; path=/';
 
 		/* show this to user */
 		var spn = document.createElement('span');
@@ -252,6 +249,7 @@
 	function loadStatData()
 	{
 		var str = localStorage.getItem('rxartefakte');
+		var i;
 
 		if (!str) {
 			log("main data 'rxartefakte' not found in web storage");
@@ -260,13 +258,13 @@
 
 		artis_sum = 0;
 
-		for (var i = 0; i < arti_name_list.length; i++) {
+		for (i = 0; i < arti_name_list.length; i++) {
 			c_arti_types[i] = 0;
 			c_arti_types_aid[i] = 0;
 			c_arti_types_page[i] = 0;
 		}
 
-		for (var i = 0; i < ressources.length; i++) {
+		for (i = 0; i < ressources.length; i++) {
 			c_ress_low[i] = 0;
 			c_ress_hi[i] = 0;
 			c_ress_low_aid[i] = 0;
@@ -279,33 +277,29 @@
 
 		/* artis_sum */
 		var substr = str.match(/sum:[^,;]+/);
-		if (substr) {
+		if (substr)
 			artis_sum = +substr[0].match(/\d+/);
-		}
 
 		/* types */
 		substr = str.match(/typc:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_arti_types.length; i++) {
+			for (i = 0; i < c_arti_types.length; i++)
 				c_arti_types[i] = +substr[i];
-			}
 		}
 
 		substr = str.match(/typaid:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_arti_types.length; i++) {
+			for (i = 0; i < c_arti_types.length; i++)
 				c_arti_types_aid[i] = +substr[i];
-			}
 		}
 
 		substr = str.match(/typpg:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_arti_types.length; i++) {
+			for (i = 0; i < c_arti_types.length; i++)
 				c_arti_types_page[i] = +substr[i];
-			}
 		}
 
 		/* freq */
@@ -323,7 +317,7 @@
 		substr = str.match(/sumres:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_ress_total.length; i++) {
+			for (i = 0; i < c_ress_total.length; i++) {
 				c_ress_total[i] = +substr[i];
 			}
 		}
@@ -331,7 +325,7 @@
 		substr = str.match(/reshi:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_ress_hi.length; i++) {
+			for (i = 0; i < c_ress_hi.length; i++) {
 				c_ress_hi[i] = +substr[i];
 			}
 		}
@@ -339,7 +333,7 @@
 		substr = str.match(/reslo:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+|Infinity/g);
-			for (var i = 0; i < c_ress_low.length; i++) {
+			for (i = 0; i < c_ress_low.length; i++) {
 				c_ress_low[i] = +substr[i];
 			}
 		}
@@ -347,7 +341,7 @@
 		substr = str.match(/reshiaid:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_ress_hi_aid.length; i++) {
+			for (i = 0; i < c_ress_hi_aid.length; i++) {
 				c_ress_hi_aid[i] = +substr[i];
 			}
 		}
@@ -355,7 +349,7 @@
 		substr = str.match(/resloaid:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_ress_low_aid.length; i++) {
+			for (i = 0; i < c_ress_low_aid.length; i++) {
 				c_ress_low_aid[i] = +substr[i];
 			}
 		}
@@ -363,7 +357,7 @@
 		substr = str.match(/reshipg:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_ress_hi_aid.length; i++) {
+			for (i = 0; i < c_ress_hi_aid.length; i++) {
 				c_ress_hi_page[i] = +substr[i];
 			}
 		}
@@ -371,7 +365,7 @@
 		substr = str.match(/reslopg:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_ress_low_aid.length; i++) {
+			for (i = 0; i < c_ress_low_aid.length; i++) {
 				c_ress_low_page[i] = +substr[i];
 			}
 		}
@@ -379,7 +373,7 @@
 		substr = str.match(/cntres:[^,;]+/);
 		if (substr) {
 			substr = substr[0].match(/\d+/g);
-			for (var i = 0; i < c_ress_total.length; i++) {
+			for (i = 0; i < c_ress_total.length; i++) {
 				c_ress_count[i] = +substr[i];
 			}
 		}
@@ -392,31 +386,32 @@
 	{
 		var ikey = 'rxartefakte';
 		var str = '';
+		var i;
 
 		/* artis_sum */
 		str += 'sum:' + artis_sum + ',';
 
 		/* types */
-		str+= 'typc:';
+		str += 'typc:';
 
-		for (var i = 0; i < c_arti_types.length; i++) {
-			str+= c_arti_types[i] + '!';
+		for (i = 0; i < c_arti_types.length; i++) {
+			str += c_arti_types[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
 		str+= 'typaid:';
 
-		for (var i = 0; i < c_arti_types_aid.length; i++) {
-			str+= c_arti_types_aid[i] + '!';
+		for (i = 0; i < c_arti_types_aid.length; i++) {
+			str += c_arti_types_aid[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'typpg:';
+		str += 'typpg:';
 
-		for (var i = 0; i < c_arti_types_page.length; i++) {
-			str+= c_arti_types_page[i] + '!';
+		for (i = 0; i < c_arti_types_page.length; i++) {
+			str += c_arti_types_page[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
@@ -426,66 +421,66 @@
 
 		/* ress */
 
-		str+= 'sumres:';
+		str += 'sumres:';
 
-		for (var i = 0; i < c_ress_total.length; i++) {
-			str+= c_ress_total[i] + '!';
+		for (i = 0; i < c_ress_total.length; i++) {
+			str += c_ress_total[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'reshi:';
+		str += 'reshi:';
 
-		for (var i = 0; i < c_ress_hi.length; i++) {
-			str+= c_ress_hi[i] + '!';
+		for (i = 0; i < c_ress_hi.length; i++) {
+			str += c_ress_hi[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'reslo:';
+		str += 'reslo:';
 
-		for (var i = 0; i < c_ress_low.length; i++) {
-			str+= c_ress_low[i] + '!';
+		for (i = 0; i < c_ress_low.length; i++) {
+			str += c_ress_low[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'reshiaid:';
+		str += 'reshiaid:';
 
-		for (var i = 0; i < c_ress_hi_aid.length; i++) {
-			str+= c_ress_hi_aid[i] + '!';
+		for (i = 0; i < c_ress_hi_aid.length; i++) {
+			str += c_ress_hi_aid[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'resloaid:';
+		str += 'resloaid:';
 
-		for (var i = 0; i < c_ress_low_aid.length; i++) {
-			str+= c_ress_low_aid[i] + '!';
+		for (i = 0; i < c_ress_low_aid.length; i++) {
+			str += c_ress_low_aid[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'reshipg:';
+		str += 'reshipg:';
 
-		for (var i = 0; i < c_ress_hi_page.length; i++) {
-			str+= c_ress_hi_page[i] + '!';
+		for (i = 0; i < c_ress_hi_page.length; i++) {
+			str += c_ress_hi_page[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'reslopg:';
+		str += 'reslopg:';
 
-		for (var i = 0; i < c_ress_low_page.length; i++) {
-			str+= c_ress_low_page[i] + '!';
+		for (i = 0; i < c_ress_low_page.length; i++) {
+			str += c_ress_low_page[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ',');
 
-		str+= 'cntres:';
+		str += 'cntres:';
 
-		for (var i = 0; i < c_ress_count.length; i++) {
-			str+= c_ress_count[i] + '!';
+		for (i = 0; i < c_ress_count.length; i++) {
+			str += c_ress_count[i] + '!';
 		}
 
 		str = str.replace(/\!$/, ';');
@@ -507,7 +502,7 @@
 	function loadArtiData()
 	{
 		var loaded = 0;
-		var keys = new Array();
+		var keys = [];
 		var idx = 0;
 
 		for (var thiskey in localStorage) {
@@ -553,6 +548,7 @@
 	{
 		/* use 100 artis per key entry to limit value to a sane size */
 		var cid = 0;
+		var i;
 
 		log('saving ' + artis.length + ' artis...');
 
@@ -565,7 +561,7 @@
 		var key_lines = new Array(Math.ceil(artis.length / 100));
 		var str = "";
 
-		for (var i = 0; i < artis.length; i++) {
+		for (i = 0; i < artis.length; i++) {
 			/* save as: "a3493t5f1r11v100000," */
 			str +=
 				"a" + artis[i].aid +
@@ -574,7 +570,7 @@
 				"r" + artis[i].ress +
 				"v" + artis[i].val;
 
-			if (!((i+1)%100)) {
+			if ((i + 1) % 100 === 0) {
 				key_lines[cid++] = str;
 				str = "";
 			} else {
@@ -585,11 +581,10 @@
 		str = str.replace(/!$/,"");
 		key_lines[cid] = str;
 
-		for (var i = 0; i <= cid; i++) {
+		for (i = 0; i <= cid; i++)
 			localStorage.setItem("rxartefakte" + ((cid < 10) ? ("0" + i) : ("" + i)), key_lines[i]);
-		}
 
-		log("saved " + ++cid + " keys in web storage");
+		log("saved " + (cid + 1) + " keys in web storage");
 
 		return 0;
 	}
@@ -599,12 +594,9 @@
 		log('cleaning up web storage (artis)');
 
 		for (var thiskey in localStorage) {
-			if ((/rxartefakte\d+/).test(thiskey)) {
+			if ((/rxartefakte\d+/).test(thiskey))
 				localStorage.removeItem(thiskey);
-			}
 		}
-
-		return 0;
 	}
 
 	/* parse page, lookup aid and add to array if new */
@@ -618,8 +610,9 @@
 			return -1;
 		}
 
-        /* a premium account has an extra table for filters, mind you */
-        var ttable = tables[tables.length - 1];
+		/* a premium account has an extra table for filters, mind you */
+		var ttable = tables[tables.length - 1];
+		var j;
 
 		for (var i = 1; i < ttable.rows.length; i++) {
 			/* exclude line with button (1 cell only) */
@@ -644,7 +637,7 @@
 			/* lookup aid, continue if existing (or overwrite, as debug switch) */
 			var idx = -1;
 
-			for (var j = 0; j < artis.length; j++) {
+			for (j = 0; j < artis.length; j++) {
 				if (artis[j].aid === aid) {
 					idx = j;
 					break;
@@ -685,7 +678,7 @@
 				/* non-ress, analyze string then */
 				arti_string = arti_string.replace(/\s*\([\S]*/,"");
 				artis[idx].type = arti_name_list.indexOf("Unbekannt");
-				for (var j = 0; j < arti_name_list.length; j++) {
+				for (j = 0; j < arti_name_list.length; j++) {
 					if (arti_string === arti_name_list[j]) {
 						artis[idx].type = j;
 						break;
@@ -700,14 +693,14 @@
 		}
 
 		if (addcounter > 0) {
-			artis.sort(function(a, b){return (a.aid === b.aid ? 0 : (a.aid < b.aid ? -1 : 1))});
+			artis.sort(function(a, b){ return (a.aid === b.aid ? 0 : (a.aid < b.aid ? -1 : 1)); });
 
 			/* user message */
 			var spn = document.createElement('span');
 			spn.style.color = '#00FFFF';
-			spn.appendChild(document.createTextNode(' ' + addcounter
-				+ ((addcounter == 1) ? ' neues Artefakt' : ' neue Artefakte')
-				+ ' indiziert!'));
+			spn.appendChild(document.createTextNode(' ' + addcounter +
+				((addcounter == 1) ? ' neues Artefakt' : ' neue Artefakte') +
+				' indiziert!'));
 			tables[0].rows[1].cells[0].appendChild(spn);
 		}
 
@@ -717,6 +710,8 @@
 	/* calc the stats of our array */
 	function calcStats()
 	{
+		var i;
+
 		artis_sum = artis.length;
 
 		c_freq_0 = 0;
@@ -725,13 +720,13 @@
 		c_freq_r = 0;
 		c_freq_l = 0;
 
-		for (var i = 0; i < arti_name_list.length; i++) {
+		for (i = 0; i < arti_name_list.length; i++) {
 			c_arti_types[i] = 0;
 			c_arti_types_aid[i] = 0;
 			c_arti_types_page[i] = 0;
 		}
 
-		for (var i = 0; i < ressources.length; i++) {
+		for (i = 0; i < ressources.length; i++) {
 			c_ress_low[i] = Infinity;
 			c_ress_hi[i] = 0;
 			c_ress_low_aid[i] = 0;
@@ -748,7 +743,7 @@
 		var specialCTaid = 0;
 		var specialCTpage = 0;
 
-		for (var i = 0; i < artis.length; i++) {
+		for (i = 0; i < artis.length; i++) {
 			/* freq */
 			switch(artis[i].freq) {
 				case FREQ_0: c_freq_0++; break;
@@ -794,11 +789,11 @@
 		c_arti_types_aid[arti_name_list.indexOf("Crew Trainer")] = specialCTaid;
 		c_arti_types_page[arti_name_list.indexOf("Crew Trainer")] = specialCTpage;
 
-		for (var i = 0; i < arti_name_list.length; i++) {
+		for (i = 0; i < arti_name_list.length; i++) {
 			c_arti_types_page[i] = Math.ceil((artis_sum - c_arti_types_page[i]) / 15);
 		}
 
-		for (var i = 0; i < ressources.length; i++) {
+		for (i = 0; i < ressources.length; i++) {
 			c_ress_low_page[i] = Math.ceil((artis_sum - c_ress_low_page[i]) / 15);
 			c_ress_hi_page[i] = Math.ceil((artis_sum - c_ress_hi_page[i]) / 15);
 		}
@@ -935,18 +930,20 @@
 		var tables = document.getElementsByTagName('table');
 		var known_artis = tables[1].rows[1].cells[0].innerHTML.match(/\berforscht[^|]*\(\d+\)/);
 		var display_links = (!!known_artis) && (+(known_artis[0].match(/\d+/)[0]) <= artis_sum);
+		var relink;
+		var i;
 
 		/* exchange links and bold texts to mark active page */
 		var thispagelink = document.getElementById('artisummary');
 		var otherlinks = thispagelink.parentNode.getElementsByTagName('b');
-		for (var i in otherlinks) {
+		for (i in otherlinks) {
 			if ((/^erforscht/).test(otherlinks[i].textContent)) {
-				var relink = document.createElement('a');
+				relink = document.createElement('a');
 				relink.href = '?est=1';
 				relink.appendChild(document.createTextNode(otherlinks[i].textContent));
 				thispagelink.parentNode.replaceChild(relink, otherlinks[i]);
 			} else if ((/^unerforscht/).test(otherlinks[i].textContent)) {
-				var relink = document.createElement('a');
+				relink = document.createElement('a');
 				relink.href = '?ust=1';
 				relink.appendChild(document.createTextNode(otherlinks[i].textContent));
 				thispagelink.parentNode.replaceChild(relink, otherlinks[i]);
@@ -1041,9 +1038,9 @@
 		hcell1.style.width = "30%";
 		hcell2.style.width = "20%";
 		hcell2.style.textAlign = 'center';
-		if (display_links) {
+		if (display_links)
 			hcell2.colSpan = 2;
-		}
+
 		hcell1.appendChild(document.createTextNode('Art'));
 		hcell2.appendChild(document.createTextNode('Anzahl'));
 		headrow.appendChild(hcell1);
@@ -1053,61 +1050,61 @@
 		t.appendChild(headrow);
 
 		var rowcount = c_arti_types.length;
-		rowcount = rowcount
-			- (c_arti_types[arti_name_list.indexOf('Regenerative Naniten Typ I')] === 0 ? 1 : 0)
-			- (c_arti_types[arti_name_list.indexOf('Regenerative Naniten Typ II')] === 0 ? 1 : 0)
-			- (c_arti_types[arti_name_list.indexOf('Regenerative Naniten Typ III')] === 0 ? 1 : 0)
-			- (c_arti_types[arti_name_list.indexOf('Optimierungsbeschleuniger')] === 0 ? 1 : 0)
-			- (c_arti_types[arti_name_list.indexOf('Unbekannt')] === 0 ? 1 : 0);
+		rowcount = rowcount -
+			(c_arti_types[arti_name_list.indexOf('Regenerative Naniten Typ I')] === 0 ? 1 : 0) -
+			(c_arti_types[arti_name_list.indexOf('Regenerative Naniten Typ II')] === 0 ? 1 : 0) -
+			(c_arti_types[arti_name_list.indexOf('Regenerative Naniten Typ III')] === 0 ? 1 : 0) -
+			(c_arti_types[arti_name_list.indexOf('Optimierungsbeschleuniger')] === 0 ? 1 : 0) -
+			(c_arti_types[arti_name_list.indexOf('Unbekannt')] === 0 ? 1 : 0);
 		rowcount = Math.ceil(rowcount / 2);
 
 		var currow = 0;
 
-		for (var i = 0; i < c_arti_types.length; i++) {
+		for (i = 0; i < c_arti_types.length; i++) {
 
 			var r = ((currow < rowcount) ? (document.createElement('tr')) : (t.rows[currow-rowcount+1]));
-			var c1 = document.createElement('td');
-			var c2 = document.createElement('td');
+			var d1 = document.createElement('td');
+			var d2 = document.createElement('td');
 
 			/* old deprecated stuff */
 			if (/Regenerative Naniten Typ [I]+/.test(arti_name_list[i])) {
 				if (c_arti_types[i] === 0) {
 					continue;
 				}
-				c1.className = 'i';
+				d1.className = 'i';
 			}
 
 			if (/Optimierungsbeschleuniger/.test(arti_name_list[i])) {
 				if (c_arti_types[i] === 0) {
 					continue;
 				}
-				c1.className = 'i';
+				d1.className = 'i';
 			}
 
 			if (arti_name_list[i] === 'Unbekannt') {
 				if (c_arti_types[i] === 0) {
 					continue;
 				}
-				c1.style.color = '#FF8000';
+				d1.style.color = '#FF8000';
 			}
 
-			c1.appendChild(document.createTextNode(arti_name_list[i]));
-			c2.appendChild(document.createTextNode(c_arti_types[i]));
-			r.appendChild(c1);
-			r.appendChild(c2);
+			d1.appendChild(document.createTextNode(arti_name_list[i]));
+			d2.appendChild(document.createTextNode(c_arti_types[i]));
+			r.appendChild(d1);
+			r.appendChild(d2);
 
 			if (display_links) {
-				var c3 = document.createElement('td');
+				var d3 = document.createElement('td');
 				if ((c_arti_types_aid[i] > 0) && (i != arti_name_list.indexOf('Ressourcen'))) {
 					var link3 = document.createElement('a');
 					link3.appendChild(document.createTextNode(LINK_TEXT));
 					link3.href = getRxDomain() + 'php/artefakte.php?est=' + c_arti_types_page[i] + '#' + c_arti_types_aid[i];
 					link3.addEventListener('click', clickRefreshSamePage, true);
-					c3.appendChild(link3);
+					d3.appendChild(link3);
 				}
-				c2.style.textAlign = 'center';
-				c3.style.textAlign = 'center';
-				r.appendChild(c3);
+				d2.style.textAlign = 'center';
+				d3.style.textAlign = 'center';
+				r.appendChild(d3);
 			}
 
 			if (currow < rowcount) {
@@ -1119,7 +1116,7 @@
 
 		/* double boundary in the middle */
 
-		for (var i = 0; i < t.rows.length; i++) {
+		for (i = 0; i < t.rows.length; i++) {
 			if (t.rows[i].cells.length == 6) {
 				t.rows[i].cells[3].style.borderStyle = 'solid solid solid double';
 				t.rows[i].cells[3].style.borderLeftWidth = '3px';
@@ -1135,9 +1132,9 @@
 
 		/* resources */
 
-		var r = document.createElement('table');
-		r.className = 'wrpd full';
-		r.style.textAlign = 'center';
+		var rt = document.createElement('table');
+		rt.className = 'wrpd full';
+		rt.style.textAlign = 'center';
 
 		var resshead = document.createElement('tr');
 
@@ -1158,9 +1155,9 @@
 			resshead.cells[4].colSpan = 2;
 		}
 
-		r.appendChild(resshead);
+		rt.appendChild(resshead);
 
-		for (var i = 0; i < c_ress_total.length; i++) {
+		for (i = 0; i < c_ress_total.length; i++) {
 
 			if (!c_ress_count[i]) {
 				continue;
@@ -1211,29 +1208,27 @@
 				rw.insertBefore(c4l, c5);
 				rw.appendChild(c5l);
 			}
-			r.appendChild(rw);
+			rt.appendChild(rw);
 		}
 
 		/* only leave first framed div intact, eliminate the rest */
 
-        var frtdivs = document.getElementsByClassName('wrp ce');
+		var frtdivs = document.getElementsByClassName('wrp ce');
 
-        for (var i = frtdivs.length - 1; i > 0; i--) {
-            if (frtdivs[i].nextSibling &&
-                (frtdivs[i].nextSibling.tagName == 'BR'))
-            {
-                frtdivs[i].parentNode.removeChild(frtdivs[i].nextSibling);
-            }
-            frtdivs[i].parentNode.removeChild(frtdivs[i]);
-        }
+		for (i = frtdivs.length - 1; i > 0; i--) {
+			if (frtdivs[i].nextSibling && (frtdivs[i].nextSibling.tagName == 'BR'))
+				frtdivs[i].parentNode.removeChild(frtdivs[i].nextSibling);
 
-        var par = frtdivs[0].parentNode;
+			frtdivs[i].parentNode.removeChild(frtdivs[i]);
+		}
+
+		var par = frtdivs[0].parentNode;
 
 		par.appendChild(frameTable(s));
 		par.appendChild(document.createElement('br'));
 		par.appendChild(frameTable(t));
-        par.appendChild(document.createElement('br'));
-		par.appendChild(frameTable(r));
+		par.appendChild(document.createElement('br'));
+		par.appendChild(frameTable(rt));
 
 		return 0;
 	}
@@ -1285,7 +1280,7 @@
 			return -1;
 		}
 
-        var ttable = tables[tables.length - 1];
+	var ttable = tables[tables.length - 1];
 
 		for (var i = 1; i < ttable.rows.length; i++) {
 			/* exclude line with button (1 cell only) */
@@ -1352,7 +1347,7 @@
 	function highlightArti(haid)
 	{
 		var tables = document.getElementsByTagName('table');
-        var ttable = tables[tables.length - 1];
+		var ttable = tables[tables.length - 1];
 
 		for (var i = 1; i < ttable.rows.length; i++) {
 
@@ -1397,8 +1392,9 @@
 	/* load cookie, check artis, save cookie if necessary, generate overview */
 	function init_artis()
 	{
-		var data_loaded = -1;
 		var tables = document.getElementsByTagName('table');
+		var data_loaded = -1;
+		var aid;
 
 		if ((/setup\.php$/).test(document.URL)) {
 			insertSettings();
@@ -1406,7 +1402,7 @@
 		} else if ((/artefakte\.php\S*asr=\d+$/).test(document.URL)) {
 			/* scrapping */
 			loadArtiData();
-			var aid = +document.URL.match(/\d+$/)[0];
+			aid = +document.URL.match(/\d+$/)[0];
 			removeArti(aid);
 			saveArtiData();
 			calcStats();
@@ -1424,12 +1420,11 @@
 			insertSummary();
 
 		} else if ((/artefakte\.php\S*agvg=\d+$/).test(document.URL) &&
-			(/artefakte\.php\S*agv=\d+$/).test(document.referrer) &&
-			tables.length > 0)
-		{
+				(/artefakte\.php\S*agv=\d+$/).test(document.referrer) &&
+			tables.length > 0) {
 			/* transfer */
 			loadArtiData();
-			var aid = +document.URL.match(/\d+$/)[0];
+			aid = +document.URL.match(/\d+$/)[0];
 			removeArti(aid);
 			saveArtiData();
 			calcStats();
@@ -1442,26 +1437,25 @@
 			 * probably risky, nevertheless convenient: exclude failure instead of inclusion of success
 			 */
 			if (!((document.getElementsByTagName('b').length > 0) &&
-				(document.getElementsByTagName('table').length === 0) &&
-				(document.getElementsByTagName('b')[0].textContent === 'Achtung')))
-			{
+					(document.getElementsByTagName('table').length === 0) &&
+					(document.getElementsByTagName('b')[0].textContent === 'Achtung'))) {
 				loadArtiData();
-				var aid = +(document.URL.match(/aid=\d+/)[0].match(/\d+/));
+				aid = +(document.URL.match(/aid=\d+/)[0].match(/\d+/));
 				removeArti(aid);
 				saveArtiData();
 				calcStats();
 			}
 
-		} else if (((/artefakte\.php$|artefakte\S*est=\d+$|artefakte\S*[e|u]st=\d+\S*faa=\d+$/).test(document.URL)) && (tables != null)) {
+		} else if (((/artefakte\.php$|artefakte\S*est=\d+$|artefakte\S*[e|u]st=\d+\S*faa=\d+$/).test(document.URL)) && (tables !== null)) {
 			/* standard page without extra parameters ('erforscht' only) */
 
 			if (!localStorage) {
 				/* user message */
 				var spn = document.createElement('span');
 				spn.style.color = '#FFFF00';
-				spn.appendChild(document.createTextNode(' Warnung:'
-					+ ' Web Storage nicht verfügbar,'
-					+ ' Artefakte können nicht gespeichert werden!'));
+				spn.appendChild(document.createTextNode(' Warnung:' +
+					' Web Storage nicht verfügbar,' +
+					' Artefakte können nicht gespeichert werden!'));
 				tables[0].rows[1].cells[0].appendChild(spn);
 				return 0;
 			}
@@ -1476,7 +1470,6 @@
 			/* load array data if changed */
 			if (tables.length > 1) {
 				var user_artis = +tables[1].rows[1].cells[0].firstChild.textContent.match(/\d+/);
-
 				var newartis = 0;
 
 				if (user_artis != artis_sum) {
@@ -1485,9 +1478,8 @@
 					 * distinguish between more saved than existent and less than existent
 					 */
 					log('mismatch: ' + user_artis + ' detected, but ' + artis_sum + ' found in storage');
-					if (data_loaded < 0) {
+					if (data_loaded < 0)
 						loadArtiData();
-					}
 
 					if (user_artis < artis_sum) {
 						log('it seems orphans exist');
@@ -1508,7 +1500,7 @@
 						log(newartis + ' new artifacts found on this page');
 						saveArtiData();
 						calcStats();
-					} else if (newartis == 0) {
+					} else if (newartis === 0) {
 						log('no new artifacts');
 					}
 				}
@@ -1516,23 +1508,20 @@
 				insertSummary(newartis);
 			}
 
-		} else if (((/artefakte\S*ust=(\d+|\d+\&afr\=\d+)$/).test(document.URL)) && (tables != null)) {
-			if (loadStatData()) {
+		} else if (((/artefakte\S*ust=(\d+|\d+\&afr\=\d+)$/).test(document.URL)) && (tables !== null)) {
+			if (loadStatData())
 				insertSummary();
-			}
 
-		} else if (((/artefakte\S*est=\d+\#\d+$/).test(document.URL)) && (tables != null)) {
+		} else if (((/artefakte\S*est=\d+\#\d+$/).test(document.URL)) && (tables !== null)) {
 			var haid = +document.URL.match(/\d+$/)[0];
-			if (!highlightArti(haid)) {
+			if (!highlightArti(haid))
 				log('arti ' + haid + ' not found on this page');
-			}
 
-			if (loadStatData()) {
+			if (loadStatData())
 				insertSummary();
-			}
 		}
 
-		log('finished.')
+		log('finished.');
 
 		return 0;
 	}
@@ -1543,19 +1532,21 @@
 	 */
 	function clone(sth)
 	{
+		var copy;
+
 		/* bool, string, number, and null or undefined */
-		if (null == sth || "object" != typeof sth) return sth;
+		if (null === sth || "object" != typeof sth) return sth;
 
 		/* date */
 		if (sth instanceof Date) {
-			var copy = new Date();
+			copy = new Date();
 			copy.setTime(sth.getTime());
 			return copy;
 		}
 
 		/* array */
 		if (sth instanceof Array) {
-			var copy = [];
+			copy = [];
 			for (var i = 0, len = sth.length; i < len; i++) {
 				copy[i] = clone(sth[i]);
 			}
@@ -1564,7 +1555,7 @@
 
 		/* object */
 		if (sth instanceof Object) {
-			var copy = {};
+			copy = {};
 			for (var attr in sth) {
 				if (sth.hasOwnProperty(attr)) copy[attr] = clone(sth[attr]);
 			}
