@@ -4,6 +4,7 @@
 // @description Modifiziert die Kartenansicht für ein neues Fluggefühl im RX-Universum
 // @downloadURL http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxnewmaps.user.js
 // @updateURL   http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxnewmaps.meta.js
+// @priority	-1
 // @version     0.9beta
 //
 // @include     http://87.106.151.92/*/map*.php*
