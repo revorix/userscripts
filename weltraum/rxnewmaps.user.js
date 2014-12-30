@@ -22,8 +22,8 @@
 
 "use strict";
 
-(function() {
-
+(function()
+{
 	var thisIsExperimental = true;
 
 	// logging
@@ -33,36 +33,162 @@
 	// settings object
 
 	var settings = {
-		viewMagnitude: {value: 3.0, type: 'float', vmin: 0.1, vmax: 10.0, name: 'Maßstab', group: 'Flugbereich'},
-		viewSectionRadius: {value: 3, type: 'int', vmin: 1, vmax: 6, name: 'Ausschnittsradius', unit: 'Sektoren', group: 'Flugbereich'},
-		viewBoundarySectors: {value: 1, type: 'int', vmin: 0, vmax: 10, name: 'Rahmenbreite', unit: 'Sektoren', group: 'Flugbereich'},
-		viewImproveGfx: {value: true, type: 'bool', name: 'Sektorgrafiken nachbearbeiten', group: 'Flugbereich'},
-		viewImproveStarsOnly: {value: false, type: 'bool', name: 'Nur nichtleeren Raum', group: 'Flugbereich', depends: 'viewImproveGfx'},
-		viewImproveFilter: {value: 1, type: 'sInt', vmin: 1, vmax: 4, name: 'Filter', group: 'Flugbereich', depends: 'viewImproveGfx'},
+		viewMagnitude: {
+			value: 3.0,
+			type: 'float',
+			vmin: 0.1,
+			vmax: 10.0,
+			name: 'Maßstab',
+			group: 'Flugbereich'
+		},
 
-		mapMagnitude: {value: 1.0, type: 'float', vmin: 0.1, vmax: 10.0, name: 'Maßstab', group: 'Kartenbereich'},
-		mapSectionSize: {value: 25, type: 'int', vmin: 1, vmax: 100, name: 'Ausschnittsgröße', unit: 'Sektoren', group: 'Kartenbereich'},
-		mapBoundarySectors: {value: 2, type: 'int', vmin: 0, vmax: 50, name: 'Rahmenbreite', unit: 'Sektoren', group: 'Kartenbereich'},
-		mapZoomFactor: {value: 1.2, type: 'float', vmin: 1.0, vmax: 5.0, name: 'Vergrößerungsfaktor', group: 'Kartenbereich'},
-		mapZoomLevelMax: {value: 2, type: 'int', vmin: 1, vmax: 10, name: 'Vergrößerungsstufen', group: 'Kartenbereich'},
+		viewSectionRadius: {
+			value: 3,
+			type: 'int',
+			vmin: 1,
+			vmax: 6,
+			name: 'Ausschnittsradius',
+			unit: 'Sektoren',
+			group: 'Flugbereich'
+		},
 
-		sectorInfoCompact: {value: true, type: 'bool', name: 'Kompaktanzeige aktivieren', group: 'Anzeigeformat'},
-		bodyRemoveTopMargin: {value: false, type: 'bool', name: 'Karten nach oben verschieben', group: 'Anzeigeformat'},
+		viewBoundarySectors: {
+			value: 1,
+			type: 'int',
+			vmin: 0,
+			vmax: 10,
+			name: 'Rahmenbreite',
+			unit: 'Sektoren',
+			group: 'Flugbereich'
+		},
 
-		hoverTimeout: {value: 500, type: 'int', vmin: 1, vmax: 10000, name: 'Zeit bis zur Anzeige der Sektorinfos', unit: 'ms', group: 'Animationen'},
-		statusTimeout: {value: 1000, type: 'int', vmin: 1, vmax: 10000, name: 'Dauer der Statusanzeige', unit: 'ms', group: 'Animationen'},
-		statusFadeInterval: {value: 100, type: 'int', vmin: 10, vmax: 1000, name: 'Animations-Intervall', unit: 'ms', group: 'Animationen'},
-		_get: function(which) {return this[which] && this[which].value},
-		_set: function(which, what) {
-			if(!this[which]) {
+		viewImproveGfx: {
+			value: true,
+			type: 'bool',
+			name: 'Sektorgrafiken nachbearbeiten',
+			group: 'Flugbereich'
+		},
+
+		viewImproveStarsOnly: {
+			value: false,
+			type: 'bool',
+			name: 'Nur nichtleeren Raum',
+			group: 'Flugbereich',
+			depends: 'viewImproveGfx'
+		},
+
+		viewImproveFilter: {
+			value: 1,
+			type: 'sInt',
+			vmin: 1,
+			vmax: 4,
+			name: 'Filter',
+			group: 'Flugbereich',
+			depends: 'viewImproveGfx'
+		},
+
+		mapMagnitude: {
+			value: 1.0,
+			type: 'float',
+			vmin: 0.1,
+			vmax: 10.0,
+			name: 'Maßstab',
+			group: 'Kartenbereich'
+		},
+
+		mapSectionSize: {
+			value: 25,
+			type: 'int',
+			vmin: 1,
+			vmax: 100,
+			name: 'Ausschnittsgröße',
+			unit: 'Sektoren',
+			group: 'Kartenbereich'
+		},
+
+		mapBoundarySectors: {
+			value: 2,
+			type: 'int',
+			vmin: 0,
+			vmax: 50,
+			name: 'Rahmenbreite',
+			unit: 'Sektoren',
+			group: 'Kartenbereich'
+		},
+
+		mapZoomFactor: {
+			value: 1.2,
+			type: 'float',
+			vmin: 1.0,
+			vmax: 5.0,
+			name: 'Vergrößerungsfaktor',
+			group: 'Kartenbereich'
+		},
+
+		mapZoomLevelMax: {
+			value: 2,
+			type: 'int',
+			vmin: 1,
+			vmax: 10,
+			name: 'Vergrößerungsstufen',
+			group: 'Kartenbereich'
+		},
+
+		sectorInfoCompact: {
+			value: true,
+			type: 'bool',
+			name: 'Kompaktanzeige aktivieren',
+			group: 'Anzeigeformat'
+		},
+
+		bodyRemoveTopMargin: {
+			value: false,
+			type: 'bool',
+			name: 'Karten nach oben verschieben',
+			group: 'Anzeigeformat'
+		},
+
+		hoverTimeout: {
+			value: 500,
+			type: 'int',
+			vmin: 1,
+			vmax: 10000,
+			name: 'Zeit bis zur Anzeige der Sektorinfos',
+			unit: 'ms',
+			group: 'Animationen'
+		},
+
+		statusTimeout: {
+			value: 1000,
+			type: 'int',
+			vmin: 1,
+			vmax: 10000,
+			name: 'Dauer der Statusanzeige',
+			unit: 'ms',
+			group: 'Animationen'
+		},
+
+		statusFadeInterval: {
+			value: 100,
+			type: 'int',
+			vmin: 10,
+			vmax: 1000,
+			name: 'Animations-Intervall',
+			unit: 'ms',
+			group: 'Animationen'
+		},
+
+		_get: function (which) { return this[which] && this[which].value },
+		_set: function (which, what) {
+			if (!this[which]) {
 				return false;
 			}
-			if(this[which].type === 'int' || this[which].type === 'float') {
-				if(what < this[which].vmin || what > this[which].vmax) {
+			if (this[which].type === 'int' || this[which].type === 'float') {
+				if (what < this[which].vmin || what > this[which].vmax) {
 					return false;
 				}
 			}
-			if(this[which].type === 'int') {
+			if (this[which].type === 'int') {
 				this[which].value = Math.round(what);
 			} else {
 				this[which].value = what;
@@ -141,7 +267,8 @@
 	var badsets = new Array();
 
 
-	function loadDefaultSettings() {
+	function loadDefaultSettings()
+	{
 		settings._set('viewMagnitude', 3.0);
 		settings._set('viewSectionRadius', 3);
 		settings._set('viewBoundarySectors', 1);
@@ -160,10 +287,10 @@
 		settings._set('statusFadeInterval', 100);
 	}
 
-	function loadSettings() {
-
+	function loadSettings()
+	{
 		var str = document.cookie.match(/rxuscriptnewmaps=[^;]+/);
-		if(!str) {
+		if (!str) {
 			log('settings cookie not found, loading default values');
 			loadDefaultSettings();
 			return;
@@ -174,23 +301,23 @@
 		str = str.substring(str.indexOf('=') + 1);
 		var savedSets = str.split('!');
 
-		for(var i = 0; i < savedSets.length; i++) {
+		for (var i = 0; i < savedSets.length; i++) {
 			var [key, value] = savedSets[i].split(':');
-			if(!key || !value) {
+			if (!key || !value) {
 				continue;
 			}
 
-			if(settings[key]) {
+			if (settings[key]) {
 				var setsuc = false;
-				if(settings[key].type === 'bool') {
+				if (settings[key].type === 'bool') {
 					setsuc = settings._set(key, (value == '1' ? true : false));
-				} else if((settings[key].type === 'int') ||
+				} else if ((settings[key].type === 'int') ||
 					(settings[key].type === 'float') ||
 					(settings[key].type === 'sInt')) {
 					setsuc = settings._set(key, +value);
 				}
 
-				if(!setsuc) {
+				if (!setsuc) {
 					log('failed to load value "' + value + '" for setting "' + key + '"');
 				}
 			} else {
@@ -200,40 +327,40 @@
 
 	}
 
-	function saveSettings() {
-
+	function saveSettings()
+	{
 		var cookieString = 'rxuscriptnewmaps=';
 
-		for(var key in settings) {
+		for (var key in settings) {
 
-			if((/^\_/).test(key)) {
+			if ((/^\_/).test(key)) {
 				continue;
 			}
 
 			var input = document.getElementById('rxnms' + key);
-			if(!input) {
+			if (!input) {
 				log('missing input for key ' + key);
 				continue;
 			}
 
 			var setsuc = false;
 
-			if(settings[key].type === 'bool') {
+			if (settings[key].type === 'bool') {
 				setsuc = settings._set(key, input.checked);
-			} else if(settings[key].type === 'sInt') {
+			} else if (settings[key].type === 'sInt') {
 				setsuc = settings._set(key, input.selectedIndex + 1);
-			} else if((settings[key].type === 'int') || (settings[key].type === 'float')) {
+			} else if ((settings[key].type === 'int') || (settings[key].type === 'float')) {
 				var num = +input.value;
-				if(num) {
+				if (num) {
 					setsuc = settings._set(key, num);
 				}
 				// test for range problems
-				if(!setsuc) {
-					if(num > settings[key].vmax) {
+				if (!setsuc) {
+					if (num > settings[key].vmax) {
 						num = settings[key].vmax;
 						log('restricted input to upper limit of ' + num + ' for setting "' + key + '"');
 						setsuc = settings._set(key, num);
-					} else if(num > settings[key].vmax) {
+					} else if (num > settings[key].vmax) {
 						num = settings[key].vmax;
 						log('restricted input to lower limit of ' + num + ' for setting "' + key + '"');
 						setsuc = settings._set(key, num);
@@ -242,16 +369,16 @@
 				input.value = settings._get(key);
 				input.style.backgroundColor = INPUTCOLOR_NORMAL;
 
-				if((settings[key].type === 'int') && !isNaN(num) && (num != settings._get(key))) {
+				if ((settings[key].type === 'int') && !isNaN(num) && (num != settings._get(key))) {
 					log('rounded value to an integer of ' + settings._get(key) + ' for "' + key + '"');
 				}
 			}
 
-			if(!setsuc) {
+			if (!setsuc) {
 				log('failed to set "' + key + '"');
 			}
 
-			if(settings[key].type === 'bool') {
+			if (settings[key].type === 'bool') {
 				cookieString += key + ':' + (settings._get(key) === true ? '1' : '0') + '!';
 			} else {
 				cookieString += key + ':' + settings._get(key) + '!';
@@ -267,63 +394,64 @@
 		document.cookie = cookieString + ' expires=' + expiredate.toGMTString();
 
 		var svmsg = document.getElementById('rxnmsavemsg');
-		if(svmsg) {
+		if (svmsg) {
 			svmsg.style.opacity = '1.0';
 		}
 
 		status_timer = window.setTimeout(fadeSin, settings._get('statusTimeout'), svmsg.id, TID_STATUS);
 	}
 
-	function hideSavemsg() {
+	function hideSavemsg()
+	{
 		var svmsg = document.getElementById('rxnmsavemsg');
-		if(svmsg) {
+		if (svmsg) {
 			svmsg.style.opacity = '0.0';
 			window.clearTimeout(status_timer);
 			window.clearInterval(interval_timer);
 		}
 	}
 
-	function checkNumberInput(fld) {
-
-		if(!fld.value) {
+	function checkNumberInput(fld)
+	{
+		if (!fld.value) {
 			return;
 		}
 
 		var key = fld.id.substring(5);
 
-		if(!key || !settings[key]) {
+		if (!key || !settings[key]) {
 			log('input field "' + fld.id + '" does not match any setting');
 			return;
 		}
 
 		var legend = document.getElementById('rxnmlegend');
-		if(legend) {
+		if (legend) {
 			legend.style.display = '';
 		}
 
 		var num = +fld.value;
 
-		if(isNaN(num)) {
+		if (isNaN(num)) {
 			fld.style.backgroundColor = INPUTCOLOR_INVALID;
 			badsets.push(fld.id);
-		} else if((num < settings[key].vmin) || (num > settings[key].vmax)) {
+		} else if ((num < settings[key].vmin) || (num > settings[key].vmax)) {
 			fld.style.backgroundColor = INPUTCOLOR_RANGE;
 			badsets.push(fld.id);
-		} else if((settings[key].type === 'int') && ((/\./).test(fld.value))) {
+		} else if ((settings[key].type === 'int') && ((/\./).test(fld.value))) {
 			fld.style.backgroundColor = INPUTCOLOR_DECIMAL;
 			badsets.push(fld.id);
 		} else {
 			fld.style.backgroundColor = INPUTCOLOR_NORMAL;
 			var idx = badsets.indexOf(fld.id);
-			if(idx > -1) {
+			if (idx > -1) {
 				badsets.splice(idx, 1);
 			}
 		}
 
 		var legend = document.getElementById('rxnmlegend');
 
-		if(legend) {
-			if(badsets.length > 0) {
+		if (legend) {
+			if (badsets.length > 0) {
 				legend.style.display = '';
 			} else {
 				legend.style.display = 'none';
@@ -332,18 +460,18 @@
 
 	}
 
-	function checkDependency() {
-
-		for(var key in settings) {
-			if((/^\_/).test(key)) {
+	function checkDependency()
+	{
+		for (var key in settings) {
+			if ((/^\_/).test(key)) {
 				continue;
 			}
 
 			var dset = this.id.substring(5);
 
-			if(settings[key].depends && (settings[key].depends === dset)) {
+			if (settings[key].depends && (settings[key].depends === dset)) {
 				var thisset = document.getElementById('rxnms' + key);
-				if(this.checked === false) {
+				if (this.checked === false) {
 					thisset.disabled = 'disabled';
 					thisset.parentNode.lastChild.style.color = '#888888';
 					thisset.parentNode.lastChild.style.fontStyle = 'italic';
@@ -358,47 +486,49 @@
 		hideSavemsg();
 	}
 
-	function numberInputEvent() {
+	function numberInputEvent()
+	{
 		checkNumberInput(this);
 		hideSavemsg();
 	}
 
-	function resetToDefault() {
+	function resetToDefault()
+	{
 		loadDefaultSettings();
 
-		for(var key in settings) {
+		for (var key in settings) {
 
-			if((/^\_/).test(key)) {
+			if ((/^\_/).test(key)) {
 				continue;
 			}
 
 			var input = document.getElementById('rxnms' + key);
-			if(!input) {
+			if (!input) {
 				continue;
 			}
 
-			if(settings[key].type === 'bool') {
+			if (settings[key].type === 'bool') {
 				input.checked = settings._get(key);
-			} else if(settings[key].type === 'sInt') {
+			} else if (settings[key].type === 'sInt') {
 				input.selectedIndex = settings._get(key) - 1;
-			} else if((settings[key].type === 'int') || (settings[key].type === 'float')) {
+			} else if ((settings[key].type === 'int') || (settings[key].type === 'float')) {
 				input.value = settings._get(key);
 				input.style.backgroundColor = INPUTCOLOR_NORMAL;
 			}
 		}
 	}
 
-	function insertSettings() {
-
+	function insertSettings()
+	{
 		var frm = document.getElementsByTagName('form');
-		if(!frm.length) {
+		if (!frm.length) {
 			return;
 		}
 		frm = frm[0];
 
 		loadSettings();
 
-		if(!Object.keys(settings).length) {
+		if (!Object.keys(settings).length) {
 			return;
 		}
 
@@ -411,7 +541,7 @@
 		t.rows[0].cells[0].className = 'nfo';
 		t.rows[0].cells[0].colSpan = 3;
 
-		if(thisIsExperimental) {
+		if (thisIsExperimental) {
 			var exp = document.createElement('span');
 			exp.className = 'i';
 			exp.style.fontVariant = 'normal';
@@ -449,9 +579,9 @@
 		var lastgroup = '';
 		var gsoff = 0;
 
-		for(var key in settings) {
+		for (var key in settings) {
 			// test if this is a function (prepended with '_')
-			if((/^\_/).test(key)) {
+			if ((/^\_/).test(key)) {
 				continue;
 			}
 
@@ -459,7 +589,7 @@
 
 			t.appendChild(document.createElement('tr'));
 
-			if(settings[key].group === lastgroup) {
+			if (settings[key].group === lastgroup) {
 				gsoff++;
 				t.rows[ri - gsoff].cells[0].rowSpan++;
 			} else {
@@ -482,7 +612,7 @@
 			var iplbl = document.createElement('label');
 			iplbl.style.verticalAlign = 'middle';
 
-			if((settings[key].type === 'int') || (settings[key].type === 'float')) {
+			if ((settings[key].type === 'int') || (settings[key].type === 'float')) {
 				ip.name = 'ip' + key;
 				ip.className = 'text';
 				ip.value = settings._get(key);
@@ -493,7 +623,7 @@
 				iplbl.appendChild(document.createTextNode(settings[key].name));
 				t.rows[ri].cells[ci].appendChild(ip);
 				t.rows[ri].cells[ci].appendChild(iplbl);
-			} else if(settings[key].type === 'bool') {
+			} else if (settings[key].type === 'bool') {
 				ip.type = 'checkbox';
 				ip.name = 'cb' + key;
 				ip.checked = settings._get(key);
@@ -502,9 +632,9 @@
 				iplbl.appendChild(document.createTextNode(settings[key].name));
 				t.rows[ri].cells[ci].appendChild(ip);
 				t.rows[ri].cells[ci].appendChild(iplbl);
-			} else if(settings[key].type === 'sInt') {
+			} else if (settings[key].type === 'sInt') {
 				// dropdown depending on key
-				if(key === 'viewImproveFilter') {
+				if (key === 'viewImproveFilter') {
 					ip = document.createElement('select');
 					ip.id = 'rxnms' + key;
 					ip.name = 'sl' + key;
@@ -551,7 +681,7 @@
 				log('unrecognized settings type: ' + settings[key].type + ' at ' + settings[key]);
 			}
 
-			if(settings[key].unit) {
+			if (settings[key].unit) {
 				t.rows[ri].cells[ci].lastChild.firstChild.data += ' [' + settings[key].unit + ']';
 			}
 		}
@@ -594,15 +724,15 @@
 		frm.parentNode.insertBefore(document.createElement('br'), frm.nextSibling);
 
 		// dependency check
-		for(var key in settings) {
+		for (var key in settings) {
 
-			if((/^\_/).test(key)) {
+			if ((/^\_/).test(key)) {
 				continue;
 			}
 
-			if(settings[key].depends) {
+			if (settings[key].depends) {
 				var dep = settings[key].depends;
-				if(settings[dep] && (settings[dep].value === false)) {
+				if (settings[dep] && (settings[dep].value === false)) {
 					var thisset = document.getElementById('rxnms' + key);
 					thisset.disabled = 'disabled';
 					thisset.parentNode.lastChild.style.color = '#888888';
@@ -615,8 +745,8 @@
 
 	}
 
-	function frameTable(t) {
-
+	function frameTable(t)
+	{
 		var maindiv = document.createElement('div');
 		maindiv.className = 'wrp ce';
 
@@ -656,17 +786,17 @@
 		return maindiv;
 	}
 
-	function getImageSize(map) {
-
+	function getImageSize(map)
+	{
 		var img = map.firstChild;
 
-		while(img.nextSibling) {
-			if(img.tagName === 'IMG') {
-				if((/\/q8\/\w+\.gif$/).test(img.src)) {
+		while (img.nextSibling) {
+			if (img.tagName === 'IMG') {
+				if ((/\/q8\/\w+\.gif$/).test(img.src)) {
 					return 8;
-				} else if((/\/q15\/\w+\.gif$/).test(img.src)) {
+				} else if ((/\/q15\/\w+\.gif$/).test(img.src)) {
 					return 15;
-				} else if((/\/q\/\w+\.gif$/).test(img.src)) {
+				} else if ((/\/q\/\w+\.gif$/).test(img.src)) {
 					return 10;
 				} else {
 					log('could not determine image size, using default of 10px');
@@ -677,8 +807,8 @@
 		}
 	}
 
-	function chooseFilter(num) {
-
+	function chooseFilter(num)
+	{
 		var FILTER_BLUR = [ 1/9, 1/9, 1/9,
 							1/9, 1/9, 1/9,
 							1/9, 1/9, 1/9 ];
@@ -720,7 +850,8 @@
 	}
 
 
-	function filterImg(image, filter) {
+	function filterImg(image, filter)
+	{
 		// 15px, x3, 5 gridwidth: 1580 ms (25 calls); 770 ms @ 8px
 		// now ~1050 ms @ 15px, 350 ms @ 8px
 		var ops = 0;
@@ -736,7 +867,7 @@
 		var srccont = srccanv.getContext('2d');
 		srccont.drawImage(image, 0, 0, w, h);
 
-		if(!filter) {
+		if (!filter) {
 			return srccanv;
 		}
 
@@ -759,19 +890,19 @@
 		var x, y, fx, fy;
 
 		// apply weighed matrix for central and neighbour pixels on each one
-		for(y = 0; y < h; y++) {
-			for(x = 0; x < w; x++) {
+		for (y = 0; y < h; y++) {
+			for (x = 0; x < w; x++) {
 				dstoff = (y * w + x) * 4;
 				// alpha channel non-existent, so ignore it
 				r = 0;
 				g = 0;
 				b = 0;
-				for(fy = 0; fy < fside; fy++) {
-					for(fx = 0; fx < fside; fx++) {
+				for (fy = 0; fy < fside; fy++) {
+					for (fx = 0; fx < fside; fx++) {
 						sx = x + fx - fhside;
 						sy = y + fy - fhside;
 						// mind image borders
-						if((sx < w) && (sy < h) && (sx >= 0) && (sy >= 0)){
+						if ((sx < w) && (sy < h) && (sx >= 0) && (sy >= 0)){
 							srcoff = (sy * w + sx) * 4;
 							f = filter[fx * fside + fy];
 							r += srcpx[srcoff] * f;
@@ -793,16 +924,16 @@
 		return dstcanv;
 	}
 
-	function removeFuelmsg() {
-
+	function removeFuelmsg()
+	{
 		var tables = document.getElementsByTagName('table');
 
-		for(var i = 0; i < tables.length; i++) {
-			if((/\bEnergie\b.+\bSchiffsreaktoren\b.+\bumverteilt\b/).test(tables[i].textContent)) {
+		for (var i = 0; i < tables.length; i++) {
+			if ((/\bEnergie\b.+\bSchiffsreaktoren\b.+\bumverteilt\b/).test(tables[i].textContent)) {
 				document.body.removeChild(tables[i].parentNode.parentNode.parentNode);
 				// those breaks...
-				for(var i = 0; i < document.body.childNodes.length; i++) {
-					if(document.body.childNodes[i].tagName === 'BR') {
+				for (var i = 0; i < document.body.childNodes.length; i++) {
+					if (document.body.childNodes[i].tagName === 'BR') {
 						document.body.removeChild(document.body.childNodes[i]);
 					}
 				}
@@ -813,18 +944,19 @@
 		return false;
 	}
 
-	function getCell(what) {
+	function getCell(what)
+	{
 		var tables = document.getElementsByTagName('table');
 
-		if(!tables.length) {
+		if (!tables.length) {
 			log('no table found');
 			return null;
 		}
 
 		var i = 0;
-		while((tables[i].rows.length !== 2) || (tables[i].rows[0].cells.length !== 2)) {
+		while ((tables[i].rows.length !== 2) || (tables[i].rows[0].cells.length !== 2)) {
 			i++;
-			if(i >= tables.length) {
+			if (i >= tables.length) {
 				log('table containing map not found');
 				return null;
 			}
@@ -846,18 +978,18 @@
 		}
 	}
 
-	function makeLocalMap(x, y) {
-
+	function makeLocalMap(x, y)
+	{
 		var map = getCell(CELL_MAP);
 
-		if(!map) {
+		if (!map) {
 			return null;
 		}
 
 		var imgurl;
 		var imgsize = getImageSize(map);
 
-		if(map.firstChild.tagName === 'A') {
+		if (map.firstChild.tagName === 'A') {
 			imgurl = map.firstChild.firstChild.src;
 		} else {
 			imgurl = map.firstChild.src;
@@ -867,8 +999,8 @@
 
 		var linelen = 0;
 
-		while(linelen < map.childNodes.length) {
-			if(map.childNodes[linelen].tagName === 'BR') {
+		while (linelen < map.childNodes.length) {
+			if (map.childNodes[linelen].tagName === 'BR') {
 				break;
 			}
 			linelen++;
@@ -878,7 +1010,8 @@
 		var totalsecs = map.getElementsByTagName('IMG').length;
 		var linecount = totalsecs / linelen;
 
-		function cellc(x, y) {
+		function cellc(x, y)
+		{
 			return ((x > 0) && (x <= linelen) && (y > 0) && (y <= linecount)) ?
 				((y - 1) * (linelen + 1) + (x - 1)) :
 				-1;
@@ -891,10 +1024,10 @@
 		var vx = x - (maxsec - 1) / 2;
 		var vy = y - (maxsec - 1) / 2;
 
-		for(var i = 0; i < bignodes.length; i++) {
+		for (var i = 0; i < bignodes.length; i++) {
 			bignodes[i] = cellc(vx, vy);
 			vx++;
-			if(!((i + 1) % maxsec)) {
+			if (!((i + 1) % maxsec)) {
 				vx -= maxsec;
 				vy++;
 			}
@@ -902,24 +1035,24 @@
 
 		var ndiv = document.createElement('div');
 
-		for(var i = 0; i < bignodes.length; i++) {
+		for (var i = 0; i < bignodes.length; i++) {
 
 			var thisnode;
 
-			if(bignodes[i] === -1) {
+			if (bignodes[i] === -1) {
 				thisnode = document.createElement('img');
 				thisnode.src = imgurl;
 			} else {
 				thisnode = map.childNodes[bignodes[i]].cloneNode(true);
 			}
 
-			if(thisnode.tagName === 'A') {
+			if (thisnode.tagName === 'A') {
 				thisnode = thisnode.firstChild;
 			}
 			thisnode.height = imgsize * settings._get('viewMagnitude');
 			thisnode.width = imgsize * settings._get('viewMagnitude');
 			ndiv.appendChild(thisnode);
-			if(!((i + 1) % maxsec)) {
+			if (!((i + 1) % maxsec)) {
 				ndiv.appendChild(document.createElement('br'));
 			}
 		}
@@ -928,12 +1061,12 @@
 		return [ndiv, linelen, linecount, imgsize];
 	}
 
-	function shift_layout() {
-
+	function shift_layout()
+	{
 		var tstart = new Date().getTime();
 
 		var scell = getCell(CELL_SECTORINFO)
-		if(!scell) {
+		if (!scell) {
 			return -1;
 		}
 
@@ -967,7 +1100,7 @@
 
 		var tstep1 = new Date().getTime();
 
-		if(removeFuelmsg()) {
+		if (removeFuelmsg()) {
 			var holder = document.createElement('div');
 			holder.style.position = 'relative';
 			holder.style.padding = viewbndsize * imgsize + 'px';
@@ -1006,14 +1139,15 @@
 		var stsdiv = document.createElement('div');
 		stsdiv.id = 'mapstatus';
 
-		function microtype(s) {
+		function microtype(s)
+		{
 			s = s.match(/[^\/]+\.gif$/)[0];
-			if((/^n\./).test(s)) return MICROTYPE_NOSPACE;
-			if((/^u\./).test(s)) return MICROTYPE_BLIND;
-			if((/^a\./).test(s)) return MICROTYPE_HERE;
-			if((/^\d\./).test(s)) return MICROTYPE_EMPTY;
-			if((/^\d{2}\./).test(s)) return MICROTYPE_PLANETS;
-			if((/^100\./).test(s)) return MICROTYPE_PORTAL;
+			if ((/^n\./).test(s)) return MICROTYPE_NOSPACE;
+			if ((/^u\./).test(s)) return MICROTYPE_BLIND;
+			if ((/^a\./).test(s)) return MICROTYPE_HERE;
+			if ((/^\d\./).test(s)) return MICROTYPE_EMPTY;
+			if ((/^\d{2}\./).test(s)) return MICROTYPE_PLANETS;
+			if ((/^100\./).test(s)) return MICROTYPE_PORTAL;
 			return MICROTYPE_UNKNOWN;
 		}
 
@@ -1023,12 +1157,12 @@
 		var midx = 0;
 		var ndim = imgsize * settings._get('mapMagnitude');
 
-		while(mapcell.firstChild) {
+		while (mapcell.firstChild) {
 
 			var thisnode = mapcell.firstChild;
 
-			if(thisnode.tagName === 'A') {
-				if(!quad_id) {
+			if (thisnode.tagName === 'A') {
+				if (!quad_id) {
 					quad_id = +thisnode.href.match(/\d+(?=&x=\d+&y=\d+$)/)[0];
 					log('qid: ' + quad_id);
 				}
@@ -1040,7 +1174,7 @@
 				thisnode.addEventListener('click', clickSector, false);
 			}
 
-			if(thisnode.tagName === 'IMG') {
+			if (thisnode.tagName === 'IMG') {
 				thisnode.height = ndim;
 				thisnode.width = ndim;
 				micro_data[midx] = microtype(thisnode.src);
@@ -1130,7 +1264,7 @@
 		var vx = 0;
 		var vy = 0;
 
-		for(var i = 0; i < micro_data.length; i++) {
+		for (var i = 0; i < micro_data.length; i++) {
 			switch (micro_data[i]) {
 				case MICROTYPE_NOSPACE: mx.fillStyle = 'rgba(0, 0, 0, 0)'; break;
 				case MICROTYPE_BLIND: mx.fillStyle = 'rgb(0, 0, 40)'; break;
@@ -1142,7 +1276,7 @@
 			}
 			mx.fillRect((vx * pxsize + xoff), (vy * pxsize + yoff), pxsize, pxsize);	// (x, y, width, height)
 			vx++;
-			if(!((i + 1) % xmax)) {
+			if (!((i + 1) % xmax)) {
 				vx -= xmax;
 				vy++;
 			}
@@ -1162,7 +1296,7 @@
 		microvframe.alt = pxsize + 'p';
 		log('set microvframe alt to ' + microvframe.alt);
 
-		if((xmax > settings._get('mapSectionSize')) || (ymax > settings._get('mapSectionSize'))) {
+		if ((xmax > settings._get('mapSectionSize')) || (ymax > settings._get('mapSectionSize'))) {
 			microvframe.style.height = pxsize * settings._get('mapSectionSize') - 2 + 'px';
 			microvframe.style.width = pxsize * settings._get('mapSectionSize') - 2 + 'px';
 			microvframe.style.left = mapdiv.scrollLeft / imgsize / settings._get('mapMagnitude') * pxsize + xoff + 'px';
@@ -1245,8 +1379,8 @@
 
 	}
 
-	function magnifyMaps() {
-
+	function magnifyMaps()
+	{
 		// scale microvframe here, display only if needed (else set height to '')
 		// get micromap size from setting values - save pixsize somewhere inside micromap (as alt?)
 		// get microvframe from pixsize and that settings value, position as above
@@ -1267,26 +1401,26 @@
 		var zminus = document.getElementById('mapsmags');
 
 		var zoom = zplus.title.match(/-?\d/);
-		if(!zoom) {
+		if (!zoom) {
 			zoom = 0;
 		} else {
 			zoom = +zoom[0];
 		}
 
-		if(this === zplus) {
+		if (this === zplus) {
 
 			zoom++;
 
-			if(Math.abs(zoom) === settings._get('mapZoomLevelMax')) {
+			if (Math.abs(zoom) === settings._get('mapZoomLevelMax')) {
 				zplus.style.visibility = 'hidden';
 			}
 			zminus.style.visibility = 'visible';
 
-		} else if(this === zminus) {
+		} else if (this === zminus) {
 
 			zoom--;
 
-			if(Math.abs(zoom) === settings._get('mapZoomLevelMax')) {
+			if (Math.abs(zoom) === settings._get('mapZoomLevelMax')) {
 				zminus.style.visibility = 'hidden';
 			}
 			zplus.style.visibility = 'visible';
@@ -1299,8 +1433,8 @@
 		var factor = 1 + zoom * (settings._get('mapZoomFactor') - 1);
 		log('zoom: ' + zoom + ', factor: ' + factor);
 
-		for(var i = 0; i < map.childNodes.length; i++) {
-			if(map.childNodes[i].tagName === 'IMG') {
+		for (var i = 0; i < map.childNodes.length; i++) {
+			if (map.childNodes[i].tagName === 'IMG') {
 				map.childNodes[i].height = factor * tsize;
 				map.childNodes[i].width = factor * tsize;
 			}
@@ -1319,7 +1453,7 @@
 		var newframesize = micropixsize * settings._get('mapSectionSize') / factor;
 		log('new size: ' + newframesize + ', max: ' + (settings._get('mapSectionSize') * tsize));
 
-		if(newframesize < (settings._get('mapSectionSize') * tsize)) {
+		if (newframesize < (settings._get('mapSectionSize') * tsize)) {
 			microvframe.style.height = micropixsize * settings._get('mapSectionSize') / factor - 2 + 'px';
 			microvframe.style.width = micropixsize * settings._get('mapSectionSize') / factor - 2 + 'px';
 			microvframe.style.left = map.scrollLeft / tsize / settings._get('mapMagnitude') * micropixsize + 'px';
@@ -1330,7 +1464,8 @@
 		}
 	}
 
-	function switchMaps() {
+	function switchMaps()
+	{
 		var minimap = document.getElementById('minimap');
 		var micromap = document.getElementById('micromap');
 		var microvframe = document.getElementById('microvframe');
@@ -1340,15 +1475,15 @@
 
 		zplus.style.visibility = 'visible';
 
-		if(minimap.style.display === 'none') {
+		if (minimap.style.display === 'none') {
 			minimap.style.display = '';
 			micromap.style.display = 'none';
 			zplus.style.visibility = 'visible';
 			zminus.style.visibility = 'visible';
 			microvframe.style.display = 'none';
 			var zoom = zplus.title.match(/-?\d/);
-			if(zoom && (Math.abs(+zoom[0]) === settings._get('mapZoomLevelMax'))) {
-				if(+zoom[0] < 0) {
+			if (zoom && (Math.abs(+zoom[0]) === settings._get('mapZoomLevelMax'))) {
+				if (+zoom[0] < 0) {
 					zminus.style.visibility = 'hidden';
 				} else {
 					zplus.style.visibility = 'hidden';
@@ -1358,7 +1493,7 @@
 		} else {
 			minimap.style.display = 'none';
 			micromap.style.display = '';
-			if(microvframe.style.height !== '') {
+			if (microvframe.style.height !== '') {
 				microvframe.style.display = '';
 			}
 			zplus.style.visibility = 'hidden';
@@ -1368,7 +1503,7 @@
 
 		sts.style.opacity = '1';
 
-		if(status_timer) {
+		if (status_timer) {
 			window.clearTimeout(status_timer);
 			window.clearInterval(status_timer);
 			window.clearInterval(interval_timer);
@@ -1379,9 +1514,9 @@
 		return 0;
 	}
 
-	function hoverSector(e) {
-
-		if(!e) {
+	function hoverSector(e)
+	{
+		if (!e) {
 			var e = window.event;
 		}
 
@@ -1394,7 +1529,7 @@
 		ms.style.left = this.offsetLeft + 'px';
 		this.style.opacity = 0.5;
 
-		if(sector_timer) {
+		if (sector_timer) {
 			window.clearTimeout(sector_timer);
 			sector_timer = null;
 		}
@@ -1407,15 +1542,15 @@
 		document.getElementById('mapstatus').style.opacity = '1.0';
 		document.getElementById('mapstatus').textContent = 'X:' + qx + ' Y:' + qy;
 
-		if(PIN_SECTORINFOS && !!infos && (infos.style.visibility != 'hidden')) {
+		if (PIN_SECTORINFOS && !!infos && (infos.style.visibility != 'hidden')) {
 			return;
 		}
 
-		if(ldrdiv) {
+		if (ldrdiv) {
 			ldrdiv.style.borderColor = 'rgb(65,66,86)';
 		}
 
-		if(infos) {
+		if (infos) {
 			infos.contentWindow.stop();
 			infos.style.display = 'none';
 			infos.style.visibility = 'hidden';
@@ -1423,7 +1558,7 @@
 
 		sector_timer = window.setTimeout(popSector, settings._get('hoverTimeout'), qx, qy, e.pageX, e.pageY, isunknown);
 
-		if(status_timer) {
+		if (status_timer) {
 			window.clearInterval(status_timer);
 			window.clearTimeout(status_timer);
 			window.clearInterval(interval_timer);
@@ -1433,42 +1568,42 @@
 		return 0;
 	}
 
-	function leaveSector(e) {
-
+	function leaveSector(e)
+	{
 		document.getElementById('mapstatus').textContent = '';
 
 		document.getElementById('marksec').style.display = 'none';
 		this.style.opacity = 1;
 
-		if(PIN_SECTORINFOS) {
+		if (PIN_SECTORINFOS) {
 			log('pin lock');
 			return;
 		}
 
-		if(sector_timer) {
+		if (sector_timer) {
 			window.clearTimeout(sector_timer);
 			sector_timer = null;
 		}
 
 		var infos = document.getElementById('sectorinfos');
 
-		if(infos) {
+		if (infos) {
 			infos.contentWindow.stop();
 			infos.style.display = 'none';
 			infos.style.visibility = 'hidden';
 		}
 
-		if(document.getElementById('loaderhint')) {
+		if (document.getElementById('loaderhint')) {
 			document.getElementById('loaderhint').style.visibility = 'hidden';
 		}
 
 	}
 
-	function clickSector() {
-
+	function clickSector()
+	{
 		var infos = document.getElementById('sectorinfos');
 
-		if(infos) {
+		if (infos) {
 			infos.contentWindow.stop();
 			infos.style.display = 'none';
 			infos.style.visibility = 'hidden';
@@ -1477,30 +1612,30 @@
 		PIN_SECTORINFOS = true;
 	}
 
-	function dblclickDestruct() {
-
+	function dblclickDestruct()
+	{
 		log('dblclick detected from ' + this.id);
 
 		var infos = document.getElementById('sectorinfos');
 		var ldr = document.getElementById('loaderhint');
 
-		if(infos) {
+		if (infos) {
 			infos.contentWindow.stop();
 			infos.style.display = 'none';
 		}
 
-		if(ldr) {
+		if (ldr) {
 			ldr.style.visibility = 'hidden';
 		}
 
 		PIN_SECTORINFOS = false;
 	}
 
-	function popSector(qx, qy, mx, my, isunknown) {
-
+	function popSector(qx, qy, mx, my, isunknown)
+	{
 		var infos = document.getElementById('sectorinfos');
 
-		if(PIN_SECTORINFOS && !!infos && (infos.style.visibility != 'hidden')) {
+		if (PIN_SECTORINFOS && !!infos && (infos.style.visibility != 'hidden')) {
 			log('sectorinfos pinned, will not replace');
 			return;
 		}
@@ -1509,7 +1644,7 @@
 
 		var ldrdiv = document.getElementById('loaderhint');
 
-		if(!ldrdiv) {
+		if (!ldrdiv) {
 			ldrdiv = document.createElement('div');
 			ldrdiv.id = 'loaderhint';
 			ldrdiv.style.position = 'absolute';
@@ -1529,14 +1664,14 @@
 		ldrdiv.style.top = my - 30 + 'px';
 		ldrdiv.style.left = mx + 5 + 'px';
 
-		if(isunknown) {
+		if (isunknown) {
 			ldrdiv.textContent = TEXT_HINT_UNKNOWN;
 			return 0;
 		}
 
 		ldrdiv.textContent = TEXT_HINT_SCAN;
 
-		if(!infos) {
+		if (!infos) {
 			infos = document.createElement('iframe');
 			infos.id = 'sectorinfos';
 			infos.style.position = 'absolute';
@@ -1549,7 +1684,7 @@
 			document.body.appendChild(infos);
 		}
 
-		if(PIN_SECTORINFOS) {
+		if (PIN_SECTORINFOS) {
 			ldrdiv.style.borderColor = '#FFFF00';
 			infos.style.borderWidth = '1px';
 			infos.style.borderColor = '#FFFF00';
@@ -1565,20 +1700,21 @@
 		// frame will get repositioned when content is loaded - this is to save mouse coords only
 		infos.style.top = my + 'px';
 		infos.style.left = mx + 'px';
-		if(infos.contentDocument.firstChild) {
+		if (infos.contentDocument.firstChild) {
 			infos.contentDocument.removeChild(infos.contentDocument.firstChild);
 		}
 
 		return 0;
 	}
 
-	function stripPage() {
-
+	function stripPage()
+	{
 		log('stripping page...');
 
 		var mdoc = window.parent.document;
 
-		function styleCompactNode(n) {
+		function styleCompactNode(n)
+		{
 			n.style.textAlign = 'left';
 			n.style.padding = '2px';
 			n.style.marginTop = '2px';
@@ -1596,7 +1732,7 @@
 		var idc = document;
 		var noinfos = false;
 
-		if((/\/rx\/error/).test(idc.URL)) {
+		if ((/\/rx\/error/).test(idc.URL)) {
 			log('logout page detected');
 			mdoc.getElementById('loaderhint').textContent = TEXT_HINT_LOGOUT;
 			return -1;
@@ -1606,15 +1742,15 @@
 
 		var tables = idc.getElementsByTagName('table');
 
-		if(!tables || tables.length === 0) {
+		if (!tables || tables.length === 0) {
 			noinfos = true;
 		}
 
-		if(!noinfos) {
+		if (!noinfos) {
 			var i = 0;
-			while((tables[i].rows.length !== 2) || (tables[i].rows[0].cells.length !== 2)) {
+			while ((tables[i].rows.length !== 2) || (tables[i].rows[0].cells.length !== 2)) {
 				i++;
-				if(i >= tables.length) {
+				if (i >= tables.length) {
 					log('table containing map not found');
 					noinfos = true;
 				}
@@ -1635,25 +1771,25 @@
 		md.style.height = 'auto';
 		md.style.display = 'inline-block';
 
-		if(noinfos) {
+		if (noinfos) {
 			md.appendChild(idc.createTextNode(TEXT_HINT_UNKNOWN));
 		} else {
-			while(sinfos.firstChild) {
-				if(sinfos.firstChild.tagName === 'A') {
-					if((/sgfx_select\.php/).test(sinfos.firstChild.href)) {
+			while (sinfos.firstChild) {
+				if (sinfos.firstChild.tagName === 'A') {
+					if ((/sgfx_select\.php/).test(sinfos.firstChild.href)) {
 						sinfos.removeChild(sinfos.firstChild);
 						continue;
 					}
 				}
 
-				if(settings._get('sectorInfoCompact')) {
+				if (settings._get('sectorInfoCompact')) {
 					// test for WL / CP / IP
-					if(sinfos.firstChild.tagName === 'TABLE') {
+					if (sinfos.firstChild.tagName === 'TABLE') {
 						var thistab = sinfos.firstChild;
-						if(thistab.rows[0].cells.length > 1) {
-							for(var i = 0; i < thistab.rows.length; i++) {
-								if(thistab.rows[i].cells[0].firstChild.tagName === 'IMG') {
-									if((/Individuelles\sPortal/).test(thistab.rows[i].cells[1].firstChild.data)) {
+						if (thistab.rows[0].cells.length > 1) {
+							for (var i = 0; i < thistab.rows.length; i++) {
+								if (thistab.rows[i].cells[0].firstChild.tagName === 'IMG') {
+									if ((/Individuelles\sPortal/).test(thistab.rows[i].cells[1].firstChild.data)) {
 										// IP
 										var ipdummy = thistab.rows[i].cells[1].innerHTML;
 										ipdummy = ipdummy.replace(/Individuelles\sPortal:\s*/, '');
@@ -1663,22 +1799,22 @@
 										var sclansum = new Array(1);
 										sclanname[0] = 'clanlos';
 										sclansum[0] = 0;
-										for(var j = 0; j < ipdummy.length; j++) {
-											if(ipdummy[j].length > 0) {
+										for (var j = 0; j < ipdummy.length; j++) {
+											if (ipdummy[j].length > 0) {
 												sum++;
 												var thisclan = ipdummy[j].match(/\[\S+\]/);
-												if(!thisclan) {
+												if (!thisclan) {
 													sclansum[0]++;
 												} else {
 													var hit = false;
-													for(var k = 0; k < sclanname.length; k++) {
-														if(sclanname[k] === thisclan[0]) {
+													for (var k = 0; k < sclanname.length; k++) {
+														if (sclanname[k] === thisclan[0]) {
 															sclansum[k]++;
 															hit = true;
 															break;
 														}
 													}
-													if(!hit) {
+													if (!hit) {
 														sclanname.push(thisclan[0]);
 														log(sclansum + ' ' + sclansum.length + ' ' + sclansum[0]);
 														sclansum.push(1);
@@ -1689,42 +1825,42 @@
 
 										var ipnodediv = mdoc.createElement('div');
 
-										if(sclanname.length == 1) {
+										if (sclanname.length == 1) {
 											ipnodediv.appendChild(mdoc.createTextNode(sum + ' IP'));
-										} else if((sclanname.length == 2) && (sclansum[0] == 0)) {
+										} else if ((sclanname.length == 2) && (sclansum[0] == 0)) {
 											ipnodediv.appendChild(mdoc.createTextNode(sum + ' IP von ' + sclanname[1]));
 										} else {
 											ipnodediv.appendChild(mdoc.createTextNode(sum + ' IP:'));
-											for(var j = sclanname.length - 1; j > 0; j--) {
+											for (var j = sclanname.length - 1; j > 0; j--) {
 												ipnodediv.appendChild(mdoc.createElement('br'));
 												ipnodediv.appendChild(mdoc.createTextNode(sclansum[j] + ' - ' + sclanname[j]));
 											}
-											if(sclansum[0] > 0) {
+											if (sclansum[0] > 0) {
 												ipnodediv.appendChild(mdoc.createElement('br'));
 												ipnodediv.appendChild(mdoc.createTextNode(sclansum[0] + ' - ' + sclanname[0]));
 											}
 										}
-									} else if((/Clan\sPortal/).test(thistab.rows[i].cells[1].firstChild.data)) {
+									} else if ((/Clan\sPortal/).test(thistab.rows[i].cells[1].firstChild.data)) {
 										// CP
 										var cpnodediv = mdoc.createElement('div');
-										while(thistab.rows[i].cells[1].firstChild) {
+										while (thistab.rows[i].cells[1].firstChild) {
 											cpnodediv.appendChild(thistab.rows[i].cells[1].firstChild);
 										}
 										cpnodediv.firstChild.data.replace(/Clan\sPortal:\s*/, 'CP: ');
-										if(cpnodediv.lastChild.tagName === 'BR') {
+										if (cpnodediv.lastChild.tagName === 'BR') {
 											cpnodediv.removeChild(cpnodediv.lastChild);
 										}
-									} else if((/npc\/w\/\d+\.gif$/).test(thistab.rows[i].cells[0].firstChild.src)) {
+									} else if ((/npc\/w\/\d+\.gif$/).test(thistab.rows[i].cells[0].firstChild.src)) {
 										// wormhole
 										var wlnodediv = mdoc.createElement('div');
-										while(thistab.rows[i].cells[1].firstChild) {
+										while (thistab.rows[i].cells[1].firstChild) {
 											// deactivate wormhole link
-											if(thistab.rows[i].cells[1].firstChild.tagName === 'A') {
+											if (thistab.rows[i].cells[1].firstChild.tagName === 'A') {
 												thistab.rows[i].cells[1].firstChild.href = 'javascript:void(0)';
 											}
 											wlnodediv.appendChild(thistab.rows[i].cells[1].firstChild);
 										}
-										if(wlnodediv.lastChild.tagName === 'BR') {
+										if (wlnodediv.lastChild.tagName === 'BR') {
 											wlnodediv.removeChild(wlnodediv.lastChild);
 										}
 									}
@@ -1736,21 +1872,21 @@
 						thistab.parentNode.removeChild(thistab);
 						continue;
 
-					} else if(sinfos.firstChild.tagName === 'IMG') {
+					} else if (sinfos.firstChild.tagName === 'IMG') {
 
-						if(((/\/r\d+\.gif$/).test(sinfos.firstChild.src))
+						if (((/\/r\d+\.gif$/).test(sinfos.firstChild.src))
 							&& (sinfos.firstChild.nextSibling.nodeName === '#text')
 							&& (!(/\(\S+\)/).test(sinfos.firstChild.nextSibling.data))) {
-							if(!ressnodediv) {
+							if (!ressnodediv) {
 								var ressnodediv = mdoc.createElement('div');
 							}
 							sinfos.firstChild.nextSibling.data += ' ';
 							ressnodediv.appendChild(sinfos.firstChild);
 							ressnodediv.appendChild(sinfos.firstChild);
-							if(!(ressnodediv.childNodes.length % 6)) {
+							if (!(ressnodediv.childNodes.length % 6)) {
 								ressnodediv.appendChild(mdoc.createElement('br'));
 							}
-							if(sinfos.firstChild.tagName === 'BR') {
+							if (sinfos.firstChild.tagName === 'BR') {
 								sinfos.removeChild(sinfos.firstChild);
 							}
 							continue;
@@ -1761,35 +1897,35 @@
 				md.appendChild(sinfos.firstChild);
 			}
 
-			while(md.lastChild.tagName === 'BR') {
+			while (md.lastChild.tagName === 'BR') {
 				md.removeChild(md.lastChild);
 			}
 
-			if(settings._get('sectorInfoCompact')) {
+			if (settings._get('sectorInfoCompact')) {
 
-				if(ressnodediv || ipnodediv || wlnodediv || cpnodediv) {
+				if (ressnodediv || ipnodediv || wlnodediv || cpnodediv) {
 					md.appendChild(mdoc.createElement('br'));
 					md.appendChild(mdoc.createElement('br'));
 
-					if(ressnodediv) {
+					if (ressnodediv) {
 						md.appendChild(styleCompactNode(ressnodediv));
 					}
 
-					if(wlnodediv) {
+					if (wlnodediv) {
 						md.appendChild(styleCompactNode(wlnodediv));
 					}
 
-					if(cpnodediv) {
+					if (cpnodediv) {
 						md.appendChild(styleCompactNode(cpnodediv));
 					}
 
-					if(ipnodediv) {
+					if (ipnodediv) {
 						md.appendChild(styleCompactNode(ipnodediv));
 					}
 				}
 			}
 
-			if((/\S+/).test(fleets.textContent)) {
+			if ((/\S+/).test(fleets.textContent)) {
 				var fd = mdoc.createElement('div');
 				fd.style.textAlign = 'center';
 				fd.style.padding = '2px';
@@ -1802,15 +1938,15 @@
 				fd.style.height = 'auto';
 				fd.style.display = 'block';
 
-				while(fleets.firstChild) {
+				while (fleets.firstChild) {
 					fd.appendChild(fleets.firstChild);
 				}
 
-				while(fd.firstChild.tagName === 'BR') {
+				while (fd.firstChild.tagName === 'BR') {
 					fd.removeChild(fd.firstChild);
 				}
 
-				while(fd.lastChild.tagName === 'BR') {
+				while (fd.lastChild.tagName === 'BR') {
 					fd.removeChild(fd.lastChild);
 				}
 
@@ -1823,7 +1959,7 @@
 		idc.body.parentNode.style.margin = '0px';
 		idc.body.parentNode.style.padding = '0px';
 
-		while(idc.body.firstChild) {
+		while (idc.body.firstChild) {
 			idc.body.removeChild(idc.body.firstChild);
 		}
 
@@ -1838,18 +1974,18 @@
 		var bdpos = mdoc.body.getBoundingClientRect();
 		var bodytopoffset = bdpos.top - mdoc.body.parentNode.getBoundingClientRect().top;
 
-		if(ifpos.height < (ifpos.top - 5)) {
+		if (ifpos.height < (ifpos.top - 5)) {
 			infoframe.style.top = ifpos.top - ifpos.height - 5 - bdpos.top + bodytopoffset + 'px';
-		} else if((ifpos.height / 2) < ifpos.top) {
+		} else if ((ifpos.height / 2) < ifpos.top) {
 			infoframe.style.top = ifpos.top - (ifpos.height / 2) - bdpos.top + bodytopoffset + 'px';
-		} else if(ifpos.height > window.innerHeight){
+		} else if (ifpos.height > window.innerHeight){
 			infoframe.style.top = '5px';
 		} else {
 			infoframe.style.top = ifpos.top + 5 - bdpos.top + bodytopoffset + 'px';
 		}
-		if(ifpos.width < (bdpos.right - ifpos.left)) {
+		if (ifpos.width < (bdpos.right - ifpos.left)) {
 			infoframe.style.left = ifpos.left + 5 + 'px';
-		} else if(bdpos.width < ifpos.height){
+		} else if (bdpos.width < ifpos.height){
 			infoframe.style.left = '0px';
 		} else {
 			infoframe.style.left = ifpos.left - ifpos.width - 5 + 'px';
@@ -1858,151 +1994,15 @@
 		infoframe.style.visibility = 'visible';
 		idc.body.addEventListener('dblclick', dblclickDestruct, false);
 
-		if(PIN_SECTORINFOS) {
+		if (PIN_SECTORINFOS) {
 			md.title = TEXT_HINT_PINCLOSE;
 		}
 
 		return 0;
 	}
 
-	/*function makeFlightCircle(size, boundwidth, boundoffset, colourrgbarr) {
-
-		// we'll get issues with rotation around the center otherwise
-		if(size % 2) {
-			size++;
-		}
-
-		log('canvas is ' + size + 'x' + size + 'px');
-		var tstart = new Date().getTime();
-
-		var canv = document.createElement('canvas');
-		canv.height = size;
-		canv.width = size;
-		var ctx = canv.getContext('2d');
-		ctx.clearRect(0, 0, size, size);
-
-		var r = size / 2 - boundoffset - boundwidth;
-		var corner = 1.4142 * size / 2;
-		var center = size / 2;
-		var pi = Math.PI
-		var opaque = new Array(boundwidth);
-		var x, y;
-		var coord_lim = Math.floor(size / 2 - 1);
-		var steps = 2048;
-		var sins = new Array(steps/4);
-		var coss = new Array(steps/4);
-
-		// precalculate les sins et les coss
-		for(var k = 0; k < steps/4; k++) {
-			coss[k] = Math.cos((k / steps + 0.5) * 2 * pi);
-			sins[k] = Math.sin((k / steps + 0.5) * 2 * pi);
-		}
-
-		for(var i = 0; i < boundwidth; i++) {
-			opaque[i] = Math.round(Math.sin(((i + 1) / boundwidth) * pi/2) * 255);
-		}
-
-		var px = new Array(size/2);
-
-		for(var p = 0; p < size/2; p++) {
-			px[p] = new Array(size/2);
-			for(var q = 0; q < size/2; q++) {
-				px[p][q] = 0;
-			}
-		}
-
-		var tstep1 = new Date().getTime();
-
-		// calculate a quarter circle, rest can be arranged through rotation
-		for(var i = 0; i < corner - r; i++) {
-			for(var k = 0; k < (steps / 4); k++) {
-				x = Math.round(center + (r + i) * coss[k]);
-				y = Math.round(center + (r + i) * sins[k]);
-				if(x < 0) x = 0; else if(x > coord_lim) x = coord_lim;
-				if(y < 0) y = 0; else if(y > coord_lim) y = coord_lim;
-				if(i < opaque.length) {
-					px[x][y] = opaque[i];
-				} else {
-					px[x][y] = 255;
-				}
-			}
-		}
-
-		var tstep2 = new Date().getTime();
-
-		// rectangles in corners saves setting single pixels (~20%)
-		var xr = size/2 - 1;
-		var yr = size/2 - 1;
-
-		while(xr > 0 && yr > 0 && px[xr][yr] < 255) {
-			xr--;
-			yr--;
-		}
-
-		for(var x = 0; x < size/2; x++) {
-			for(var y = 0; y < size/2; y++) {
-				if((x < xr) && (y < xr)) {
-					px[x][y] = 0;
-				}
-			}
-		}
-
-		var tstep3 = new Date().getTime();
-
-		var cnt = 0;
-		var off = 0;
-		var x, y;
-
-		var aimg = ctx.createImageData(size/2, size/2);
-		for(x = 0; x < size/2; x++) {
-			for(y = 0; y < size/2; y++) {
-				if(px[x][y] == 0) {
-					continue;
-				}
-				var off = (x * size/2 + y) * 4;
-				aimg.data[off + 0] = colourrgbarr[0];
-				aimg.data[off + 1] = colourrgbarr[1];
-				aimg.data[off + 2] = colourrgbarr[2];
-				aimg.data[off + 3] = px[x][y];
-				cnt++;
-			}
-		}
-
-		var tstep4 = new Date().getTime();
-		// paint on buffer canvas, mirror and rotate it and put on main canvas
-		var tmpcanv = document.createElement('canvas');
-		tmpcanv.height = size/2;
-		tmpcanv.width = size/2;
-		var tmpctx = tmpcanv.getContext('2d');
-		tmpctx.clearRect(0, 0, size/2, size/2);
-
-		tmpctx.putImageData(aimg, 0, 0);
-
-		// paint corners
-		tmpctx.fillStyle = 'rgba(' + colourrgbarr[0] + ', ' +
-			colourrgbarr[1] + ', ' + colourrgbarr[2] + ', 1)';
-		tmpctx.fillRect(0, 0, xr, yr);
-
-		ctx.translate(size/2 ,size/2);
-
-		for(var i = 0; i < 4; i++) {
-			ctx.drawImage(tmpcanv, -size/2, -size/2);
-			ctx.rotate(90 * Math.PI / 180);
-		}
-
-		var tstep5 = new Date().getTime();
-		log('[circle] step1 (initialization): ' + (tstep1 - tstart) + 'ms');
-		log('[circle] step2 (quarter circle): ' + (tstep2 - tstep1) + 'ms');
-		log('[circle] step3 (cut da corners): ' + (tstep3 - tstep2) + 'ms (rect = ' + xr + 'x' + yr + 'px)');
-		log('[circle] step4 (make imagedata): ' + (tstep4 - tstep3) + 'ms (' + cnt + ' loops)');
-		log('[circle] step5 (paint & rotate): ' + (tstep5 - tstep4) + 'ms');
-		log('[circle] done in ' + (tstep5 - tstart) + 'ms');
-
-		return canv;
-	}*/
-
-	function makeFlightCircle(size, boundwidth, boundoffset, colourrgbarr) {
-
+	function makeFlightCircle(size, boundwidth, boundoffset, colourrgbarr)
+	{
 		var tstart = new Date().getTime();
 
 		var canv = document.createElement('canvas');
@@ -2028,8 +2028,8 @@
 		return canv;
 	}
 
-	function fadeSin(eid, tid) {
-
+	function fadeSin(eid, tid)
+	{
 		switch(tid) {
 			case TID_STATUS: tid = status_timer; break;
 			case TID_FUEL: tid = fuel_timer; break;
@@ -2041,22 +2041,22 @@
 
 		var steps = 20;
 		var sins = new Array(steps);
-		for(var i = 1;  i <= steps; i++) {
+		for (var i = 1;  i <= steps; i++) {
 			sins[i-1] = Math.round(Math.cos(i / steps * 0.5 * 3.14) * 100) / 100;
 		}
 
 		var idx = steps - 1;
 		var op = +elem.style.opacity;
 
-		if(op === 1.0) {
+		if (op === 1.0) {
 			interval_timer = window.setInterval(fadeSin, settings._get('statusFadeInterval'), elem.id, TID_INTERVAL);
 		}
 
-		if(op <= sins[steps - 1]) {
+		if (op <= sins[steps - 1]) {
 			window.clearInterval(tid);
 			op = 0;
 		} else {
-			while((idx >= 0) && (op > sins[idx])) {
+			while ((idx >= 0) && (op > sins[idx])) {
 				idx--;
 			}
 			op = sins[idx+1];
@@ -2065,39 +2065,16 @@
 		elem.style.opacity = op;
 	}
 
-	/*function fancyGfx() {
-
-		if(settings._get('viewImproveGfx')) {
-			var fl = document.getElementById('flightarea');
-
-			if(!fl) {
-				return -1;
-			}
-
-			for(var i = 0; i < fl.childNodes.length; i++) {
-				if(!(/n\.gif$/).test(fl.childNodes[i].src)) {
-					if(fl.childNodes[i].tagName === 'IMG' && !(settings._get('viewImproveStarsOnly'))
-						|| (settings._get('viewImproveStarsOnly') && (/\d{2,3}\.gif$/).test(fl.childNodes[i].src))) {
-						var old = fl.childNodes[i];
-						old.parentNode.replaceChild(filterImg(old, chooseFilter(settings._get('viewImproveFilter'))), old);
-					}
-				}
-			}
-		}
-
-		return 0;
-	}*/
-
-	function fancyGfx() {
-
+	function fancyGfx()
+	{
 		// new function rendering a single image and overwriting darkness
 		// (with optional rendering a raster in between)
 		// make filter override sections which are not relevant
 
-		if(settings._get('viewImproveGfx')) {
+		if (settings._get('viewImproveGfx')) {
 			var fl = document.getElementById('flightarea');
 
-			if(!fl) {
+			if (!fl) {
 				return -1;
 			}
 
@@ -2115,10 +2092,10 @@
 
 			var sx = 0, sy = 0;
 
-			for(var i = 0; i < sectors; i++) {
+			for (var i = 0; i < sectors; i++) {
 				ctx.drawImage(flimg[i], sx, sy, secwidth, secwidth);
 				sx += secwidth;
-				if(sx >= seclength * secwidth) {
+				if (sx >= seclength * secwidth) {
 					sx = 0;
 					sy += secwidth;
 				}
@@ -2131,30 +2108,30 @@
 			sx = 0;
 			sy = 0;
 
-			for(var i = 0; i < sectors; i++) {
-				if((/n\.gif$/).test(flimg[i].src)) {
+			for (var i = 0; i < sectors; i++) {
+				if ((/n\.gif$/).test(flimg[i].src)) {
 					ctx.fillStyle = 'rgb(24, 25, 46)';
 					ctx.fillRect(sx, sy, secwidth, secwidth);
 				} else if ((settings._get('viewImproveStarsOnly') && !(/\d{2,3}\.gif$/).test(flimg[i].src))) {
 					ctx.drawImage(flimg[i], sx, sy, secwidth, secwidth);
 				}
 				sx += secwidth;
-				if(sx >= seclength * secwidth) {
+				if (sx >= seclength * secwidth) {
 					sx = 0;
 					sy += secwidth;
 				}
 			}
 
-			while(fl.firstChild.tagName === 'IMG' || fl.firstChild.tagName === 'BR') {
+			while (fl.firstChild.tagName === 'IMG' || fl.firstChild.tagName === 'BR') {
 				fl.removeChild(fl.firstChild);
 			}
 
 			fl.insertBefore(canv, fl.firstChild);
 
 			/*
-			for(var i = 0; i < fl.childNodes.length; i++) {
-				if(!(/n\.gif$/).test(fl.childNodes[i].src)) {
-					if(fl.childNodes[i].tagName === 'IMG' && !(settings._get('viewImproveStarsOnly'))
+			for (var i = 0; i < fl.childNodes.length; i++) {
+				if (!(/n\.gif$/).test(fl.childNodes[i].src)) {
+					if (fl.childNodes[i].tagName === 'IMG' && !(settings._get('viewImproveStarsOnly'))
 						|| (settings._get('viewImproveStarsOnly') && (/\d{2,3}\.gif$/).test(fl.childNodes[i].src))) {
 						var old = fl.childNodes[i];
 						old.parentNode.replaceChild(filterImg(old, chooseFilter(settings._get('viewImproveFilter'))), old);
@@ -2167,8 +2144,8 @@
 		return 0;
 	}
 
-	function eliminateRxTagScript() {
-
+	function eliminateRxTagScript()
+	{
 		// prevents that unnecessary rx script checking every single
 		// image for being a ressource type and adding title and alt
 		// from being executed
@@ -2179,18 +2156,20 @@
 		document.body.appendChild(scr);
 	}
 
-	function loadCompletedHook() {
+	function loadCompletedHook()
+	{
 		var start = new Date().getTime();
 		fancyGfx();
 		var pc = window.mozPaintCount;
 		log('lCHook done in ' + (new Date().getTime() - start) + ' ms! (repaint count: ' + pc + ')')
 	}
 
-	function deframe() {
+	function deframe()
+	{
 		var nav = document.getElementsByName('rxqa');
 		var flight = document.getElementsByName('rxqb');
 
-		if(!(nav && flight)) {
+		if (!(nav && flight)) {
 			log(flight + ' ' + nav + ' not found');
 			return;
 		}
@@ -2254,8 +2233,8 @@
 		document.documentElement.style.height = '100%';
 	}
 
-	function beautify() {
-
+	function beautify()
+	{
 		var db = document.body;
 
 		db.style.background = 'none';
@@ -2263,15 +2242,15 @@
 		document.getElementById('fleet').style.backgroundColor = '#090C1D';
 
 		// delete those incredibly useless textnodes containing '\n'...
-		for(var i = db.childNodes.length - 1; i >= 0; i--) {
-			if(db.childNodes[i].nodeName === '#text') {
+		for (var i = db.childNodes.length - 1; i >= 0; i--) {
+			if (db.childNodes[i].nodeName === '#text') {
 				db.removeChild(db.childNodes[i]);
 			}
 		}
 
 		// clear some more useless stuff at the beginning
 
-		while((db.firstChild.tagName === 'IMG') || (db.firstChild.tagName === 'BR')) {
+		while ((db.firstChild.tagName === 'IMG') || (db.firstChild.tagName === 'BR')) {
 			db.removeChild(db.firstChild);
 		}
 
@@ -2284,14 +2263,15 @@
 
 	}
 
-	function autoresize() {
+	function autoresize()
+	{
 		this.style.width = this.contentDocument.body.scrollWidth + 'px';
 		this.style.marginLeft = -this.contentDocument.body.scrollWidth / 2 + 'px';
 		this.style.visibility = 'visible';
 	}
 
-	function init_houston() {
-
+	function init_houston()
+	{
 		// make insert iframe @ sec-info, loads stripped fleet infos on request
 		// W: x M ; A: x M ; L: x/X ; R: x/X
 
@@ -2301,34 +2281,34 @@
 		//log(document.URL);
 		//log(document.referrer);
 
-		if((/\/map\S*\.php/).test(document.URL)) {
+		if ((/\/map\S*\.php/).test(document.URL)) {
 			loadSettings();
-			if((/#strip$/).test(document.URL)) {
+			if ((/#strip$/).test(document.URL)) {
 				stripPage();
 			} else {
-				if(settings._get('bodyRemoveTopMargin')) {
+				if (settings._get('bodyRemoveTopMargin')) {
 					document.documentElement.style.paddingTop = '5px';
 				}
 				document.documentElement.style.paddingBottom = NAVBAR_HEIGHT + 5 + 'px';
 			}
 		}
 
-		if((/map\.php\S*fid\=\d+(?:.dir\=[a-z]{1,2})?$/).test(document.URL)) {
+		if ((/map\.php\S*fid\=\d+(?:.dir\=[a-z]{1,2})?$/).test(document.URL)) {
 			loadSettings();
 			eliminateRxTagScript();
 			window.addEventListener('load', loadCompletedHook, true);
 			shift_layout();
 		}
 
-		if((/\/rx\.php\?set\=4/).test(document.URL)) {
+		if ((/\/rx\.php\?set\=4/).test(document.URL)) {
 			deframe();
 		}
 
-		if((/\/rx\.php\?set\=5/).test(document.URL)) {
+		if ((/\/rx\.php\?set\=5/).test(document.URL)) {
 			beautify();
 		}
 
-		if((/setup\.php$/).test(document.URL)) {
+		if ((/setup\.php$/).test(document.URL)) {
 			insertSettings();
 		}
 
@@ -2339,13 +2319,14 @@
 
 	function log(str)
 	{
-		if(DEBUG_VERBOSE) {
+		if (DEBUG_VERBOSE) {
 			console.log('rxnewmaps: ' + str);
 		}
 	}
 
-	function logScriptInfo() {
-		if(typeof(GM_info) !== 'undefined') {
+	function logScriptInfo()
+	{
+		if (typeof(GM_info) !== 'undefined') {
 			console.log(
 				GM_info.script.name
 				+ ' v' + GM_info.script.version
