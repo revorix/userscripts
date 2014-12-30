@@ -425,11 +425,6 @@
 			return;
 		}
 
-		var legend = document.getElementById('rxnmlegend');
-		if (legend) {
-			legend.style.display = '';
-		}
-
 		var num = +fld.value;
 
 		if (isNaN(num)) {
