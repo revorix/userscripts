@@ -1,9 +1,13 @@
 // ==UserScript==
 // @name Entwicklungsliste
 // @namespace coolcow.dyndns.org
-// @description Script zum Uebertrag von Schiffsplaenen aus dem Sternenbund nach Revorix
+// @description Script zum Uebertrag von Schiffsplaenen aus dem Sternenbund nach Revorix - changelog: https://gist.github.com/tpummer/f318a9ac8ed02c1c4fe8dc691ac3629a
 // @author coolius
 // @contributor Lord-FaKe
+// @contributor Wintermoon
+// @downloadURL https://gist.github.com/tpummer/f318a9ac8ed02c1c4fe8dc691ac3629a/raw/entwicklungsliste.user.js
+// @updateURL https://gist.github.com/tpummer/f318a9ac8ed02c1c4fe8dc691ac3629a/raw/entwicklungsliste.user.js
+// @version 3.2016061501
 // @include http://www.revorix.info/php/entwicklung_neu.php
 // @run-at document-idle
 // @require https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -12,13 +16,9 @@
 // @grant unsafeWindow
 // ==/UserScript==
 
-/*
-    Edited by Wintermoon
-*/
-
 //Preconditions
 var url = "";
-//Should be deprecated because we no longer make use of unsafeWindow
+//Should be deprectead because we no longer make use of unsafeWindow
 //var isMonkey = typeof unsafeWindow != 'undefined';
 
 //Get the shipname
