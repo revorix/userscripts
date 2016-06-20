@@ -1,6 +1,6 @@
 # Change Log
 All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
+The pattern of versioning is: Major.YearMonthDayCount
 
 ## [3.2016061501] - 2016-06-15
 ### Added
@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Pläne können per Sternenbundlink übertragen werden, ohne dass das Script jeweils angepasst werden muss.
 
-## [2.x] - 2015-10-06
+## [2.x]
 ### Added
 - Es können nun mehrere Buttons/mehrere Pläne hinterlegt werden
 
