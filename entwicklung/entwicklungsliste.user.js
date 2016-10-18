@@ -18,7 +18,7 @@
 
 //Preconditions
 var url = "";
-//Should be deprectead because we no longer make use of unsafeWindow
+//Should be deprecated because we no longer make use of unsafeWindow
 //var isMonkey = typeof unsafeWindow != 'undefined';
 
 //Get the shipname
