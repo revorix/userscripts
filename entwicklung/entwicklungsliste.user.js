@@ -1,16 +1,17 @@
 // ==UserScript==
 // @name Entwicklungsliste
 // @namespace coolcow.dyndns.org
-// @description Script zum Uebertrag von Schiffsplaenen aus dem Sternenbund nach Revorix - changelog: https://gist.github.com/tpummer/f318a9ac8ed02c1c4fe8dc691ac3629a
+// @description Script zum Uebertrag von Schiffsplaenen aus dem Sternenbund nach Revorix
 // @author coolius
 // @contributor Lord-FaKe
-// @contributor Wintermoon
-// @downloadURL https://gist.github.com/tpummer/f318a9ac8ed02c1c4fe8dc691ac3629a/raw/entwicklungsliste.user.js
-// @updateURL https://gist.github.com/tpummer/f318a9ac8ed02c1c4fe8dc691ac3629a/raw/entwicklungsliste.user.js
-// @version 3.2016061501
+// @contributor   Wintermoon
+// @downloadURL https://gist.github.com/tpummer/4d383632cb02caf80fbe/raw/entwicklungsliste.user.js
+// @updateURL https://gist.github.com/tpummer/4d383632cb02caf80fbe/raw/entwicklungsliste.user.js
 // @include http://www.revorix.info/php/entwicklung_neu.php
+// @include https://www.revorix.info/php/entwicklung_neu.php
+// @version 2.2017032801
 // @run-at document-idle
-// @require https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
+// @require http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
 // @grant GM_setValue
 // @grant GM_getValue
 // @grant unsafeWindow
@@ -217,7 +218,7 @@ function addPlan()
             //javascript:unsafeWindow.add(mod[0], mod[1]-1);
 
             /*
-               maybe the code in entw.js has changed:
+               maybe the code in entw.js has changed: 
                //needed by html from server
                window.sorty = sorty;
                window.classy = classy;
