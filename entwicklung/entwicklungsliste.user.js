@@ -9,7 +9,7 @@
 // @updateURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/entwicklungsliste.user.js
 // @include http://www.revorix.info/php/entwicklung_neu.php
 // @include https://www.revorix.info/php/entwicklung_neu.php
-// @version 2.2017032801
+// @version 3.2017032801
 // @run-at document-idle
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
 // @grant GM_setValue
