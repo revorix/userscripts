@@ -5,26 +5,22 @@
 // @downloadURL http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxnewmaps.user.js
 // @updateURL   http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxnewmaps.meta.js
 // @priority	-1
-// @version     0.9beta
+// @version     0.10beta
 //
-// @include     http://87.106.151.92/*/map*.php*
-// @include     http://87.106.151.92/*/setup.php*
-// @include     http://87.106.151.92/*/sgfx_select.php*
-// @include     http://87.106.151.92/*/rx.php?set=4*
-// @include     http://87.106.151.92/*/rx.php?set=5*
-// @include     http://www.revorix.info/*/map*.php*
-// @include     http://www.revorix.info/*/setup.php*
-// @include     http://www.revorix.info/*/sgfx_select.php*
-// @include     http://www.revorix.info/*/rx.php?set=4*
-// @include     http://www.revorix.info/*/rx.php?set=5*
+// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/map.*\.php/
+// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/setup\.php/
+// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/sgfx\_select\.php/
+// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/rx\.php\?set=(4|5)/
 // ==/UserScript==
 
 /* made by DarkIce */
 
-"use strict";
+/* globals console */
 
 (function()
 {
+	"use strict";
+
 	var thisIsExperimental = true;
 
 	// logging
@@ -179,7 +175,7 @@
 			group: 'Animationen'
 		},
 
-		_get: function (which) { return this[which] && this[which].value },
+		_get: function (which) { return this[which] && this[which].value; },
 		_set: function (which, what) {
 			if (!this[which]) {
 				return false;
@@ -196,7 +192,7 @@
 			}
 			return true;
 		}
-	}
+	};
 
 	// static vars
 
@@ -265,7 +261,7 @@
 
 	var PIN_SECTORINFOS = false;
 
-	var badsets = new Array();
+	var badsets = [];
 
 
 	function loadDefaultSettings()
@@ -303,7 +299,10 @@
 		var savedSets = str.split('!');
 
 		for (var i = 0; i < savedSets.length; i++) {
-			var [key, value] = savedSets[i].split(':');
+			var parts = savedSets[i].split(':');
+			var key = parts[0];
+			var value = parts[1];
+
 			if (!key || !value) {
 				continue;
 			}
@@ -333,6 +332,8 @@
 		var cookieString = 'rxuscriptnewmaps=';
 
 		for (var key in settings) {
+			if (!settings.hasOwnProperty(key))
+				continue;
 
 			if ((/^\_/).test(key)) {
 				continue;
@@ -456,18 +457,21 @@
 
 	}
 
-	function checkDependency()
+	function checkDependency(evt)
 	{
 		for (var key in settings) {
+			if (!settings.hasOwnProperty(key))
+				continue;
+
 			if ((/^\_/).test(key)) {
 				continue;
 			}
 
-			var dset = this.id.substring(5);
+			var dset = evt.target.id.substring(5);
 
 			if (settings[key].depends && (settings[key].depends === dset)) {
 				var thisset = document.getElementById('rxnms' + key);
-				if (this.checked === false) {
+				if (evt.target.checked === false) {
 					thisset.disabled = 'disabled';
 					thisset.parentNode.lastChild.style.color = '#888888';
 					thisset.parentNode.lastChild.style.fontStyle = 'italic';
@@ -482,9 +486,9 @@
 		hideSavemsg();
 	}
 
-	function numberInputEvent()
+	function numberInputEvent(evt)
 	{
-		checkNumberInput(this);
+		checkNumberInput(evt.target);
 		hideSavemsg();
 	}
 
@@ -493,6 +497,8 @@
 		loadDefaultSettings();
 
 		for (var key in settings) {
+			if (!settings.hasOwnProperty(key))
+				continue;
 
 			if ((/^\_/).test(key)) {
 				continue;
@@ -574,8 +580,12 @@
 
 		var lastgroup = '';
 		var gsoff = 0;
+		var key;
 
-		for (var key in settings) {
+		for (key in settings) {
+			if (!settings.hasOwnProperty(key))
+				continue;
+
 			// test if this is a function (prepended with '_')
 			if ((/^\_/).test(key)) {
 				continue;
@@ -720,7 +730,9 @@
 		frm.parentNode.insertBefore(document.createElement('br'), frm.nextSibling);
 
 		// dependency check
-		for (var key in settings) {
+		for (key in settings) {
+			if (!settings.hasOwnProperty(key))
+				continue;
 
 			if ((/^\_/).test(key)) {
 				continue;
@@ -841,7 +853,7 @@
 			case 5: return FILTER_LINES;
 			case 6: return FILTER_GHOST;
 			case 7: return FILTER_3DTILE;
-			default: return null
+			default: return null;
 		}
 	}
 
@@ -928,9 +940,9 @@
 			if ((/\bEnergie\b.+\bSchiffsreaktoren\b.+\bumverteilt\b/).test(tables[i].textContent)) {
 				document.body.removeChild(tables[i].parentNode.parentNode.parentNode);
 				// those breaks...
-				for (var i = 0; i < document.body.childNodes.length; i++) {
-					if (document.body.childNodes[i].tagName === 'BR') {
-						document.body.removeChild(document.body.childNodes[i]);
+				for (var j = 0; i < document.body.childNodes.length; i++) {
+					if (document.body.childNodes[j].tagName === 'BR') {
+						document.body.removeChild(document.body.childNodes[j]);
 					}
 				}
 				return true;
@@ -1019,11 +1031,12 @@
 
 		var vx = x - (maxsec - 1) / 2;
 		var vy = y - (maxsec - 1) / 2;
+		var i;
 
-		for (var i = 0; i < bignodes.length; i++) {
+		for (i = 0; i < bignodes.length; i++) {
 			bignodes[i] = cellc(vx, vy);
 			vx++;
-			if (!((i + 1) % maxsec)) {
+			if ((i + 1) % maxsec === 0) {
 				vx -= maxsec;
 				vy++;
 			}
@@ -1031,7 +1044,7 @@
 
 		var ndiv = document.createElement('div');
 
-		for (var i = 0; i < bignodes.length; i++) {
+		for (i = 0; i < bignodes.length; i++) {
 
 			var thisnode;
 
@@ -1048,7 +1061,7 @@
 			thisnode.height = imgsize * settings._get('viewMagnitude');
 			thisnode.width = imgsize * settings._get('viewMagnitude');
 			ndiv.appendChild(thisnode);
-			if (!((i + 1) % maxsec)) {
+			if ((i + 1) % maxsec === 0) {
 				ndiv.appendChild(document.createElement('br'));
 			}
 		}
@@ -1061,7 +1074,7 @@
 	{
 		var tstart = new Date().getTime();
 
-		var scell = getCell(CELL_SECTORINFO)
+		var scell = getCell(CELL_SECTORINFO);
 		if (!scell) {
 			return -1;
 		}
@@ -1073,9 +1086,11 @@
 
 		log('current fleet position is ' + q + ' ' + x + ':' + y);
 
-		var ldiv, xmax, ymax, imgsize;
-
-		[ldiv, xmax, ymax, imgsize] = makeLocalMap(x, y);
+		var mapdata = makeLocalMap(x, y);
+		var ldiv = mapdata[0];
+		var xmax = mapdata[1];
+		var ymax = mapdata[2];
+		var imgsize = mapdata[3];
 		log('xmax = ' + xmax + ', ymax = ' + ymax + ', imgsize = ' + imgsize);
 
 		var viewsecsize = (settings._get('viewSectionRadius') * 2 - 1) * settings._get('viewMagnitude');
@@ -1272,7 +1287,7 @@
 			}
 			mx.fillRect((vx * pxsize + xoff), (vy * pxsize + yoff), pxsize, pxsize);	// (x, y, width, height)
 			vx++;
-			if (!((i + 1) % xmax)) {
+			if ((i + 1) % xmax === 0) {
 				vx -= xmax;
 				vy++;
 			}
@@ -1318,7 +1333,7 @@
 		mapdiv.appendChild(marksec);
 
 		var swb = document.createElement('a');
-		swb.href = 'javascript:void(0);';
+		swb.href = '#';
 		swb.id = 'switchmaps';
 		swb.appendChild(document.createTextNode(TEXT_MAP_SWITCH));
 		swb.addEventListener('click', switchMaps, false);
@@ -1326,7 +1341,7 @@
 		swbdiv.appendChild(swb);
 
 		var magl = document.createElement('a');
-		magl.href = 'javascript:void(0);';
+		magl.href = '#';
 		magl.id = 'mapsmagl';
 		magl.style.fontFamily = 'DejaVu Sans Mono,Lucida Console,Liberation Mono,Courier New,monospace';
 		magl.appendChild(document.createTextNode('+++'));
@@ -1336,7 +1351,7 @@
 		magldiv.style.cssFloat = 'right';
 
 		var mags = document.createElement('a');
-		mags.href = 'javascript:void(0);';
+		mags.href = '#';
 		mags.id = 'mapsmags';
 		mags.style.fontFamily = 'DejaVu Sans Mono,Lucida Console,Liberation Mono,Courier New,monospace';
 		mags.appendChild(document.createTextNode('---'));
@@ -1375,12 +1390,13 @@
 
 	}
 
-	function magnifyMaps()
+	function magnifyMaps(evt)
 	{
 		// scale microvframe here, display only if needed (else set height to '')
 		// get micromap size from setting values - save pixsize somewhere inside micromap (as alt?)
 		// get microvframe from pixsize and that settings value, position as above
 		// positioning still dodgy
+		evt.preventDefault();
 
 		var map = document.getElementById('minimap');
 		var microvframe = document.getElementById('microvframe');
@@ -1403,7 +1419,7 @@
 			zoom = +zoom[0];
 		}
 
-		if (this === zplus) {
+		if (evt.target === zplus) {
 
 			zoom++;
 
@@ -1412,7 +1428,7 @@
 			}
 			zminus.style.visibility = 'visible';
 
-		} else if (this === zminus) {
+		} else if (evt.target === zminus) {
 
 			zoom--;
 
@@ -1460,8 +1476,10 @@
 		}
 	}
 
-	function switchMaps()
+	function switchMaps(evt)
 	{
+		evt.preventDefault();
+
 		var minimap = document.getElementById('minimap');
 		var micromap = document.getElementById('micromap');
 		var microvframe = document.getElementById('microvframe');
@@ -1510,10 +1528,10 @@
 		return 0;
 	}
 
-	function hoverSector(e)
+	function hoverSector(evt)
 	{
-		if (!e) {
-			var e = window.event;
+		if (!evt) {
+			evt = window.event;
 		}
 
 		var infos = document.getElementById('sectorinfos');
@@ -1521,17 +1539,17 @@
 
 		var ms = document.getElementById('marksec');
 		ms.style.display = 'inline-block';
-		ms.style.top = this.offsetTop + 'px';
-		ms.style.left = this.offsetLeft + 'px';
-		this.style.opacity = 0.5;
+		ms.style.top = evt.target.offsetTop + 'px';
+		ms.style.left = evt.target.offsetLeft + 'px';
+		evt.target.style.opacity = 0.5;
 
 		if (sector_timer) {
 			window.clearTimeout(sector_timer);
 			sector_timer = null;
 		}
 
-		var altText = this.alt;
-		var isunknown = (/u\.gif$/).test(this.src);
+		var altText = evt.target.alt;
+		var isunknown = (/u\.gif$/).test(evt.target.src);
 		var qx = +altText.match(/\d+(?=\s*Y)/)[0];
 		var qy = +altText.match(/\d+\s*$/)[0];
 
@@ -1552,7 +1570,8 @@
 			infos.style.visibility = 'hidden';
 		}
 
-		sector_timer = window.setTimeout(popSector, settings._get('hoverTimeout'), qx, qy, e.pageX, e.pageY, isunknown);
+		sector_timer = window.setTimeout(popSector, settings._get('hoverTimeout'),
+			qx, qy, evt.pageX, evt.pageY, isunknown);
 
 		if (status_timer) {
 			window.clearInterval(status_timer);
@@ -1564,12 +1583,12 @@
 		return 0;
 	}
 
-	function leaveSector(e)
+	function leaveSector(evt)
 	{
 		document.getElementById('mapstatus').textContent = '';
 
 		document.getElementById('marksec').style.display = 'none';
-		this.style.opacity = 1;
+		evt.target.style.opacity = 1;
 
 		if (PIN_SECTORINFOS) {
 			log('pin lock');
@@ -1608,9 +1627,9 @@
 		PIN_SECTORINFOS = true;
 	}
 
-	function dblclickDestruct()
+	function dblclickDestruct(evt)
 	{
-		log('dblclick detected from ' + this.id);
+		log('dblclick detected from ' + evt.target.id);
 
 		var infos = document.getElementById('sectorinfos');
 		var ldr = document.getElementById('loaderhint');
@@ -1645,7 +1664,7 @@
 			ldrdiv.id = 'loaderhint';
 			ldrdiv.style.position = 'absolute';
 			ldrdiv.style.zIndex = 10;
-			ldrdiv.style.background = 'rgb(24,25,46)'
+			ldrdiv.style.background = 'rgb(24,25,46)';
 			ldrdiv.style.textAlign = 'left';
 			ldrdiv.style.padding = '2px';
 			ldrdiv.style.border = 'solid';
@@ -1708,6 +1727,7 @@
 		log('stripping page...');
 
 		var mdoc = window.parent.document;
+		var i, j, k;
 
 		function styleCompactNode(n)
 		{
@@ -1742,8 +1762,11 @@
 			noinfos = true;
 		}
 
+		var sinfos = null;
+		var fleets = null;
+
 		if (!noinfos) {
-			var i = 0;
+			i = 0;
 			while ((tables[i].rows.length !== 2) || (tables[i].rows[0].cells.length !== 2)) {
 				i++;
 				if (i >= tables.length) {
@@ -1751,12 +1774,12 @@
 					noinfos = true;
 				}
 			}
-			var sinfos = tables[i].rows[0].cells[1];
-			var fleets = tables[i].rows[1].cells[0];
+			sinfos = tables[i].rows[0].cells[1];
+			fleets = tables[i].rows[1].cells[0];
 		}
 
 		var md = mdoc.createElement('div');
-		md.style.background = 'rgb(24,25,46)'
+		md.style.background = 'rgb(24,25,46)';
 		md.style.textAlign = 'left';
 		md.style.whiteSpace = 'nowrap';
 		md.style.padding = '2px';
@@ -1766,6 +1789,11 @@
 		md.style.width = 'auto';
 		md.style.height = 'auto';
 		md.style.display = 'inline-block';
+
+		var ressnodediv = null;
+		var ipnodediv = null;
+		var cpnodediv = null;
+		var wlnodediv = null;
 
 		if (noinfos) {
 			md.appendChild(idc.createTextNode(TEXT_HINT_UNKNOWN));
@@ -1783,7 +1811,7 @@
 					if (sinfos.firstChild.tagName === 'TABLE') {
 						var thistab = sinfos.firstChild;
 						if (thistab.rows[0].cells.length > 1) {
-							for (var i = 0; i < thistab.rows.length; i++) {
+							for (i = 0; i < thistab.rows.length; i++) {
 								if (thistab.rows[i].cells[0].firstChild.tagName === 'IMG') {
 									if ((/Individuelles\sPortal/).test(thistab.rows[i].cells[1].firstChild.data)) {
 										// IP
@@ -1795,7 +1823,7 @@
 										var sclansum = new Array(1);
 										sclanname[0] = 'clanlos';
 										sclansum[0] = 0;
-										for (var j = 0; j < ipdummy.length; j++) {
+										for (j = 0; j < ipdummy.length; j++) {
 											if (ipdummy[j].length > 0) {
 												sum++;
 												var thisclan = ipdummy[j].match(/\[\S+\]/);
@@ -1803,7 +1831,7 @@
 													sclansum[0]++;
 												} else {
 													var hit = false;
-													for (var k = 0; k < sclanname.length; k++) {
+													for (k = 0; k < sclanname.length; k++) {
 														if (sclanname[k] === thisclan[0]) {
 															sclansum[k]++;
 															hit = true;
@@ -1819,15 +1847,15 @@
 											}
 										}
 
-										var ipnodediv = mdoc.createElement('div');
+										ipnodediv = mdoc.createElement('div');
 
 										if (sclanname.length == 1) {
 											ipnodediv.appendChild(mdoc.createTextNode(sum + ' IP'));
-										} else if ((sclanname.length == 2) && (sclansum[0] == 0)) {
+										} else if ((sclanname.length === 2) && (sclansum[0] === 0)) {
 											ipnodediv.appendChild(mdoc.createTextNode(sum + ' IP von ' + sclanname[1]));
 										} else {
 											ipnodediv.appendChild(mdoc.createTextNode(sum + ' IP:'));
-											for (var j = sclanname.length - 1; j > 0; j--) {
+											for (j = sclanname.length - 1; j > 0; j--) {
 												ipnodediv.appendChild(mdoc.createElement('br'));
 												ipnodediv.appendChild(mdoc.createTextNode(sclansum[j] + ' - ' + sclanname[j]));
 											}
@@ -1838,7 +1866,7 @@
 										}
 									} else if ((/Clan\sPortal/).test(thistab.rows[i].cells[1].firstChild.data)) {
 										// CP
-										var cpnodediv = mdoc.createElement('div');
+										cpnodediv = mdoc.createElement('div');
 										while (thistab.rows[i].cells[1].firstChild) {
 											cpnodediv.appendChild(thistab.rows[i].cells[1].firstChild);
 										}
@@ -1848,11 +1876,11 @@
 										}
 									} else if ((/npc\/w\/\d+\.gif$/).test(thistab.rows[i].cells[0].firstChild.src)) {
 										// wormhole
-										var wlnodediv = mdoc.createElement('div');
+										wlnodediv = mdoc.createElement('div');
 										while (thistab.rows[i].cells[1].firstChild) {
 											// deactivate wormhole link
 											if (thistab.rows[i].cells[1].firstChild.tagName === 'A') {
-												thistab.rows[i].cells[1].firstChild.href = 'javascript:void(0)';
+												thistab.rows[i].cells[1].firstChild.href = '#';
 											}
 											wlnodediv.appendChild(thistab.rows[i].cells[1].firstChild);
 										}
@@ -1870,16 +1898,16 @@
 
 					} else if (sinfos.firstChild.tagName === 'IMG') {
 
-						if (((/\/r\d+\.gif$/).test(sinfos.firstChild.src))
-							&& (sinfos.firstChild.nextSibling.nodeName === '#text')
-							&& (!(/\(\S+\)/).test(sinfos.firstChild.nextSibling.data))) {
+						if (((/\/r\d+\.gif$/).test(sinfos.firstChild.src)) &&
+								(sinfos.firstChild.nextSibling.nodeName === '#text') &&
+								(!(/\(\S+\)/).test(sinfos.firstChild.nextSibling.data))) {
 							if (!ressnodediv) {
-								var ressnodediv = mdoc.createElement('div');
+								ressnodediv = mdoc.createElement('div');
 							}
 							sinfos.firstChild.nextSibling.data += ' ';
 							ressnodediv.appendChild(sinfos.firstChild);
 							ressnodediv.appendChild(sinfos.firstChild);
-							if (!(ressnodediv.childNodes.length % 6)) {
+							if (ressnodediv.childNodes.length % 6 === 0) {
 								ressnodediv.appendChild(mdoc.createElement('br'));
 							}
 							if (sinfos.firstChild.tagName === 'BR') {
@@ -2010,10 +2038,10 @@
 		var rout = size / 2 - boundoffset;
 
 		var rgrad = ctx.createRadialGradient(size/2, size/2, rin, size/2, size/2, rout);
-		rgrad.addColorStop(0, 'rgba(' + colourrgbarr[0] + ', '
-			+ colourrgbarr[1] + ', '  + colourrgbarr[2] + ', 0)');
-		rgrad.addColorStop(1, 'rgba(' + colourrgbarr[0] + ', '
-			+ colourrgbarr[1] + ', '  + colourrgbarr[2] + ', 255)');
+		rgrad.addColorStop(0, 'rgba(' + colourrgbarr[0] + ', ' +
+			colourrgbarr[1] + ', '  + colourrgbarr[2] + ', 0)');
+		rgrad.addColorStop(1, 'rgba(' + colourrgbarr[0] + ', ' +
+			colourrgbarr[1] + ', '  + colourrgbarr[2] + ', 255)');
 
 		ctx.fillStyle = rgrad;
 		ctx.fillRect(0, 0, size, size);
@@ -2087,8 +2115,9 @@
 			var ctx = canv.getContext('2d');
 
 			var sx = 0, sy = 0;
+			var i;
 
-			for (var i = 0; i < sectors; i++) {
+			for (i = 0; i < sectors; i++) {
 				ctx.drawImage(flimg[i], sx, sy, secwidth, secwidth);
 				sx += secwidth;
 				if (sx >= seclength * secwidth) {
@@ -2104,7 +2133,7 @@
 			sx = 0;
 			sy = 0;
 
-			for (var i = 0; i < sectors; i++) {
+			for (i = 0; i < sectors; i++) {
 				if ((/n\.gif$/).test(flimg[i].src)) {
 					ctx.fillStyle = 'rgb(24, 25, 46)';
 					ctx.fillRect(sx, sy, secwidth, secwidth);
@@ -2157,7 +2186,7 @@
 		var start = new Date().getTime();
 		fancyGfx();
 		var pc = window.mozPaintCount;
-		log('lCHook done in ' + (new Date().getTime() - start) + ' ms! (repaint count: ' + pc + ')')
+		log('lCHook done in ' + (new Date().getTime() - start) + ' ms! (repaint count: ' + pc + ')');
 	}
 
 	function deframe()
@@ -2211,12 +2240,7 @@
 
 		// since the original page has the html 4 frameset standard as doctype,
 		// we need to regenerate the entire page
-		var doctype = document.implementation.createDocumentType('HTML',
-			'-//W3C//DTD HTML 4.01 Transitional//EN',
-			'http://www.w3.org/TR/html4/loose.dtd');
-
 		var ndoc = document.implementation.createHTMLDocument('Revorix: Weltraum');
-		var nnode = document.importNode(ndoc.documentElement, true);
 		document.removeChild(document.documentElement);
 		document.appendChild(ndoc.documentElement);
 		document.replaceChild(ndoc.doctype, document.doctype);
@@ -2259,11 +2283,13 @@
 
 	}
 
-	function autoresize()
+	function autoresize(evt)
 	{
-		this.style.width = this.contentDocument.body.scrollWidth + 'px';
-		this.style.marginLeft = -this.contentDocument.body.scrollWidth / 2 + 'px';
-		this.style.visibility = 'visible';
+		var tgt = evt.target;
+
+		tgt.style.width = tgt.contentDocument.body.scrollWidth + 'px';
+		tgt.style.marginLeft = -tgt.contentDocument.body.scrollWidth / 2 + 'px';
+		tgt.style.visibility = 'visible';
 	}
 
 	function init_houston()
@@ -2308,7 +2334,7 @@
 			insertSettings();
 		}
 
-		log('main done in ' + (new Date().getTime() - start) + ' ms! (repaint count: ' + pc + ')')
+		log('main done in ' + (new Date().getTime() - start) + ' ms! (repaint count: ' + pc + ')');
 
 		return 0;
 	}
@@ -2324,10 +2350,10 @@
 	{
 		if (typeof(GM_info) !== 'undefined') {
 			console.log(
-				GM_info.script.name
-				+ ' v' + GM_info.script.version
-				+ ' (will ' + (GM_info.scriptWillUpdate ? '' : 'NOT ')
-				+ 'auto-update)'
+				GM_info.script.name +
+				' v' + GM_info.script.version +
+				' (will ' + (GM_info.scriptWillUpdate ? '' : 'NOT ') +
+				'auto-update)'
 			);
 		}
 	}
