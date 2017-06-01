@@ -3,8 +3,8 @@
 // @namespace   http://random.erdbeerkuchen.net/
 // @author      DarkIce (The42)
 // @description Modifiziert die Kartenansicht für ein neues Fluggefühl im RX-Universum
-// @downloadURL http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxnewmaps.user.js
-// @updateURL   http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxnewmaps.meta.js
+// @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/weltraum/rxnewmaps.user.js
+// @updateURL   https://raw.githubusercontent.com/tpummer/gm-revorix/master/weltraum/rxnewmaps.meta.js
 // @priority    -1
 // @grant       None
 // @version     0.10beta
