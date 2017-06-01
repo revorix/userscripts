@@ -7,7 +7,7 @@
 // @updateURL   https://raw.githubusercontent.com/tpummer/gm-revorix/master/weltraum/rxnewmaps.meta.js
 // @priority    -1
 // @grant       None
-// @version     0.10beta
+// @version     1.20170602
 //
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/map.*\.php/
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/setup\.php/
