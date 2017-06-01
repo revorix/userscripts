@@ -2,11 +2,11 @@
 // @name Revorix_Sternenbund_Importer
 // @namespace foo.ddnss.de
 // @description Script zum Uebertrag von Schiffsplaenen aus dem Sternenbund nach Revorix
-// @contributor coolius
+// @contributor Wintermoon
 // @contributor Lord-FaKe
-// @author   Wintermoon
-// @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/entwicklungsliste.user.js
-// @updateURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/entwicklungsliste.user.js
+// @author   coolius
+// @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/Revorix_Sternenbund_Importer.user.js
+// @updateURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/Revorix_Sternenbund_Importer.user.js
 // @include http*revorix.info/php/entwicklung_neu.php*
 // @version 3.2017053101
 // @run-at document-idle
@@ -32,6 +32,11 @@ window.addEventListener("message", recvMessage, false);
 //Helper func to reset the persistent variable
 function reset() {
     GM_setValue('urlStore', "");
+    var element = document.getElementsByClassName("wrp ce")[1];
+    element.outerHTML = "";
+    delete element;
+    addButton(shipname + " übernehmen");
+    viewUrlStore();
 }
 
 //Add default button
@@ -159,6 +164,10 @@ function addButton(text) {
 
 //Update view
 function viewUrlStore() {
+    //Initial declare urlStore
+    if (!GM_getValue('urlStore')) {
+        GM_setValue('urlStore', "");
+    }
     var urlStore = GM_getValue('urlStore');
     l = urlStore.split(", ");
     if (typeof l[0] !== 'undefined' && l[0] !== null && l[0] !== "") {
