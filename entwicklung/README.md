@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 The pattern of versioning is: Major.YearMonthDayCount
 
+## [3.2017310501] - 2017-05-31
+- Es können nun alle Module entfernt werden, sowie das UI ist ansprechender gestalted
+
 ## [3.2017032801] - 2017-03-28
 - Der Planer kann nun mit https umgehen
 
