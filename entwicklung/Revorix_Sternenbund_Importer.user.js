@@ -82,7 +82,7 @@ function addButton(text) {
     resetBtn.style.marginLeft = "5px";
     resetBtn.style.marginBottom = "5px";
     resetBtn.setAttribute("type", "button");
-    resetBtn.setAttribute("class", "button")
+    resetBtn.setAttribute("class", "button");
     resetBtn.setAttribute("value", "Alle gespeicherten Pläne löschen");
     resetBtn.addEventListener('click', reset, true);
 
@@ -164,8 +164,8 @@ function addButton(text) {
 
 //Update view
 function viewUrlStore() {
-    //Initial declare urlStore
     if (!GM_getValue('urlStore')) {
+        console.log("define Urlstore first time");
         GM_setValue('urlStore', "");
     }
     var urlStore = GM_getValue('urlStore');
@@ -224,7 +224,7 @@ function viewUrlStore() {
                 addButton(shipname + " übernehmen");
                 viewUrlStore();
             }, true);
-            targetTable.rows[basecnt + i].cells[1].setAttribute("style", "text-align: center; vertical-align: middle;")
+            targetTable.rows[basecnt + i].cells[1].setAttribute("style", "text-align: center; vertical-align: middle;");
             targetTable.rows[basecnt + i].cells[1].appendChild(delbtn);
         }
     }
