@@ -113,10 +113,15 @@ function markBuildAge(trelemente)
 function extractID(str)
 {
 	/* reference: Begleitschiff (L) xyz (ID:874535) */
-	var split = str.split(":");
-	var IDsplit = split[1].split(")");
+	var id;
 
-	return IDsplit[0];
+	try {
+		id = str.match(/\(ID:(\d+)\)/)[1];
+	} catch (ex) {
+		id = 0;
+	}
+
+	return id;
 }
 
 function strAge(yy, mm)
