@@ -19,7 +19,7 @@
 	 * Referenzen - ShipID + Bautag aus dem Logbuch (vorsicht bei
 	 * Baubeschleunigern!) - Monate sind 0-basiert!
 	 */
-	var refs = new Array();
+	var refs = [];
 	refs[0] = new Array(8305319, (new Date(2010, 0, 3)).getTime());
 	refs[1] = new Array(8827853, (new Date(2010, 4, 5)).getTime());
 	refs[2] = new Array(8834088, (new Date(2010, 4, 6)).getTime());
@@ -91,7 +91,7 @@
 			return false;
 
 		var tdshipid = td[0];
-		shipid = extractID(tdshipid.textContent);
+		var shipid = extractID(tdshipid.textContent);
 
 		var lowindex = refs.length;
 		var highindex = refs.length;
@@ -119,7 +119,7 @@
 
 		// dy / dx
 		var m = (refs[highindex][1] - refs[lowindex][1]) /
-			(refs[highindex][0] - refs[lowindex][0])
+			(refs[highindex][0] - refs[lowindex][0]);
 		// y1 - m*x1
 		var c = refs[lowindex][1] - m * refs[lowindex][0];
 		var estdate = new Date(m * shipid + c);
@@ -173,7 +173,7 @@
 				str += "e";
 
 			if (mm > 0)
-				str += ",&nbsp;"
+				str += ",&nbsp;";
 		}
 
 		if (mm > 0) {
