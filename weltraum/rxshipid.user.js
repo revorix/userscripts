@@ -41,73 +41,76 @@ function initShipID()
 	var tables = document.getElementsByTagName('table');
 
 	for (var i = 0; i < tables.length; i++) {
-		var trelemente = tables[i].getElementsByTagName('tr');
-		var text = trelemente[0].textContent;
+		var rows = tables[i].getElementsByTagName('tr');
+		var text = rows[0].textContent;
 
 		if (text == "Gescannte Schiffe") {
 			// resize popup to prevent linebreaks
-			if (markBuildAge(trelemente) == 1)
+			if (markBuildAge(rows) == 1)
 				window.resizeBy(100, 0);
 		}
 	}
 }
 
-function markBuildAge(trelemente)
+function markRow(tr)
 {
-	var hasExecuted = 0;
+	var td = tr.getElementsByTagName('td');
+	if (td.length !== 3)
+		return false;
 
-	for (var i = 2; i < trelemente.length; i++) {
-		var tr = trelemente[i];
-		var tdelemente = tr.getElementsByTagName('td');
+	var tdshipid = td[0];
+	shipid = extractID(tdshipid.textContent);
 
-		if (tdelemente.length == 3) {
-			var tdshipid = tdelemente[0];
-			shipid = extractID(tdshipid.textContent);
+	var lowindex = refs.length;
+	var highindex = refs.length;
 
-			var lowindex = refs.length;
-			var highindex = refs.length;
-
-			// find adjacent grid points
-			for (var j = 0; j < refs.length; j++) {
-				if (shipid < refs[j][0]) {
-					lowindex = j - 1;
-					highindex = j;
-					break;
-				}
-			}
-
-			// lower bound
-			if (lowindex < 0) {
-				lowindex = 0;
-				highindex = 1;
-			}
-
-			// upper bound
-			if (highindex >= refs.length) {
-				lowindex = refs.length - 2;
-				highindex = refs.length - 1;
-			}
-
-			// dy / dx
-			var m = (refs[highindex][1] - refs[lowindex][1]) /
-				(refs[highindex][0] - refs[lowindex][0])
-			// y1 - m*x1
-			var c = refs[lowindex][1] - m * refs[lowindex][0];
-			var estdate = new Date(m * shipid + c);
-
-			var agemonths = Math.round((now - estdate) /
-				(1000 * 60 * 60 * 24 * 365) * 12);
-			var diffyears = Math.floor(agemonths / 12);
-			var diffmonths = agemonths % 12;
-
-			tdshipid.innerHTML += "&nbsp;<span style='color:#FFFF00'>" +
-				strAge(diffyears, diffmonths) + "</span>";
-
-			hasExecuted = 1;
+	// find adjacent grid points
+	for (var j = 0; j < refs.length; j++) {
+		if (shipid < refs[j][0]) {
+			lowindex = j - 1;
+			highindex = j;
+			break;
 		}
 	}
 
-	return hasExecuted;
+	// lower bound
+	if (lowindex < 0) {
+		lowindex = 0;
+		highindex = 1;
+	}
+
+	// upper bound
+	if (highindex >= refs.length) {
+		lowindex = refs.length - 2;
+		highindex = refs.length - 1;
+	}
+
+	// dy / dx
+	var m = (refs[highindex][1] - refs[lowindex][1]) /
+		(refs[highindex][0] - refs[lowindex][0])
+	// y1 - m*x1
+	var c = refs[lowindex][1] - m * refs[lowindex][0];
+	var estdate = new Date(m * shipid + c);
+
+	var agemonths = Math.round((now - estdate) /
+		(1000 * 60 * 60 * 24 * 365) * 12);
+	var diffyears = Math.floor(agemonths / 12);
+	var diffmonths = agemonths % 12;
+
+	tdshipid.innerHTML += "&nbsp;<span style='color:#FFFF00'>" +
+		strAge(diffyears, diffmonths) + "</span>";
+
+	return true;
+}
+
+function markBuildAge(rows)
+{
+	var marked = 0;
+
+	for (var i = 2; i < rows.length; i++)
+		marked += markRow(rows[i]) ? 1 : 0;
+
+	return marked;
 }
 
 function extractID(str)
@@ -128,24 +131,23 @@ function strAge(yy, mm)
 {
 	var str = "&nbsp;(";
 
-	if ((mm <= 0) && (yy <= 0)) {
-		str += "neu";
-	} else {
-		if (yy > 0) {
-			str += yy + "&nbsp;Jahr";
+	if ((mm <= 0) && (yy <= 0))
+		return str + 'neu)';
 
-			if (yy > 1)
-				str += "e";
+	if (yy > 0) {
+		str += yy + "&nbsp;Jahr";
 
-			if (mm > 0)
-				str += ",&nbsp;"
-		}
+		if (yy > 1)
+			str += "e";
 
-		if (mm > 0) {
-			str += mm + "&nbsp;Monat";
-			if (mm > 1)
-				str += "e";
-		}
+		if (mm > 0)
+			str += ",&nbsp;"
+	}
+
+	if (mm > 0) {
+		str += mm + "&nbsp;Monat";
+		if (mm > 1)
+			str += "e";
 	}
 
 	str += ")";
