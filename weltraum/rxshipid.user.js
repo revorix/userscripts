@@ -41,32 +41,27 @@ function initShipID()
 {
 	var tables = document.getElementsByTagName('table');
 
-	for (var i=0; i < tables.length; i++) {
+	for (var i = 0; i < tables.length; i++) {
 		var trelemente = tables[i].getElementsByTagName('tr');
 		var text = trelemente[0].textContent;
 
-		if(text=="Gescannte Schiffe") {
+		if (text == "Gescannte Schiffe") {
 			// resize popup to prevent linebreaks
-			if(markBuildAge(trelemente) == 1) {
+			if (markBuildAge(trelemente) == 1)
 				window.resizeBy(100, 0);
-			}
 		}
 	}
-
 }
-
 
 function markBuildAge(trelemente)
 {
 	var hasExecuted = 0;
 
-	for (var i=2; i < trelemente.length; i++)
-	{
+	for (var i = 2; i < trelemente.length; i++) {
 		var tr = trelemente[i];
 		var tdelemente = tr.getElementsByTagName('td');
 
-		if(tdelemente.length==3)
-		{
+		if (tdelemente.length == 3) {
 			var tdshipid = tdelemente[0];
 			shipid = extractID(tdshipid.textContent);
 
@@ -74,8 +69,8 @@ function markBuildAge(trelemente)
 			var highindex = refs.length;
 
 			// find adjacent grid points
-			for(var j=0; j < refs.length; j++) {
-				if(shipid < refs[j][0]) {
+			for (var j = 0; j < refs.length; j++) {
+				if (shipid < refs[j][0]) {
 					lowindex = j - 1;
 					highindex = j;
 					break;
@@ -83,28 +78,31 @@ function markBuildAge(trelemente)
 			}
 
 			// lower bound
-			if(lowindex < 0) {
+			if (lowindex < 0) {
 				lowindex = 0;
 				highindex = 1;
 			}
 
 			// upper bound
-			if(highindex >= refs.length) {
+			if (highindex >= refs.length) {
 				lowindex = refs.length - 2;
 				highindex = refs.length - 1;
 			}
 
 			// dy / dx
-			var m = (refs[highindex][1] - refs[lowindex][1]) / (refs[highindex][0] - refs[lowindex][0])
+			var m = (refs[highindex][1] - refs[lowindex][1]) /
+				(refs[highindex][0] - refs[lowindex][0])
 			// y1 - m*x1
 			var c = refs[lowindex][1] - m * refs[lowindex][0];
 			var estdate = new Date(m * shipid + c);
 
-			var agemonths = Math.round((now - estdate) / (1000 * 60 * 60 * 24 * 365) * 12);
+			var agemonths = Math.round((now - estdate) /
+				(1000 * 60 * 60 * 24 * 365) * 12);
 			var diffyears = Math.floor(agemonths / 12);
 			var diffmonths = agemonths % 12;
 
-			tdshipid.innerHTML += "&nbsp;<span style='color:#FFFF00'>" + strAge(diffyears, diffmonths) + "</span>";
+			tdshipid.innerHTML += "&nbsp;<span style='color:#FFFF00'>" +
+				strAge(diffyears, diffmonths) + "</span>";
 
 			hasExecuted = 1;
 		}
@@ -115,7 +113,8 @@ function markBuildAge(trelemente)
 
 function extractID(str)
 {
-	var split = str.split(":");		// example: Begleitschiff (L) xyz (ID:874535)
+	/* reference: Begleitschiff (L) xyz (ID:874535) */
+	var split = str.split(":");
 	var IDsplit = split[1].split(")");
 
 	return IDsplit[0];
@@ -125,31 +124,28 @@ function strAge(yy, mm)
 {
 	var str = "&nbsp;(";
 
-	if((mm <= 0) && (yy <= 0)) {
+	if ((mm <= 0) && (yy <= 0)) {
 		str += "neu";
 	} else {
-		if(yy > 0) {
+		if (yy > 0) {
 			str += yy + "&nbsp;Jahr";
 
-			if(yy > 1) {
+			if (yy > 1)
 				str += "e";
-			}
 
-			if(mm > 0) {
+			if (mm > 0)
 				str += ",&nbsp;"
-			}
 		}
 
-		if(mm > 0) {
+		if (mm > 0) {
 			str += mm + "&nbsp;Monat";
-			if(mm > 1) {
+			if (mm > 1)
 				str += "e";
-			}
 		}
-
 	}
 
 	str += ")";
+
 	return str;
 }
 
