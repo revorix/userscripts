@@ -12,10 +12,6 @@
 
 /* made by DarkIce */
 
-var isOpera = "Opera" == navigator.appName;
-var isFireFox = "Netscape" == navigator.appName;
-var isChrome = "Netscape" == navigator.appName && navigator.appVersion.indexOf("Chrome") > -1;
-
 // Referenzen - ShipID + Bautag aus dem Logbuch (vorsicht bei Baubeschleunigern!) - Monate sind 0-basiert!
 var refs = new Array();
 refs[0] = new Array(8305319, (new Date(2010, 0, 3)).getTime());
@@ -47,12 +43,7 @@ function initShipID()
 
 	for (var i=0; i < tables.length; i++) {
 		var trelemente = tables[i].getElementsByTagName('tr');
-
-		if(isOpera) {
-			var text = trelemente[0].innerText;
-		} else {
-			var text = trelemente[0].textContent;
-		}
+		var text = trelemente[0].textContent;
 
 		if(text=="Gescannte Schiffe") {
 			// resize popup to prevent linebreaks
@@ -77,7 +68,7 @@ function markBuildAge(trelemente)
 		if(tdelemente.length==3)
 		{
 			var tdshipid = tdelemente[0];
-			shipid = extractID(getTDText(tdshipid));
+			shipid = extractID(tdshipid.textContent);
 
 			var lowindex = refs.length;
 			var highindex = refs.length;
@@ -160,15 +151,6 @@ function strAge(yy, mm)
 
 	str += ")";
 	return str;
-}
-
-function getTDText(td)
-{
-	if(isOpera) {
-		return td.innerText;
-	} else {
-		return td.textContent;
-	}
 }
 
 initShipID();
