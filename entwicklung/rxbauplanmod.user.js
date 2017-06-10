@@ -11,10 +11,6 @@
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/entwicklung_i\.php/
 // ==/UserScript==
 
-var isOpera = "Opera" == navigator.appName;
-var isFireFox = "Netscape" == navigator.appName;
-var isChrome = "Netscape" == navigator.appName && navigator.appVersion.indexOf("Chrome") > -1;
-
 function initPlanMod()
 {
 	var tables = document.getElementsByTagName('table');
@@ -22,7 +18,7 @@ function initPlanMod()
 	for(var i=0; i < tables.length; i++) {
 		var trelemente = tables[i].getElementsByTagName('tr');
 
-		text = getTDText(trelemente[0]);
+		text = trelemente[0].textContent;
 
 		if(text.search(/Technische Daten des Bauplans/)) {
 			rearrangeTable(tables[i]);
@@ -44,30 +40,30 @@ function rearrangeTable(planvals)
 		tdels[i] = trels[i+1].getElementsByTagName('td');
 	}
 
-	var ship_name = new Array(getTDText(tdels[0][0]), getTDText(tdels[0][1]));
-	var ship_sens = new Array(getTDText(tdels[0][2]), getTDText(tdels[0][3]));
-	var ship_type = new Array(getTDText(tdels[1][0]), getTDText(tdels[1][1]));
-	var ship_trn = new Array(getTDText(tdels[1][2]), getTDText(tdels[1][3]));
-	var ship_build = new Array(getTDText(tdels[2][0]), getTDText(tdels[2][1]));
-	var ship_aw = new Array(getTDText(tdels[2][2]), getTDText(tdels[2][3]));
-	var ship_opt = new Array(getTDText(tdels[3][0]), getTDText(tdels[3][1]));
-	var ship_sh = new Array(getTDText(tdels[3][2]), getTDText(tdels[3][3]));
-	var ship_mod = new Array(getTDText(tdels[4][0]), getTDText(tdels[4][1]));
-	var ship_pz = new Array(getTDText(tdels[4][2]), getTDText(tdels[4][3]));
-	var ship_tl = new Array(getTDText(tdels[5][0]), getTDText(tdels[5][1]));
-	var ship_str = new Array(getTDText(tdels[5][2]), getTDText(tdels[5][3]));
-	var ship_kp = new Array(getTDText(tdels[6][0]), getTDText(tdels[6][1]));
-	var ship_ss = new Array(getTDText(tdels[6][2]), getTDText(tdels[6][3]));
-	var ship_maxp = new Array(getTDText(tdels[7][0]), getTDText(tdels[7][1]));
-	var ship_sq = new Array(getTDText(tdels[7][2]), getTDText(tdels[7][3]));
-	var ship_minp = new Array(getTDText(tdels[8][0]), getTDText(tdels[8][1]));
-	var ship_sv = new Array(getTDText(tdels[8][2]), getTDText(tdels[8][3]));
-	var ship_rea = new Array(getTDText(tdels[9][0]), getTDText(tdels[9][1]));
-	var ship_sz = new Array(getTDText(tdels[9][2]), getTDText(tdels[9][3]));
-	var ship_lr = new Array(getTDText(tdels[10][0]), getTDText(tdels[10][1]));
-	var ship_ae = new Array(getTDText(tdels[10][2]), getTDText(tdels[10][3]));
-	var ship_wnd = new Array(getTDText(tdels[11][0]), getTDText(tdels[11][1]));
-	var ship_az = new Array(getTDText(tdels[11][2]), getTDText(tdels[11][3]));
+	var ship_name = [tdels[0][0].textContent, tdels[0][1].textContent];
+	var ship_sens = [tdels[0][2].textContent, tdels[0][3].textContent];
+	var ship_type = [tdels[1][0].textContent, tdels[1][1].textContent];
+	var ship_trn = [tdels[1][2].textContent, tdels[1][3].textContent];
+	var ship_build = [tdels[2][0].textContent, tdels[2][1].textContent];
+	var ship_aw = [tdels[2][2].textContent, tdels[2][3].textContent];
+	var ship_opt = [tdels[3][0].textContent, tdels[3][1].textContent];
+	var ship_sh = [tdels[3][2].textContent, tdels[3][3].textContent];
+	var ship_mod = [tdels[4][0].textContent, tdels[4][1].textContent];
+	var ship_pz = [tdels[4][2].textContent, tdels[4][3].textContent];
+	var ship_tl = [tdels[5][0].textContent, tdels[5][1].textContent];
+	var ship_str = [tdels[5][2].textContent, tdels[5][3].textContent];
+	var ship_kp = [tdels[6][0].textContent, tdels[6][1].textContent];
+	var ship_ss = [tdels[6][2].textContent, tdels[6][3].textContent];
+	var ship_maxp = [tdels[7][0].textContent, tdels[7][1].textContent];
+	var ship_sq = [tdels[7][2].textContent, tdels[7][3].textContent];
+	var ship_minp = [tdels[8][0].textContent, tdels[8][1].textContent];
+	var ship_sv = [tdels[8][2].textContent, tdels[8][3].textContent];
+	var ship_rea = [tdels[9][0].textContent, tdels[9][1].textContent];
+	var ship_sz = [tdels[9][2].textContent, tdels[9][3].textContent];
+	var ship_lr = [tdels[10][0].textContent, tdels[10][1].textContent];
+	var ship_ae = [tdels[10][2].textContent, tdels[10][3].textContent];
+	var ship_wnd = [tdels[11][0].textContent, tdels[11][1].textContent];
+	var ship_az = [tdels[11][2].textContent, tdels[11][3].textContent];
 
 	var baukp = Math.ceil(0.2 * ship_kp[1]) + 5;
 
@@ -99,15 +95,6 @@ function rearrangeTable(planvals)
 	);
 
 	window.resizeBy(-150, 250);
-}
-
-function getTDText(td)
-{
-	if(isOpera) {
-		return td.innerText;
-	} else {
-		return td.textContent;
-	}
 }
 
 /* start */
