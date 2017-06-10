@@ -6,7 +6,7 @@
 // @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/rxbauplanmod.user.js
 // @updateURL   https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/rxbauplanmod.meta.js
 // @grant       None
-// @version     1.0.2
+// @version     1.20170610
 //
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/entwicklung_i\.php/
 // ==/UserScript==
