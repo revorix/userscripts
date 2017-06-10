@@ -1,15 +1,15 @@
 ﻿// ==UserScript==
 // @name        Revorix-Bauplananzeige-Mod
 // @namespace   http://random.erdbeerkuchen.net/
-// @description Passt die Bauplananzeige graphisch derjenigen von Schiffen an und fügt den KP-Verbrauch während des Zusammenbaus hinzu
-// @downloadURL http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxbauplanmod.user.js
-// @updateURL   http://random.erdbeerkuchen.net/rxcode/scripts/DarkIce/rxbauplanmod.meta.js
+// @author      DarkIce (The42)
+// @description Passt die Bauplananzeige derjenigen von Schiffen an und fügt die Bau-KP hinzu
+// @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/rxbauplanmod.user.js
+// @updateURL   https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/rxbauplanmod.meta.js
+// @grant       None
 // @version     1.0.2
 //
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/entwicklung_i\.php/
 // ==/UserScript==
-
-/* made by DarkIce */
 
 var isOpera = "Opera" == navigator.appName;
 var isFireFox = "Netscape" == navigator.appName;
