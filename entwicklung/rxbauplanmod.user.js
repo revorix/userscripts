@@ -11,91 +11,92 @@
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/entwicklung_i\.php/
 // ==/UserScript==
 
-function initPlanMod()
+(function()
 {
-	var tables = document.getElementsByTagName('table');
+	"use strict";
 
-	for(var i=0; i < tables.length; i++) {
-		var trelemente = tables[i].getElementsByTagName('tr');
+	function initPlanMod()
+	{
+		var tables = document.getElementsByTagName('table');
 
-		text = trelemente[0].textContent;
+		for(var i = 0; i < tables.length; i++) {
+			var rows = tables[i].getElementsByTagName('tr');
+			var text = rows[0].textContent;
 
-		if(text.search(/Technische Daten des Bauplans/)) {
-			rearrangeTable(tables[i]);
+			if (text.search(/Technische Daten des Bauplans/)) {
+				rearrangeTable(tables[i]);
+				break;
+			}
 		}
 	}
 
-}
+	function rearrangeTable(planvals)
+	{
+		var trels = planvals.getElementsByTagName('tr');
+		var tdels = new Array(12);
 
-function rearrangeTable(planvals)
-{
-	var trels = planvals.getElementsByTagName('tr');
-	var tdels = new Array(12);
+		if (trels.length != 13)
+			return;
 
-	if(trels.length != 13) {
-		return;
+		for (var i = 0; i < 12; i++)
+			tdels[i] = trels[i + 1].getElementsByTagName('td');
+
+		var ship_name = [tdels[0][0].textContent, tdels[0][1].textContent];
+		var ship_sens = [tdels[0][2].textContent, tdels[0][3].textContent];
+		var ship_type = [tdels[1][0].textContent, tdels[1][1].textContent];
+		var ship_trn = [tdels[1][2].textContent, tdels[1][3].textContent];
+		var ship_build = [tdels[2][0].textContent, tdels[2][1].textContent];
+		var ship_aw = [tdels[2][2].textContent, tdels[2][3].textContent];
+		var ship_opt = [tdels[3][0].textContent, tdels[3][1].textContent];
+		var ship_sh = [tdels[3][2].textContent, tdels[3][3].textContent];
+		var ship_mod = [tdels[4][0].textContent, tdels[4][1].textContent];
+		var ship_pz = [tdels[4][2].textContent, tdels[4][3].textContent];
+		var ship_tl = [tdels[5][0].textContent, tdels[5][1].textContent];
+		var ship_str = [tdels[5][2].textContent, tdels[5][3].textContent];
+		var ship_kp = [tdels[6][0].textContent, tdels[6][1].textContent];
+		var ship_ss = [tdels[6][2].textContent, tdels[6][3].textContent];
+		var ship_maxp = [tdels[7][0].textContent, tdels[7][1].textContent];
+		var ship_sq = [tdels[7][2].textContent, tdels[7][3].textContent];
+		var ship_minp = [tdels[8][0].textContent, tdels[8][1].textContent];
+		var ship_sv = [tdels[8][2].textContent, tdels[8][3].textContent];
+		var ship_rea = [tdels[9][0].textContent, tdels[9][1].textContent];
+		var ship_sz = [tdels[9][2].textContent, tdels[9][3].textContent];
+		var ship_lr = [tdels[10][0].textContent, tdels[10][1].textContent];
+		var ship_ae = [tdels[10][2].textContent, tdels[10][3].textContent];
+		var ship_wnd = [tdels[11][0].textContent, tdels[11][1].textContent];
+		var ship_az = [tdels[11][2].textContent, tdels[11][3].textContent];
+
+		var baukp = Math.ceil(0.2 * ship_kp[1]) + 5;
+
+		planvals.innerHTML = (
+			"<tr><td class=\"nfo\" align=middle colspan=2><b>Technische Daten des Bauplans</b></td></tr>" +
+			"<tr><td width=200>" + ship_name[0] + "</td><td>" + ship_name[1] + "</td></tr>" +
+			"<tr><td>" + ship_type[0] + "</td><td>" + ship_type[1] + "</td></tr>" +
+			"<tr><td>" + ship_opt[0] + "</td><td>" + ship_opt[1] + "</td></tr>" +
+			"<tr><td>" + ship_build[0] + "</td><td>" + ship_build[1] + "</td></tr>" +
+			"<tr><td>" + ship_tl[0] + "</td><td>" + ship_tl[1] + "</td></tr>" +
+			"<tr><td>" + ship_mod[0] + "</td><td>" + ship_mod[1] + "</td></tr>" +
+			"<tr><td>" + ship_kp[0] + "</td><td>" + ship_kp[1] + "&nbsp;<span style='color:#00FFFF'>(" + baukp + " im Bau)</span>" + "</td></tr>" +
+			"<tr><td>" + ship_ss[0] + "</td><td>" + ship_ss[1] + "</td></tr>" +
+			"<tr><td>" + ship_sq[0] + "</td><td>" + ship_sq[1] + "</td></tr>" +
+			"<tr><td>" + ship_sv[0] + "</td><td>" + ship_sv[1] + "</td></tr>" +
+			"<tr><td>" + ship_sz[0] + "</td><td>" + ship_sz[1] + "</td></tr>" +
+			"<tr><td>" + ship_az[0] + "</td><td>" + ship_az[1] + "</td></tr>" +
+			"<tr><td>" + ship_ae[0] + "</td><td>" + ship_ae[1] + "</td></tr>" +
+			"<tr><td>" + ship_aw[0] + "</td><td>" + ship_aw[1] + "</td></tr>" +
+			"<tr><td>" + ship_sh[0] + "</td><td>" + ship_sh[1] + "</td></tr>" +
+			"<tr><td>" + ship_pz[0] + "</td><td>" + ship_pz[1] + "</td></tr>" +
+			"<tr><td>" + ship_str[0] + "</td><td>" + ship_str[1] + "</td></tr>" +
+			"<tr><td>" + ship_wnd[0] + "</td><td>" + ship_wnd[1] + "</td></tr>" +
+			"<tr><td>" + ship_sens[0] + "</td><td>" + ship_sens[1] + "</td></tr>" +
+			"<tr><td>" + ship_trn[0] + "</td><td>" + ship_trn[1] + "</td></tr>" +
+			"<tr><td>" + "Besatzung" + "</td><td>" + ship_minp[1] + "/" + ship_maxp[1] + "</td></tr>" +
+			"<tr><td>" + ship_rea[0] + "</td><td>" + ship_rea[1] + "</td></tr>" +
+			"<tr><td>" + ship_lr[0] + "</td><td>" + ship_lr[1] + "</td></tr>"
+		);
+
+		window.resizeBy(-150, 250);
 	}
 
-	for (var i=0; i < 12; i++) {
-		tdels[i] = trels[i+1].getElementsByTagName('td');
-	}
-
-	var ship_name = [tdels[0][0].textContent, tdels[0][1].textContent];
-	var ship_sens = [tdels[0][2].textContent, tdels[0][3].textContent];
-	var ship_type = [tdels[1][0].textContent, tdels[1][1].textContent];
-	var ship_trn = [tdels[1][2].textContent, tdels[1][3].textContent];
-	var ship_build = [tdels[2][0].textContent, tdels[2][1].textContent];
-	var ship_aw = [tdels[2][2].textContent, tdels[2][3].textContent];
-	var ship_opt = [tdels[3][0].textContent, tdels[3][1].textContent];
-	var ship_sh = [tdels[3][2].textContent, tdels[3][3].textContent];
-	var ship_mod = [tdels[4][0].textContent, tdels[4][1].textContent];
-	var ship_pz = [tdels[4][2].textContent, tdels[4][3].textContent];
-	var ship_tl = [tdels[5][0].textContent, tdels[5][1].textContent];
-	var ship_str = [tdels[5][2].textContent, tdels[5][3].textContent];
-	var ship_kp = [tdels[6][0].textContent, tdels[6][1].textContent];
-	var ship_ss = [tdels[6][2].textContent, tdels[6][3].textContent];
-	var ship_maxp = [tdels[7][0].textContent, tdels[7][1].textContent];
-	var ship_sq = [tdels[7][2].textContent, tdels[7][3].textContent];
-	var ship_minp = [tdels[8][0].textContent, tdels[8][1].textContent];
-	var ship_sv = [tdels[8][2].textContent, tdels[8][3].textContent];
-	var ship_rea = [tdels[9][0].textContent, tdels[9][1].textContent];
-	var ship_sz = [tdels[9][2].textContent, tdels[9][3].textContent];
-	var ship_lr = [tdels[10][0].textContent, tdels[10][1].textContent];
-	var ship_ae = [tdels[10][2].textContent, tdels[10][3].textContent];
-	var ship_wnd = [tdels[11][0].textContent, tdels[11][1].textContent];
-	var ship_az = [tdels[11][2].textContent, tdels[11][3].textContent];
-
-	var baukp = Math.ceil(0.2 * ship_kp[1]) + 5;
-
-	planvals.innerHTML = (
-		"<tr><td class=\"nfo\" align=middle colspan=2><b>Technische Daten des Bauplans</b></td></tr>" +
-		"<tr><td width=200>" + ship_name[0] + "</td><td>" + ship_name[1] + "</td></tr>" +
-		"<tr><td>" + ship_type[0] + "</td><td>" + ship_type[1] + "</td></tr>" +
-		"<tr><td>" + ship_opt[0] + "</td><td>" + ship_opt[1] + "</td></tr>" +
-		"<tr><td>" + ship_build[0] + "</td><td>" + ship_build[1] + "</td></tr>" +
-		"<tr><td>" + ship_tl[0] + "</td><td>" + ship_tl[1] + "</td></tr>" +
-		"<tr><td>" + ship_mod[0] + "</td><td>" + ship_mod[1] + "</td></tr>" +
-		"<tr><td>" + ship_kp[0] + "</td><td>" + ship_kp[1] + "&nbsp;<span style='color:#00FFFF'>(" + baukp + " im Bau)</span>" + "</td></tr>" +
-		"<tr><td>" + ship_ss[0] + "</td><td>" + ship_ss[1] + "</td></tr>" +
-		"<tr><td>" + ship_sq[0] + "</td><td>" + ship_sq[1] + "</td></tr>" +
-		"<tr><td>" + ship_sv[0] + "</td><td>" + ship_sv[1] + "</td></tr>" +
-		"<tr><td>" + ship_sz[0] + "</td><td>" + ship_sz[1] + "</td></tr>" +
-		"<tr><td>" + ship_az[0] + "</td><td>" + ship_az[1] + "</td></tr>" +
-		"<tr><td>" + ship_ae[0] + "</td><td>" + ship_ae[1] + "</td></tr>" +
-		"<tr><td>" + ship_aw[0] + "</td><td>" + ship_aw[1] + "</td></tr>" +
-		"<tr><td>" + ship_sh[0] + "</td><td>" + ship_sh[1] + "</td></tr>" +
-		"<tr><td>" + ship_pz[0] + "</td><td>" + ship_pz[1] + "</td></tr>" +
-		"<tr><td>" + ship_str[0] + "</td><td>" + ship_str[1] + "</td></tr>" +
-		"<tr><td>" + ship_wnd[0] + "</td><td>" + ship_wnd[1] + "</td></tr>" +
-		"<tr><td>" + ship_sens[0] + "</td><td>" + ship_sens[1] + "</td></tr>" +
-		"<tr><td>" + ship_trn[0] + "</td><td>" + ship_trn[1] + "</td></tr>" +
-		"<tr><td>" + "Besatzung" + "</td><td>" + ship_minp[1] + "/" + ship_maxp[1] + "</td></tr>" +
-		"<tr><td>" + ship_rea[0] + "</td><td>" + ship_rea[1] + "</td></tr>" +
-		"<tr><td>" + ship_lr[0] + "</td><td>" + ship_lr[1] + "</td></tr>"
-	);
-
-	window.resizeBy(-150, 250);
-}
-
-/* start */
-initPlanMod();
+	initPlanMod();
+})();
