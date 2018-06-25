@@ -3,10 +3,8 @@
 // @namespace     http://toasten.de/
 // @description	  Dieses Script erweitert die Bau-Anzeige. Es zeigt an, wann ein Bau abgeschlossen wird.
 // @version       3.0.180625
-
+// @grant       none
 // @include http*revorix.info/*/bau.php*
-// @include http://217.160.164.101/*/bau.php*
-// @include http://www.revorix.info/*/bau.php*
 // ==/UserScript==
 
 /*
@@ -53,7 +51,6 @@ function initBauzeit()
 
 
 function markGeb(trelemente){
-
 
 	var lastSekunden = "";
 
@@ -186,6 +183,7 @@ function getTDText(td){
 	}
 }
 
+initBauzeit();
 window.addEventListener('load', function() {
 /*Start des ganzes Systems*/
     initBauzeit();
