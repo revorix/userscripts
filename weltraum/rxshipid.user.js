@@ -5,7 +5,7 @@
 // @description Zeigt das geschätzte Alter eines Schiffes im Flottenscan an
 // @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/weltraum/rxshipid.user.js
 // @updateURL   https://raw.githubusercontent.com/tpummer/gm-revorix/master/weltraum/rxshipid.meta.js
-// @version     1.20191014
+// @version     1.20191014.1
 // @grant       None
 //
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/map_fflotte\.php/
@@ -63,14 +63,14 @@
 	refs[40] = new Array(16731355, (new Date(2016, 1,  6)).getTime());
 	refs[41] = new Array(16819175, (new Date(2016, 2, 15)).getTime());
 	refs[42] = new Array(16842005, (new Date(2016, 2, 26)).getTime());
-	refs[42] = new Array(16931652, (new Date(2016, 4, 11)).getTime());
-	refs[43] = new Array(17270811, (new Date(2016, 10, 7)).getTime());
-	refs[44] = new Array(17476791, (new Date(2017, 2, 23)).getTime());
-	refs[45] = new Array(17694378, (new Date(2017, 4, 23)).getTime());
-	refs[42] = new Array(17877338, (new Date(2017, 8,  7)).getTime());
-	refs[42] = new Array(18993784, (new Date(2019, 5, 10)).getTime());
-	refs[42] = new Array(19179372, (new Date(2019, 7, 16)).getTime());
-	refs[42] = new Array(19234066, (new Date(2019, 9,  5)).getTime());
+	refs[43] = new Array(16931652, (new Date(2016, 4, 11)).getTime());
+	refs[44] = new Array(17270811, (new Date(2016, 10, 7)).getTime());
+	refs[45] = new Array(17476791, (new Date(2017, 2, 23)).getTime());
+	refs[46] = new Array(17694378, (new Date(2017, 4, 23)).getTime());
+	refs[47] = new Array(17877338, (new Date(2017, 8,  7)).getTime());
+	refs[48] = new Array(18993784, (new Date(2019, 5, 10)).getTime());
+	refs[49] = new Array(19179372, (new Date(2019, 7, 16)).getTime());
+	refs[50] = new Array(19234066, (new Date(2019, 9,  5)).getTime());
 	
 
 	var now = (new Date()).getTime();	// ms
