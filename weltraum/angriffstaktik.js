@@ -18,14 +18,14 @@ var taktikNumber = 22; // 0 use default
 function setTaktik() {
 	try 
 	{
-	  if(taktikNumber != 0){
-  		var taktikButtons = document.getElementsByName("gtkt");
-  		for( var i=0; i < taktikButtons.length; i++) {
-        if(taktikButtons[i].value == taktikNumber) {
-          taktikButtons[i].setAttribute("checked", "")
-        }
-      }
-  	}
+		if(taktikNumber != 0){
+			var taktikButtons = document.getElementsByName("gtkt");
+			for( var i=0; i < taktikButtons.length; i++) {
+				if(taktikButtons[i].value == taktikNumber) {
+				  taktikButtons[i].setAttribute("checked", "")
+				}
+			}
+		}
 	} catch(e) {
 		// noop
 	}
