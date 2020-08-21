@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Autofill Venadname & focus captcha
 // @namespace   Violentmonkey Scripts
-// @match       https://www.revorix.info/login/
+// @match       http*://www.revorix.info/login/
 // @grant       none
 // @version     1.0
 // @author      TFAN
