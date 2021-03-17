@@ -6,7 +6,7 @@
 // @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/artefakte/rxartefakte.user.js
 // @updateURL   https://raw.githubusercontent.com/tpummer/gm-revorix/master/artefakte/rxartefakte.meta.js
 // @grant       none
-// @version     1.20170602.1
+// @version     1.20210317.1
 //
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/artefakte.*/
 // @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/setup\.php/
@@ -882,7 +882,7 @@
 		if ((/\/\/\d+\.\d+\.\d+\.\d+\//).test(document.URL)) {	/* IP */
 			return (document.URL.match(/[\w:\.\/]+\/rx\//)[0]);
 		} else {	/* revorix.info */
-			return (document.URL.match(/[\w:\.\/]+revorix\.info\//)[0]);
+			return (document.URL.match(/[\w:\.\/]+revorix\.com\//)[0]);
 		}
 	}
 
