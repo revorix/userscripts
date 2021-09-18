@@ -2,7 +2,7 @@
 // @name          Revorix Bauzeit-Script
 // @namespace     http://toasten.de/
 // @description	  Dieses Script erweitert die Bau-Anzeige. Es zeigt an, wann ein Bau abgeschlossen wird.
-// @version       3.0.180625
+// @version       3.1.210919
 // @grant       none
 // @include http*revorix.de/*/bau.php*
 // ==/UserScript==
