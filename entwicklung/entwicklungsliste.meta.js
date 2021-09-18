@@ -7,8 +7,8 @@
 // @contributor   Wintermoon
 // @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/Revorix_Sternenbund_Importer.user.js
 // @updateURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/entwicklung/Revorix_Sternenbund_Importer.user.js
-// @include http*revorix.info/php/entwicklung_neu.php*
-// @version 3.2017040102
+// @include http*revorix.de/php/entwicklung_neu.php*
+// @version 3.20210919
 // @run-at document-idle
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
 // @grant GM_setValue
