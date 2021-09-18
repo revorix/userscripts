@@ -4,7 +4,7 @@
 // @description	  Dieses Script erweitert die Bau-Anzeige. Es zeigt an, wann ein Bau abgeschlossen wird.
 // @version       3.0.180625
 // @grant       none
-// @include http*revorix.info/*/bau.php*
+// @include http*revorix.de/*/bau.php*
 // ==/UserScript==
 
 /*
