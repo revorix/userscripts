@@ -9,8 +9,8 @@
 // @grant       None
 // @version     1.20170602
 //
-// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/map.*\.php/
-// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/setup\.php/
-// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/sgfx\_select\.php/
-// @include     /(87\.106\.151\.92|(www\.)?revorix\.(de|com|info))\S*\/rx\.php\?set=(4|5)/
+// @include     /(87\.106\.151\.92|(game\.|www\.)?revorix\.(de|com|info))\S*\/map.*\.php/
+// @include     /(87\.106\.151\.92|(game\.|www\.)?revorix\.(de|com|info))\S*\/setup\.php/
+// @include     /(87\.106\.151\.92|(game\.|www\.)?revorix\.(de|com|info))\S*\/sgfx\_select\.php/
+// @include     /(87\.106\.151\.92|(game\.|www\.)?revorix\.(de|com|info))\S*\/rx\.php\?set=(4|5)/
 // ==/UserScript==
