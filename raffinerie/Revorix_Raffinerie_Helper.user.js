@@ -2,11 +2,10 @@
 // @name           Revorix_Raffinerie_Helper
 // @namespace      URI <http://marczewski.ddnss.org/>
 // @description    Erleichtert die Umwandlung von Erz im Spiel Revorix beim Ressourcenversand
-// @include        http*://www.revorix.info/php/res_portal.php*
-// @include    https://87.106.151.92/rx/php/res_portal.php*
+// @include        http*://game.revorix.de/php/res_portal.php*
 // @downloadURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/raffinerie/Revorix_Raffinerie_Helper.user.js
 // @updateURL https://raw.githubusercontent.com/tpummer/gm-revorix/master/raffinerie/Revorix_Raffinerie_Helper.user.js
-// @version 3.2017053101
+// @version 3.2021091901
 // ==/UserScript==
 
 /*
