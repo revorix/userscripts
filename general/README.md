@@ -11,7 +11,7 @@ Zeilen mit dem Suchwort werden dann entsprechend eingefärbt.
 [Color-it Skript installieren](https://github.com/tpummer/gm-revorix/raw/master/general/revorix.color-it.user.js)
 
 ## revorix.inline-view.user.js
-Erweitert die Bauzeit-Anzeige in Entwicklung und Werft um den Zeitpunkt der Fertigstellung.
+Dieses Skript entfernt die Popups in den News und zeigt die Details der News direkt auf der gleichen Seite (IFrmae).
 
 ![Inline-View Screenshot](../_images/inline.png)
 
@@ -25,6 +25,6 @@ Dieses Skript lässt auch Tabellen sortieren. Sicher funktionieren bisher nur Ca
 [Sortierung Skript installieren](https://github.com/tpummer/gm-revorix/raw/master/general/revorix.sortierung.user.js)
 
 ## revorix.werbungsgrenze.user.js
-Erweitert die Bauzeit-Anzeige in Entwicklung und Werft um den Zeitpunkt der Fertigstellung.
+Hält die Werbung im Rahmen.
 
 [Werbungsgrenze Skript installieren](https://github.com/tpummer/gm-revorix/raw/master/general/werbungsgrenze.user.js)
