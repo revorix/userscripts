@@ -16,8 +16,7 @@
 // @updateURL     https://raw.githubusercontent.com/revorix/userscripts/master/color-it/revorix.color-it.meta.js
 // @downloadURL   https://raw.githubusercontent.com/revorix/userscripts/master/color-it/revorix.color-it.user.js
 
-// @include https://game.revorix.de/*
-
+// @include https://game.revorix.de/php/*
 // ==/UserScript==
 
 
@@ -57,10 +56,8 @@ function initColorIt()
 	tds = table.getElementsByTagName("tr")[0].getElementsByTagName("td");
 	td = tds[tds.length-1];
 
-	td.innerHTML+="<div style='float:right; width: 105px; text-align:right;'><a href='javascript:colorizer.toggleColorizer();'><img src='"+confimage+"' alt='Configure Color-It'/></a></div>";
-
-	addcontent = "";
-	addcontent += "<div id='colorizer' style='position:absolute; right:10px; height:270px; width:500px;  border:3px solid #000000; padding:3px; background-color:#ffffbb; visibility:hidden;'>";
+	addcontent = "<div style='float:left;'><a href='javascript:colorizer.toggleColorizer();'><img src='"+confimage+"' alt='Configure Color-It'/></a></div>";
+	addcontent += "<div id='colorizer' style='position:absolute; right:10px; top: 200px; height:270px; width:500px;  border:3px solid #000000; padding:3px; background-color:#ffffbb; visibility:hidden;'>";
 	addcontent += '<div class="nfo" style="position: relative; width: 100%; border: 0px; margin:0px; padding: 0px; top:0px; left:0px; text-align:right;"><a href="javascript:colorizer.toggleColorizer()">X</a>&nbsp;</div>';
 	addcontent += '<div id="bautipttext" style="color:black; text-align:left; padding-top:1px;">';
 	addcontent += '<div style="float:left; width:200px; height:200px; background-color:#aa3300; color:#ffffff;">&nbsp;Auswahl:<br/><select id="searchselect" name="top5" size="3" style="border: 1px solid #aa3300; width:100%; height:210px; background-color:#ffffff;" onchange="colorizer.searchselected(this.value)"></select><br/><center><input type="button" onclick="colorizer.addSearch()" value="Neu"></input>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="colorizer.deleteSearch()" value="Löschen"></input></center></div>';
@@ -72,8 +69,8 @@ function initColorIt()
 	addcontent += '<input type="button" onclick="colorizer.colorit()" value="Testen"></input>&nbsp;der aktuellen Einstellungen<br/><br/><input type="button" onclick="colorizer.saveRule()" value="Speichern"><span id="unsaved" style="color:#ff0000;  visibility:hidden;">&nbsp;ungespeicherte Änderungen!</span></input>';
 	addcontent += '</div>';
 	addcontent += '</div>';
+  td.insertAdjacentHTML('beforeend',addcontent);
 
-	td.innerHTML += addcontent;
 	var swatch = document.getElementById("searchcolor");
 
 	//CFInstall.check({ mode: "overlay" });
@@ -1031,3 +1028,7 @@ for(mysite in sites){
     } catch(e) {
       console.log(e);
     }
+	}
+}
+
+
