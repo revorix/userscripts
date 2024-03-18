@@ -4,8 +4,8 @@
 // @description     Dieses Script erweitert die Bau-Anzeige. Es zeigt an, wann ein Bau abgeschlossen wird.
 // @version         3.2.210921
 //
-// @updateURL       https://github.com/tpummer/gm-revorix/raw/master/bauzeiten/revorix.bauzeit.meta.js
-// @downloadURL     https://github.com/tpummer/gm-revorix/raw/master/bauzeiten/revorix.bauzeit.user.js
+// @updateURL       https://raw.githubusercontent.com/revorix/userscripts/master/bauzeiten/revorix.bauzeit.meta.js
+// @downloadURL     https://raw.githubusercontent.com/revorix/userscripts/master/bauzeiten/revorix.bauzeit.user.js
 //
 // @grant           none
 // @include         http*revorix.de/*/bau.php*
