@@ -11,4 +11,4 @@ Neu hinzu gekommen ist die Option, einige Aktien ganz ausblenden zu lassen, dami
 
 ![Aktien Screenshot](../_images/aktien.png)
 
-[Aktien Skript installieren](https://github.com/tpummer/gm-revorix/raw/master/aktien/revorix.aktien.user.js)
+[Aktien Skript installieren](../../../raw/master/aktien/revorix.aktien.user.js)
